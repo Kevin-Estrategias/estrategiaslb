@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EstrategiasLB — Invertí con estrategia</title>
+<meta name="description" content="Asesoramiento financiero profesional en acciones, CEDEARs, bonos y más. Canal gratuito y Ecosistema Premium con 7 grupos de WhatsApp. Registrado CNV — Asesor Idóneo M.N. 2220.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06101a; --bg2:#040c13; --panel:#0d1b2c; --panel2:#122035;
+    --line:#1c3047; --line2:#263f59;
+    --txt:#e6edf5; --muted:#7d92a6; --muted2:#536475;
+    --gold:#D4AF37; --gold2:#e4c455; --gold-dim:rgba(212,175,55,.12);
+    --green:#4ade80; --red:#f1665a; --usd:#7dcfff; --crypto:#f7a83e;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;line-height:1.1;letter-spacing:-0.01em}
+  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;white-space:nowrap;font-weight:500;font-size:15px;padding:12px 22px;border-radius:12px;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,background .2s ease,border-color .2s ease}
+  .btn-primary{background:var(--gold);color:#0a0700;font-weight:700}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--gold2)}
+  .btn-ghost{background:transparent;color:var(--txt);border-color:var(--line2)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-wa{background:#25D366;color:#fff;font-weight:700}
+  .btn-wa:hover{transform:translateY(-2px);background:#20ba59}
+
+  /* NAV */
+  header.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(6,16,26,.82);border-bottom:1px solid transparent;transition:border-color .3s}
+  header.nav.scrolled{border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:20px}
+  .logo-mark{width:34px;height:34px;border-radius:9px;background:var(--gold-dim);border:1px solid rgba(212,175,55,.35);display:grid;place-items:center;flex-shrink:0}
+  .logo-mark svg{width:20px;height:20px;display:block}
+  .logo-name{background:linear-gradient(90deg,#D4AF37,#e8d080 60%,#D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a.lnk{color:var(--muted);font-size:15px;transition:color .2s}
+  .nav-links a.lnk:hover{color:var(--txt)}
+  @media(max-width:760px){.nav-links a.lnk{display:none}}
+  .cta-short{display:none}
+  @media(max-width:760px){.nav-links{gap:9px} header.nav .btn-nav{padding:8px 13px;font-size:13px} .cta-full{display:none} .cta-short{display:inline}}
+
+  /* HERO */
+  .hero{position:relative;padding:84px 0 72px;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:900px;height:520px;background:radial-gradient(ellipse at center,rgba(212,175,55,.1),transparent 62%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+  .hero h1{font-size:clamp(40px,6vw,62px);font-weight:600}
+  .hero h1 em{font-style:italic;color:var(--gold);font-weight:500}
+  .hero p.sub{margin-top:22px;font-size:18px;color:var(--muted);max-width:34ch}
+  .hero-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-trust{margin-top:20px;font-size:13.5px;color:var(--muted2);display:flex;align-items:center;gap:8px}
+  .hero-trust .tick{color:var(--gold)}
+
+  /* MOCK */
+  .mock{background:linear-gradient(180deg,var(--panel),#0a1520);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+  .mock-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .mock-label{font-size:12px;color:var(--muted);letter-spacing:.04em}
+  .mock-chips{display:flex;gap:6px}
+  .chip{font-size:10.5px;padding:3px 8px;border-radius:20px;border:1px solid var(--line2);color:var(--muted)}
+  .chip.on{background:rgba(212,175,55,.16);border-color:transparent;color:var(--gold)}
+  .mock-total{font-size:34px;font-weight:600;margin-top:6px}
+  .mock-delta{font-size:13.5px;color:var(--green);margin-top:2px}
+  .spark{margin:14px 0 16px;width:100%;height:54px;display:block}
+  .compo{display:flex;height:9px;border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .compo i{display:block;height:100%}
+  .holds{display:flex;flex-direction:column;gap:9px}
+  .hold{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px;padding:11px 12px;background:var(--bg2);border:1px solid var(--line);border-radius:11px}
+  .tkr{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:700;color:#06140d}
+  .hold .nm{font-size:13.5px}
+  .hold .ty{font-size:11px;color:var(--muted)}
+  .hold .v{font-size:13px;text-align:right}
+  .hold .g{font-size:12px;text-align:right}
+  .up{color:var(--green)} .down{color:var(--red)}
+
+  /* Animaciones */
+  .mock .spark .line{stroke-dasharray:400;stroke-dashoffset:400}
+  .mock.in .spark .line{animation:drawLine 1.5s .25s ease forwards}
+  @keyframes drawLine{to{stroke-dashoffset:0}}
+  .mock .spark .area{opacity:0}
+  .mock.in .spark .area{animation:fadeIn .9s 1.2s ease forwards}
+  @keyframes fadeIn{to{opacity:1}}
+  .mock .compo i{transform:scaleX(0);transform-origin:left}
+  .mock.in .compo i{animation:growx .8s ease forwards}
+  .mock.in .compo i:nth-child(1){animation-delay:.45s}
+  .mock.in .compo i:nth-child(2){animation-delay:.6s}
+  .mock.in .compo i:nth-child(3){animation-delay:.75s}
+  .mock.in .compo i:nth-child(4){animation-delay:.9s}
+  @keyframes growx{to{transform:scaleX(1)}}
+  .mock .hold{opacity:0;transform:translateY(8px)}
+  .mock.in .hold{animation:holdIn .5s ease forwards}
+  .mock.in .hold:nth-child(1){animation-delay:1s}
+  .mock.in .hold:nth-child(2){animation-delay:1.15s}
+  .mock.in .hold:nth-child(3){animation-delay:1.3s}
+  @keyframes holdIn{to{opacity:1;transform:none}}
+
+  /* CHARTS */
+  .viz-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:860px){.viz-grid{grid-template-columns:1fr}}
+  .viz-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .viz-ttl{font-size:13px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .donut-wrap{position:relative;width:200px;height:200px;margin:0 auto 24px}
+  .donut{width:200px;height:200px;border-radius:50%;background:conic-gradient(var(--gold) 0 32%,#4ade80 32% 58%,var(--usd) 58% 76%,var(--crypto) 76% 100%);-webkit-mask:radial-gradient(circle,transparent 58%,#000 59%);mask:radial-gradient(circle,transparent 58%,#000 59%);transform:scale(.75) rotate(-28deg);opacity:0}
+  .viz-grid.in .donut{animation:donutIn 1s .15s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes donutIn{to{transform:scale(1) rotate(0);opacity:1}}
+  .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0}
+  .viz-grid.in .donut-center{animation:fadeIn .6s .8s ease forwards}
+  .donut-center .dc-v{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--gold)}
+  .donut-center .dc-k{font-size:12px;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center}
+  .legend span{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+  .legend b{color:var(--txt);font-weight:500;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .evo{width:100%;height:auto;display:block;overflow:visible}
+  .evo .evo-line{stroke-dasharray:560;stroke-dashoffset:560}
+  .viz-grid.in .evo .evo-line{animation:drawLine 1.6s .3s ease forwards}
+  .evo .evo-area{opacity:0}
+  .viz-grid.in .evo .evo-area{animation:fadeIn 1s 1.3s ease forwards}
+  .evo .evo-dot{opacity:0}
+  .viz-grid.in .evo .evo-dot{animation:fadeIn .5s 1.7s ease forwards}
+  .evo-x{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:#586880}
+  @media(prefers-reduced-motion:reduce){
+    .mock .spark .line,.evo .evo-line{stroke-dashoffset:0!important;animation:none!important}
+    .mock .spark .area,.mock .hold,.donut,.donut-center,.evo .evo-area,.evo .evo-dot{opacity:1!important;transform:none!important;animation:none!important}
+    .mock .compo i{transform:none!important;animation:none!important}
+  }
+
+  /* SECCIONES */
+  section{padding:84px 0}
+  .sec-head{max-width:620px;margin-bottom:48px}
+  .sec-head h2{font-size:clamp(28px,4vw,40px);margin-top:14px}
+  .sec-head p{margin-top:14px;color:var(--muted);font-size:17px}
+
+  /* PROBLEMA */
+  .pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.pain-grid{grid-template-columns:1fr}}
+  .pain{padding:26px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+  .pain h3{font-size:18px;font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:8px}
+  .pain p{color:var(--muted);font-size:15px}
+  .pain .x{color:var(--red);font-size:20px;margin-bottom:10px;display:block}
+
+  /* PASOS */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  .step{padding:34px 28px;border-right:1px solid var(--line);background:var(--panel)}
+  .step:last-child{border-right:none}
+  @media(max-width:760px){.step{border-right:none;border-bottom:1px solid var(--line)} .step:last-child{border-bottom:none}}
+  .step .n{font-family:'Fraunces',serif;font-size:15px;color:var(--gold);margin-bottom:16px;display:block}
+  .step h3{font-size:20px;font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:8px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* FEATURES */
+  .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.feat-grid{grid-template-columns:1fr}}
+  .feat{padding:28px;border:1px solid var(--line);border-radius:16px;background:var(--panel);transition:border-color .25s,transform .25s}
+  .feat:hover{border-color:var(--line2);transform:translateY(-3px)}
+  .feat .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:16px;font-size:18px}
+  .feat h3{font-size:18.5px;font-family:'Outfit',sans-serif;font-weight:600;margin-bottom:8px}
+  .feat p{color:var(--muted);font-size:14.5px}
+  .feat.wide{grid-column:span 2}
+  @media(max-width:760px){.feat.wide{grid-column:span 1}}
+
+  /* DIFERENCIAL */
+  .diferencial{background:linear-gradient(180deg,transparent,rgba(212,175,55,.04),transparent)}
+  .dif-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media(max-width:880px){.dif-grid{grid-template-columns:1fr}}
+  .fx{display:flex;flex-direction:column;gap:12px}
+  .fx-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+  .fx-row .lbl{font-size:14px;color:var(--muted)}
+  .fx-row .val{font-size:15px;font-weight:500}
+
+  /* PRECIO */
+  .price-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:20px;align-items:stretch}
+  @media(max-width:760px){.price-wrap{grid-template-columns:1fr}}
+  .price{padding:34px;border-radius:18px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+  .price.pro{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,175,55,.07),var(--panel))}
+  .price .tag{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px}
+  .price .amt{font-family:'Fraunces',serif;font-size:42px;font-weight:600;line-height:1}
+  .price .amt small{font-size:16px;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:400}
+  .price .trial{margin:6px 0 22px;color:var(--muted);font-size:14px}
+  .price ul{list-style:none;margin:0 0 26px;display:flex;flex-direction:column;gap:11px;flex:1}
+  .price li{font-size:14.5px;color:var(--txt);display:flex;gap:10px;align-items:flex-start}
+  .price li::before{content:'→';color:var(--gold);flex-shrink:0}
+  /* 7 grupos */
+  .grupos-list{list-style:none;margin:0 0 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .grupo-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;font-size:14px}
+  .grupo-icon{font-size:16px;flex-shrink:0}
+  .grupo-name{font-weight:500}
+  .grupo-desc{font-size:12px;color:var(--muted);margin-top:1px}
+  .price-badge{display:inline-block;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);color:var(--gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:16px}
+
+  /* CNV */
+  .cnv{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:40px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+  @media(max-width:680px){.cnv{grid-template-columns:1fr}}
+  .cnv .shield{width:54px;height:54px;border-radius:14px;background:var(--gold-dim);display:grid;place-items:center;font-size:24px}
+  .cnv h3{font-size:22px;margin-bottom:12px}
+  .cnv p{color:var(--muted);font-size:15px;margin-bottom:10px;max-width:62ch}
+  .cnv strong{color:var(--txt);font-weight:500}
+  .cnv-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .cnv-tag{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--gold-dim);border:1px solid rgba(212,175,55,.25);color:var(--gold)}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  .qa{border-bottom:1px solid var(--line)}
+  .qa button{width:100%;text-align:left;background:none;border:none;color:var(--txt);font-family:'Outfit',sans-serif;font-size:17px;font-weight:500;padding:22px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .qa .sign{color:var(--gold);font-size:22px;transition:transform .25s;flex-shrink:0}
+  .qa.open .sign{transform:rotate(45deg)}
+  .qa .ans{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .qa .ans p{color:var(--muted);font-size:15px;padding-bottom:22px}
+
+  /* APP BANNER */
+  .app-banner{background:linear-gradient(135deg,var(--panel),rgba(18,32,53,1));border:1px solid rgba(212,175,55,.3);border-radius:18px;padding:40px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
+  @media(max-width:680px){.app-banner{grid-template-columns:1fr}}
+  .app-banner h3{font-size:24px;margin-bottom:10px}
+  .app-banner p{color:var(--muted);font-size:15px;max-width:48ch}
+
+  /* CTA FINAL */
+  .final{text-align:center;padding:96px 0}
+  .final h2{font-size:clamp(30px,5vw,48px);max-width:18ch;margin:0 auto 16px}
+  .final p{color:var(--muted);font-size:18px;margin-bottom:30px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted2);font-size:13.5px}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-links{display:flex;flex-wrap:wrap;gap:14px 22px}
+  .foot-links a{color:var(--muted)}
+  .foot-links a:hover{color:var(--txt)}
+  .foot-social{display:flex;align-items:center;gap:16px}
+  .foot-social a{color:var(--muted);display:inline-flex;transition:.15s}
+  .foot-social a:hover{color:var(--gold)}
+  .foot-social svg{width:20px;height:20px;display:block}
+  .foot-disclaimer{margin-top:14px;color:var(--muted2);font-size:12.5px;line-height:1.55;max-width:700px}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important} .reveal{opacity:1;transform:none} html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="8" width="3" height="8" rx="1" fill="#D4AF37"/>
+          <rect x="4" y="5" width="1" height="3" fill="#D4AF37"/>
+          <rect x="4" y="16" width="1" height="3" fill="#D4AF37"/>
+          <rect x="10.5" y="4" width="3" height="12" rx="1" fill="#D4AF37" opacity=".85"/>
+          <rect x="11.5" y="1" width="1" height="3" fill="#D4AF37" opacity=".85"/>
+          <rect x="11.5" y="16" width="1" height="3" fill="#D4AF37" opacity=".85"/>
+          <rect x="18" y="10" width="3" height="6" rx="1" fill="#D4AF37" opacity=".7"/>
+          <rect x="19" y="7" width="1" height="3" fill="#D4AF37" opacity=".7"/>
+          <rect x="19" y="16" width="1" height="3" fill="#D4AF37" opacity=".7"/>
+        </svg>
+      </span>
+      <span class="logo-name">EstrategiasLB</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#como" class="lnk">Cómo funciona</a>
+      <a href="#features" class="lnk">Qué hacemos</a>
+      <a href="#precio" class="lnk">Planes</a>
+      <a href="#faq" class="lnk">Preguntas</a>
+      <a href="https://chat.whatsapp.com/CnJx8Fy85TGLORUjCreKtE" target="_blank" rel="noopener" class="btn btn-ghost btn-nav">Canal Free</a>
+      <a href="https://wa.me/5491136172201?text=Hola%20EstrategiasLB%2C%20quiero%20info%20del%20Ecosistema%20Premium" target="_blank" rel="noopener" class="btn btn-primary btn-nav">
+        <span class="cta-full">Ver Premium →</span>
+        <span class="cta-short">Premium</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Asesoramiento financiero · Registrado CNV</span>
+      <h1>Invertí con<br><em>estrategia</em>.</h1>
+      <p class="sub">CEDEARs, acciones, bonos y opciones con criterio profesional. Canal gratuito y Ecosistema Premium con 7 grupos de WhatsApp.</p>
+      <div class="hero-cta">
+        <a href="https://chat.whatsapp.com/CnJx8Fy85TGLORUjCreKtE" target="_blank" rel="noopener" class="btn btn-wa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.12 1.528 5.843L.055 23.78l6.016-1.576A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.374l-.36-.213-3.726.977.995-3.638-.234-.374A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+          Unirse al Canal Free
+        </a>
+        <a href="#precio" class="btn btn-ghost">Ver el Premium</a>
+      </div>
+      <p class="hero-trust"><span class="tick">✓</span> Registrado CNV · M.N. 2220 · Corrientes, Argentina</p>
+    </div>
+
+    <!-- Mock cartera -->
+    <div class="mock reveal">
+      <div class="mock-top">
+        <span class="mock-label">Cartera modelo · EstrategiasLB</span>
+        <div class="mock-chips"><span class="chip on">ARS</span><span class="chip">MEP</span><span class="chip">CCL</span></div>
+      </div>
+      <div class="mock-total mono" id="heroTotal">$6.240.000</div>
+      <div class="mock-delta mono">▲ +42,8% YTD · +$1.851.200</div>
+      <svg class="spark" viewBox="0 0 320 54" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D4AF37" stop-opacity=".35"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></linearGradient></defs>
+        <path class="area" d="M0,48 L40,44 L80,46 L120,36 L160,38 L200,24 L240,20 L280,12 L320,8 L320,54 L0,54 Z" fill="url(#g)"/>
+        <path class="line" d="M0,48 L40,44 L80,46 L120,36 L160,38 L200,24 L240,20 L280,12 L320,8" fill="none" stroke="#D4AF37" stroke-width="2"/>
+      </svg>
+      <div class="compo">
+        <i style="width:38%;background:#4ade80"></i>
+        <i style="width:28%;background:var(--usd)"></i>
+        <i style="width:20%;background:var(--gold)"></i>
+        <i style="width:14%;background:var(--crypto)"></i>
+      </div>
+      <div class="holds">
+        <div class="hold"><span class="tkr" style="background:#4ade8030;color:#4ade80;border:1px solid #4ade8040">GG</span><div><div class="nm">GGAL</div><div class="ty">Acción</div></div><div class="v mono">$1.240.800</div><div class="g mono up">+28,4%</div></div>
+        <div class="hold"><span class="tkr" style="background:#7dcfff30;color:var(--usd);border:1px solid #7dcfff40">ME</span><div><div class="nm">MELI</div><div class="ty">CEDEAR</div></div><div class="v mono">$892.400</div><div class="g mono up">+18,7%</div></div>
+        <div class="hold"><span class="tkr" style="background:#D4AF3730;color:var(--gold);border:1px solid #D4AF3740">AL</span><div><div class="nm">AL30</div><div class="ty">Bono</div></div><div class="v mono">$614.200</div><div class="g mono up">+6,2%</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">El problema</span>
+      <h2>Invertir en Argentina sin guía es difícil.</h2>
+      <p>Información dispersa, "analistas" sin respaldo y un mercado que cambia semana a semana. Necesitás más que un video de YouTube.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain reveal"><span class="x">✕</span><h3>Demasiado ruido</h3><p>En internet sobran opiniones y faltan análisis con fundamento. Casi nadie tiene registro CNV.</p></div>
+      <div class="pain reveal"><span class="x">✕</span><h3>Sin estrategia clara</h3><p>Comprás y vendés por impulso, sin gestión del riesgo ni un plan para tu cartera.</p></div>
+      <div class="pain reveal"><span class="x">✕</span><h3>El mercado local es complejo</h3><p>CEDEARs, MEP, CCL, bonos dolarizados… difícil entrar sin una guía de confianza.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CÓMO FUNCIONA -->
+<section id="como">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Cómo funciona</span>
+      <h2>Tres pasos para invertir mejor.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><span class="n">Paso 01</span><h3>Seguís el Canal Free</h3><p>YouTube, Instagram y el grupo de WhatsApp gratuito con análisis semanales y contexto macro. Sin costo.</p></div>
+      <div class="step"><span class="n">Paso 02</span><h3>Aprendés la metodología</h3><p>Valuación, timing, gestión del riesgo y lectura del CCL. Contenido que te enseña a leer el mercado.</p></div>
+      <div class="step"><span class="n">Paso 03</span><h3>Entrás al Ecosistema Premium</h3><p>7 grupos de WhatsApp con alertas en tiempo real, análisis completos y seguimiento de cartera.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Qué hacemos</span>
+      <h2>Cobertura real del mercado argentino.</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat wide reveal">
+        <div class="ic" style="background:rgba(212,175,55,.14);color:var(--gold)">◧</div>
+        <h3>CEDEARs, acciones, bonos, opciones y cripto</h3>
+        <p>Cobertura completa: líderes del MERVAL, CEDEARs con análisis del CCL implícito, bonos soberanos en dólares, estrategias con opciones y criptomonedas. Todo en contexto argentino.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(125,207,255,.14);color:var(--usd)">⇄</div>
+        <h3>Arbitraje y tipo de cambio</h3>
+        <p>Calculamos el CCL implícito de cada CEDEAR antes de que lo metas. Sabés si comprás caro o barato respecto al mercado.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(212,175,55,.14);color:var(--gold)">◷</div>
+        <h3>Calendario de dividendos</h3>
+        <p>Cuándo cobran los CEDEARs que seguimos, cuánto pagan en dólares y cuáles son los de mayor rendimiento.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(74,222,128,.14);color:var(--green)">◔</div>
+        <h3>Análisis técnico y fundamental</h3>
+        <p>No solo el gráfico: entendemos el negocio. Valuación, EBITDA, posición de caja y precio objetivo.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(247,168,62,.14);color:var(--crypto)">◉</div>
+        <h3>Alertas de oportunidad</h3>
+        <p>Te avisamos cuando un activo llega a zona de entrada, con precio, contexto y stop sugerido.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(212,175,55,.14);color:var(--gold)">▤</div>
+        <h3>Diario Financiero</h3>
+        <p>Resumen del mercado cada jornada. Lo que pasó, lo que viene y el posicionamiento sugerido.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="ic" style="background:rgba(74,222,128,.14);color:var(--green)">◐</div>
+        <h3>Cartera modelo pública</h3>
+        <p>Seguí nuestras posiciones desde la entrada, con precio y contexto. Transparencia total.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- VISUAL CHARTS -->
+<section id="visual">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">De un vistazo</span>
+      <h2>La cartera modelo, en números.</h2>
+      <p>Composición y evolución actualizada semanalmente. Disponible también en nuestra app de cartera gratuita.</p>
+    </div>
+    <div class="viz-grid reveal">
+      <div class="viz-card">
+        <div class="viz-ttl">Composición por tipo de activo</div>
+        <div class="donut-wrap"><div class="donut"></div><div class="donut-center"><div class="dc-v mono">7</div><div class="dc-k">posiciones</div></div></div>
+        <div class="legend">
+          <span><i style="background:var(--gold)"></i>CEDEARs <b>32%</b></span>
+          <span><i style="background:#4ade80"></i>Acciones <b>26%</b></span>
+          <span><i style="background:var(--usd)"></i>Bonos USD <b>18%</b></span>
+          <span><i style="background:var(--crypto)"></i>Liquidez <b>24%</b></span>
+        </div>
+      </div>
+      <div class="viz-card">
+        <div class="viz-ttl">Rendimiento acumulado <span class="up mono" style="font-size:13px">▲ +42,8% · YTD</span></div>
+        <svg class="evo" viewBox="0 0 420 200" aria-hidden="true">
+          <defs><linearGradient id="evog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D4AF37" stop-opacity=".28"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="55" x2="420" y2="55" stroke="#1c3047" stroke-width="1"/>
+          <line x1="0" y1="105" x2="420" y2="105" stroke="#1c3047" stroke-width="1"/>
+          <line x1="0" y1="155" x2="420" y2="155" stroke="#1c3047" stroke-width="1"/>
+          <path class="evo-area" d="M0,170 L84,155 L168,158 L252,110 L336,76 L420,38 L420,200 L0,200 Z" fill="url(#evog)"/>
+          <path class="evo-line" d="M0,170 L84,155 L168,158 L252,110 L336,76 L420,38" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle class="evo-dot" cx="420" cy="38" r="4.5" fill="#D4AF37"/>
+        </svg>
+        <div class="evo-x"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIFERENCIAL -->
+<section class="diferencial" id="diferencial">
+  <div class="wrap dif-grid">
+    <div class="reveal">
+      <span class="eyebrow">Por qué EstrategiasLB</span>
+      <h2 style="font-size:clamp(28px,4vw,40px);margin-top:14px">Con respaldo institucional.</h2>
+      <p style="margin-top:16px;color:var(--muted);font-size:17px;max-width:42ch">Cualquiera analiza gráficos. Nosotros entendemos el contexto argentino: la brecha cambiaria, el CCL implícito de cada CEDEAR y cómo construir una cartera en un mercado como el nuestro. Y además estamos registrados en la CNV.</p>
+    </div>
+    <div class="fx reveal">
+      <div class="fx-row"><span class="lbl">Registro CNV</span><span class="val" style="color:var(--gold)">✓ Asesor Idóneo M.N. 2220</span></div>
+      <div class="fx-row"><span class="lbl">Cartera modelo · YTD</span><span class="val mono up">▲ +42,8%</span></div>
+      <div class="fx-row"><span class="lbl">Activos cubiertos</span><span class="val" style="color:var(--muted)">CEDEARs · Acciones · Bonos · Opciones · Cripto</span></div>
+      <div class="fx-row"><span class="lbl">Ecosistema Premium</span><span class="val" style="color:var(--gold)">7 grupos de WhatsApp</span></div>
+      <div class="fx-row"><span class="lbl">Canal Free</span><span class="val" style="color:var(--green)">Gratis · sin compromiso</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRECIO -->
+<section id="precio">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-left:auto;margin-right:auto;text-align:center">
+      <span class="eyebrow">Planes</span>
+      <h2>Empezá gratis. Escalá cuando quieras.</h2>
+      <p>El canal gratuito es para siempre. El Premium lo levantás cuando estés listo.</p>
+    </div>
+    <div class="price-wrap">
+
+      <!-- CANAL FREE -->
+      <div class="price reveal">
+        <span class="tag">Canal Free</span>
+        <div class="amt mono">Gratis</div>
+        <div class="trial">Para siempre · sin tarjeta ni registro</div>
+        <ul>
+          <li>Análisis semanal en YouTube e Instagram</li>
+          <li>Cobertura de CEDEARs, acciones y bonos</li>
+          <li>Contexto macro y tipo de cambio</li>
+          <li>Calendario de dividendos público</li>
+          <li>Educación financiera accesible</li>
+          <li>Grupo de WhatsApp gratuito</li>
+        </ul>
+        <a href="https://chat.whatsapp.com/CnJx8Fy85TGLORUjCreKtE" target="_blank" rel="noopener" class="btn btn-wa" style="justify-content:center;gap:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.12 1.528 5.843L.055 23.78l6.016-1.576A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.374l-.36-.213-3.726.977.995-3.638-.234-.374A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+          Unirse al Canal Free
+        </a>
+      </div>
+
+      <!-- ECOSISTEMA PREMIUM -->
+      <div class="price pro reveal">
+        <span class="tag">Ecosistema Premium</span>
+        <div class="price-badge">7 grupos de WhatsApp</div>
+        <div class="amt mono">$30.000<small> / mes</small></div>
+        <div class="trial" style="color:var(--gold)">Acceso inmediato tras el pago</div>
+        <ul class="grupos-list">
+          <li class="grupo-item"><span class="grupo-icon">📊</span><div><div class="grupo-name">EstrategiasLB</div><div class="grupo-desc">Señales y análisis del mercado local</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">📰</span><div><div class="grupo-name">Diario Financiero</div><div class="grupo-desc">Resumen del mercado cada jornada</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">⚙️</span><div><div class="grupo-name">EstrategiasLB Opciones</div><div class="grupo-desc">Estrategias con opciones sobre acciones</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">₿</span><div><div class="grupo-name">Cripto LB</div><div class="grupo-desc">Análisis y señales del mercado crypto</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">💰</span><div><div class="grupo-name">Cartera Dividendo</div><div class="grupo-desc">CEDEARs con renta en dólares</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">📈</span><div><div class="grupo-name">Mediano - Largo Plazo</div><div class="grupo-desc">Construcción gradual de cartera</div></div></li>
+          <li class="grupo-item"><span class="grupo-icon">🔔</span><div><div class="grupo-name">Alertas VIP</div><div class="grupo-desc">Entradas y salidas en tiempo real</div></div></li>
+        </ul>
+        <a href="https://wa.me/5491136172201?text=Hola%20EstrategiasLB%2C%20quiero%20entrar%20al%20Ecosistema%20Premium%20%F0%9F%93%88" target="_blank" rel="noopener" class="btn btn-primary" style="justify-content:center">
+          Consultá por WhatsApp →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- APP BANNER -->
+<section>
+  <div class="wrap">
+    <div class="app-banner reveal">
+      <div>
+        <h3>App de cartera gratuita</h3>
+        <p>Seguí tus inversiones en tiempo real: valor en ARS, MEP y CCL, gráfico de composición, calculadora de arbitraje y calendario de dividendos. Gratis para todos.</p>
+      </div>
+      <a href="./app.html" class="btn btn-primary" style="flex-shrink:0">Abrir la app →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- CNV -->
+<section id="cnv">
+  <div class="wrap">
+    <div class="cnv reveal">
+      <div class="shield">🏛</div>
+      <div>
+        <h3>Respaldo institucional. En claro.</h3>
+        <p>EstrategiasLB es una firma de asesoramiento financiero con <strong>registro en la CNV (Comisión Nacional de Valores)</strong>. Luis Barberán, Asesor Idóneo M.N. 2220, es el responsable de las recomendaciones. No somos un broker, no custodiamos fondos ni ejecutamos órdenes.</p>
+        <p>Todas las recomendaciones son de carácter informativo y no constituyen asesoramiento personalizado salvo en el marco de un contrato de asesoría formal. <strong>Los rendimientos pasados no garantizan resultados futuros.</strong></p>
+        <div class="cnv-tags">
+          <span class="cnv-tag">CNV Registrado</span>
+          <span class="cnv-tag">M.N. 2220</span>
+          <span class="cnv-tag">CUIT 30-71888651-8</span>
+          <span class="cnv-tag">Corrientes, Argentina</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-left:auto;margin-right:auto;text-align:center">
+      <span class="eyebrow">Preguntas</span>
+      <h2>Lo que se suele preguntar.</h2>
+    </div>
+    <div class="faq">
+      <div class="qa"><button>¿Tienen registro en la CNV?<span class="sign">+</span></button><div class="ans"><p>Sí. EstrategiasLB opera como firma de asesoramiento registrada en la Comisión Nacional de Valores. El asesor responsable es Luis Barberán, Asesor Idóneo M.N. 2220. CUIT: 30-71888651-8.</p></div></div>
+      <div class="qa"><button>¿Qué incluye el Ecosistema Premium?<span class="sign">+</span></button><div class="ans"><p>7 grupos de WhatsApp: señales del mercado local, Diario Financiero diario, estrategias con opciones, análisis crypto, cartera de dividendos, estrategia de mediano-largo plazo y alertas VIP en tiempo real. Todo por $30.000/mes.</p></div></div>
+      <div class="qa"><button>¿Con qué broker puedo operar lo que recomiendan?<span class="sign">+</span></button><div class="ans"><p>Con cualquier broker habilitado en Argentina: IOL, Balanz, Cocos Capital, Bull Market u otros. EstrategiasLB no opera ni custodia fondos; las órdenes las colocás vos desde tu cuenta.</p></div></div>
+      <div class="qa"><button>¿Qué cubre el Canal Free?<span class="sign">+</span></button><div class="ans"><p>Análisis semanal en YouTube e Instagram, cobertura de CEDEARs, acciones y bonos, y acceso al grupo de WhatsApp gratuito. Sin costo ni registro.</p></div></div>
+      <div class="qa"><button>¿Cómo me uno al Premium?<span class="sign">+</span></button><div class="ans"><p>Escribinos por WhatsApp al +54 11 3617-2201 o hacé clic en "Consultá por WhatsApp". Te indicamos el método de pago y el acceso a los 7 grupos es inmediato.</p></div></div>
+      <div class="qa"><button>¿Los rendimientos pasados garantizan algo?<span class="sign">+</span></button><div class="ans"><p>No. Todas las recomendaciones son de carácter informativo. Los mercados tienen riesgo inherente y los resultados pasados no garantizan rendimientos futuros. Invertí siempre dentro de tu tolerancia al riesgo.</p></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="wrap reveal">
+    <h2>Empezá a invertir con criterio.</h2>
+    <p>Canal gratuito disponible hoy. Premium cuando estés listo.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="https://chat.whatsapp.com/CnJx8Fy85TGLORUjCreKtE" target="_blank" rel="noopener" class="btn btn-wa">Unirse al Canal Free</a>
+      <a href="https://wa.me/5491136172201?text=Hola%20EstrategiasLB%2C%20quiero%20info%20del%20Premium" target="_blank" rel="noopener" class="btn btn-primary">Ver el Premium →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-in">
+    <div class="logo" style="font-size:17px">
+      <span class="logo-mark" style="width:28px;height:28px">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+          <rect x="3" y="8" width="3" height="8" rx="1" fill="#D4AF37"/>
+          <rect x="10.5" y="4" width="3" height="12" rx="1" fill="#D4AF37" opacity=".85"/>
+          <rect x="18" y="10" width="3" height="6" rx="1" fill="#D4AF37" opacity=".7"/>
+        </svg>
+      </span>
+      <span class="logo-name">EstrategiasLB</span>
+    </div>
+    <div class="foot-links">
+      <a href="#diferencial">Quiénes somos</a>
+      <a href="#features">Qué hacemos</a>
+      <a href="#precio">Planes</a>
+      <a href="#cnv">CNV</a>
+      <a href="./app.html">App de cartera</a>
+      <a href="mailto:estrategiaslb@gmail.com">estrategiaslb@gmail.com</a>
+    </div>
+    <div class="foot-social">
+      <a href="https://instagram.com/estrategiaslb" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://youtube.com/@EstrategiasLB" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.27-1.9-1.1-2.74c-1.05-1.1-2.23-1.1-2.77-1.17C16.34 3 12 3 12 3s-4.34 0-7.13.09c-.54.07-1.72.07-2.77 1.17C1.27 5.1 1 7 1 7S.73 9.1.73 11.2v1.96C.73 15.25 1 17.35 1 17.35s.27 1.9 1.1 2.74c1.05 1.1 2.43 1.06 3.04 1.18C7.27 21.4 12 21.45 12 21.45s4.34 0 7.13-.19c.54-.07 1.72-.07 2.77-1.17.83-.84 1.1-2.74 1.1-2.74S23.27 15.25 23.27 13.15V11.2C23.27 9.1 23 7 23 7zM9.75 15.02V8.98l6.49 3.04-6.49 3z"/></svg>
+      </a>
+      <a href="https://wa.me/5491136172201" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.12 1.528 5.843L.055 23.78l6.016-1.576A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.374l-.36-.213-3.726.977.995-3.638-.234-.374A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="foot-disclaimer">El contenido publicado por EstrategiasLB tiene carácter informativo y educativo. No constituye asesoramiento financiero personalizado salvo en el marco de un contrato formal. Invertir en mercados financieros implica riesgo de pérdida de capital. Rendimientos pasados no garantizan resultados futuros. Asesor Idóneo CNV M.N. 2220 · CUIT 30-71888651-8 · Rivadavia 1578, Corrientes.</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10));
+
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Animar donut cuando entra en viewport
+  const ioViz = new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) { document.querySelector('.viz-grid')?.classList.add('in'); ioViz.disconnect(); }
+  }, { threshold: .15 });
+  if (document.querySelector('.viz-grid')) ioViz.observe(document.querySelector('.viz-grid'));
+
+  // Animar mock
+  const ioMock = new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) { es[0].target.classList.add('in'); ioMock.disconnect(); }
+  }, { threshold: .2 });
+  if (document.querySelector('.mock')) ioMock.observe(document.querySelector('.mock'));
+
+  // Count-up hero
+  (function(){
+    const el = document.getElementById('heroTotal');
+    if (!el || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    const target = 6240000, dur = 1600, t0 = performance.now();
+    (function tick(now){ const p = Math.min(1,((now||t0)-t0)/dur); el.textContent='$'+Math.round(target*(1-Math.pow(1-p,3))).toLocaleString('es-AR'); if(p<1) requestAnimationFrame(tick); })(t0);
+  })();
+
+  // FAQ
+  document.querySelectorAll('.qa button').forEach(b => {
+    b.addEventListener('click', () => {
+      const qa = b.parentElement, ans = qa.querySelector('.ans'), open = qa.classList.contains('open');
+      document.querySelectorAll('.qa').forEach(o => { o.classList.remove('open'); o.querySelector('.ans').style.maxHeight = null; });
+      if (!open) { qa.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+    });
+  });
+</script>
+</body>
+</html>

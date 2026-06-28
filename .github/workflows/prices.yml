@@ -1,1 +1,67 @@
+name: Actualizar precios de mercado
 
+on:
+  schedule:
+    - cron: '0,15,30,45 14-20 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Crear carpeta data
+        run: mkdir -p data
+
+      - name: Fetch acciones MERVAL
+        run: |
+          if curl -sf --max-time 15 --retry 2 "https://data912.com/live/arg" -o data/prices_arg_tmp.json; then
+            COUNT=$(python3 -c "import json; d=json.load(open('data/prices_arg_tmp.json')); print(len(d) if isinstance(d,list) else 0)" 2>/dev/null || echo 0)
+            if [ "$COUNT" -gt "0" ]; then
+              mv data/prices_arg_tmp.json data/prices_arg.json
+              echo "Acciones: $COUNT tickers"
+            else
+              rm -f data/prices_arg_tmp.json
+            fi
+          else
+            echo "Error conectando a data912"
+          fi
+
+      - name: Fetch CEDEARs
+        run: |
+          if curl -sf --max-time 15 --retry 2 "https://data912.com/live/cedears" -o data/prices_ced_tmp.json; then
+            COUNT=$(python3 -c "import json; d=json.load(open('data/prices_ced_tmp.json')); print(len(d) if isinstance(d,list) else 0)" 2>/dev/null || echo 0)
+            if [ "$COUNT" -gt "0" ]; then
+              mv data/prices_ced_tmp.json data/prices_ced.json
+              echo "CEDEARs: $COUNT tickers"
+            else
+              rm -f data/prices_ced_tmp.json
+            fi
+          else
+            echo "Error conectando a data912"
+          fi
+
+      - name: Escribir timestamp
+        run: |
+          echo "{\"updated\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"source\":\"data912\"}" > data/meta.json
+
+      - name: Commit y push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "Sin cambios"
+          else
+            git commit -m "precios $(date -u +'%H:%M')"
+            git push
+          fi

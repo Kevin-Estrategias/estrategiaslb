@@ -31,9 +31,10 @@ jobs:
               echo "Acciones: $COUNT tickers"
             else
               rm -f data/prices_arg_tmp.json
+              echo "JSON vacio - manteniendo datos anteriores"
             fi
           else
-            echo "Error conectando a data912"
+            echo "Error conectando a data912 (acciones)"
           fi
 
       - name: Fetch CEDEARs
@@ -45,9 +46,10 @@ jobs:
               echo "CEDEARs: $COUNT tickers"
             else
               rm -f data/prices_ced_tmp.json
+              echo "JSON vacio - manteniendo datos anteriores"
             fi
           else
-            echo "Error conectando a data912"
+            echo "Error conectando a data912 (CEDEARs)"
           fi
 
       - name: Escribir timestamp
@@ -62,6 +64,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "Sin cambios"
           else
-            git commit -m "precios $(date -u +'%H:%M')"
+            git pull --rebase origin main
             git push
           fi

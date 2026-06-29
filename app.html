@@ -21,6 +21,10 @@
 .tp{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:600}.pa{background:rgba(74,222,128,.1);color:var(--green)}.pc{background:rgba(125,207,255,.1);color:var(--usd)}.pb{background:rgba(212,175,55,.1);color:var(--gold)}.pf{background:rgba(247,168,62,.1);color:#f7a83e}.pl{background:rgba(212,175,55,.08);color:var(--gold)}.pk{background:rgba(247,168,62,.1);color:#f7a83e}
 .bkdots{display:flex;gap:4px;align-items:center}.bkdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
+.px-cell{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.px-main{color:var(--usd)}.px-main.px-stale{color:var(--muted)}
+.px-ch{font-size:10.5px;font-family:"JetBrains Mono",monospace;font-weight:600}
+.px-pdf{font-size:9px;color:var(--muted2);background:rgba(125,146,166,.12);padding:1px 5px;border-radius:4px;letter-spacing:.03em}
 .ppc-cell{cursor:pointer;min-width:100px}.ppc-set{color:var(--txt)}.ppc-set:hover{color:var(--gold)}.ppc-add{color:var(--muted2);font-size:12px;border:1px dashed var(--line2);padding:3px 9px;border-radius:6px;cursor:pointer;transition:.15s}.ppc-add:hover{border-color:var(--gold);color:var(--gold)}
 .rec{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;white-space:nowrap}.rec-buy-a{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}.rec-buy-b{background:rgba(125,207,255,.1);color:var(--usd);border:1px solid rgba(125,207,255,.2)}.rec-sell-hi{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.3)}.rec-sell-md{background:rgba(212,175,55,.1);color:var(--gold2);border:1px solid rgba(212,175,55,.2)}.rec-hold{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--line)}.rec-review{background:rgba(241,102,90,.1);color:var(--red);border:1px solid rgba(241,102,90,.2)}
 .er td{text-align:center;padding:48px 20px;color:var(--muted2)}.be-icon{font-size:40px;margin-bottom:14px}.be-txt{font-size:16px;font-weight:600;margin-bottom:8px}.be-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
@@ -372,6 +376,7 @@ async function fetchPx(){
 }
 async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");renderIndices();renderSignals();}
 function pxOf(tk){return S.px[tk]?.p||null;}
+function chOf(tk){const c=S.px[tk]?.ch;return(c===0||c)?c:null;}
 function fa(n,d=0){if(n==null)return"—";return"$"+Number(n.toFixed(d)).toLocaleString("es-AR");}
 function fu(n){if(n==null)return"—";return"U$S "+Number(n.toFixed(0)).toLocaleString("es-AR");}
 function fk(n){if(n==null)return"—";if(Math.abs(n)>=1e6)return"$"+(n/1e6).toFixed(2)+"M";return fa(n);}
@@ -393,28 +398,33 @@ function getRec(ganPct,ticker){
 function getConsolidated(){
   const map={};
   const add=(ticker,tipo,cant,broker,pdfPx,pdfVal)=>{
-    if(!map[ticker])map[ticker]={ticker,tipo:tipo||(DB[ticker]?.t||"accion"),cant:0,pdfVal:0,brokers:[]};
+    if(!map[ticker])map[ticker]={ticker,tipo:tipo||(DB[ticker]?.t||"accion"),cant:0,pdfVal:0,pdfPx:0,brokers:[]};
     map[ticker].cant+=cant;map[ticker].pdfVal+=(pdfVal||0);
+    if(pdfPx>0)map[ticker].pdfPx=pdfPx; // precio unitario del PDF (último que aparezca)
     if(!map[ticker].brokers.includes(broker))map[ticker].brokers.push(broker);
   };
   for(const pf of S.portfolios)for(const it of pf.items)add(it.ticker,it.tipo,it.cant,pf.broker,it.precio,it.valorARS);
   for(const m of S.manual)add(m.ticker,m.tipo,m.cant,m.broker,m.precio,m.cant*(m.precio||0));
   return Object.values(map).filter(h=>h.cant>0).map(h=>{
-    const lp=pxOf(h.ticker);const val=lp?h.cant*lp:h.pdfVal;
+    const lp=pxOf(h.ticker);
+    const precio=lp||h.pdfPx||null;        // FALLBACK al precio del PDF (igual que getBrokerH)
+    const val=precio?h.cant*precio:h.pdfVal;
     const ppc=S.ppc[h.ticker]||null;
-    const ganARS=(lp&&ppc)?((lp-ppc)*h.cant):null;
-    const ganPct=(lp&&ppc)?((lp-ppc)/ppc*100):null;
-    return{...h,precio:lp||null,valorARS:val,ppc,ganARS,ganPct,rec:getRec(ganPct,h.ticker)};
+    const ganARS=(precio&&ppc)?((precio-ppc)*h.cant):null;
+    const ganPct=(precio&&ppc)?((precio-ppc)/ppc*100):null;
+    return{...h,precio,valorARS:val,ppc,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getBrokerH(broker){
   const src=broker==="manual"?S.manual:(S.portfolios.find(p=>p.broker===broker)?.items||[]);
   return src.map(it=>{
-    const lp=pxOf(it.ticker);const val=lp?it.cant*lp:(it.valorARS||(it.cant*(it.precio||0)));
+    const lp=pxOf(it.ticker);
+    const precio=lp||it.precio||null;
+    const val=precio?it.cant*precio:(it.valorARS||0);
     const ppc=S.ppc[it.ticker]||null;
-    const ganARS=(lp&&ppc)?((lp-ppc)*it.cant):null;
-    const ganPct=(lp&&ppc)?((lp-ppc)/ppc*100):null;
-    return{...it,precio:lp||it.precio||null,valorARS:val,ppc,ganARS,ganPct,rec:getRec(ganPct,it.ticker)};
+    const ganARS=(precio&&ppc)?((precio-ppc)*it.cant):null;
+    const ganPct=(precio&&ppc)?((precio-ppc)/ppc*100):null;
+    return{...it,precio,valorARS:val,ppc,ganARS,ganPct,ch:chOf(it.ticker),live:!!lp,rec:getRec(ganPct,it.ticker)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
@@ -481,7 +491,10 @@ function renderTable(hs){
   body.innerHTML=hs.map(h=>{
     const tCls=TPC[h.tipo||"accion"]||"pa";
     const bkDots=(h.brokers||[h.broker||"manual"]).map(b=>`<span class="bkdot" style="background:${BC[b]||"#D4AF37"}" title="${cap(b)}"></span>`).join("");
-    const prEl=h.precio?`<span class="mono" style="color:var(--usd)">${fa(h.precio)}</span>`:`<span style="color:var(--muted2)">—</span>`;
+    const chTxt=(h.ch!=null&&h.live)?`<span class="px-ch ${h.ch>=0?"up":"dn"}">${h.ch>=0?"▲":"▼"} ${Math.abs(h.ch).toFixed(2)}%</span>`:"";
+    const prEl=h.precio
+      ? `<div class="px-cell"><span class="mono px-main${h.live?"":" px-stale"}">${fa(h.precio)}</span>${chTxt}${h.live?"":'<span class="px-pdf" title="Precio del último resumen. Actualizá para traer el precio en vivo.">s/PDF</span>'}</div>`
+      : `<span style="color:var(--muted2)">—</span>`;
     const ppcEl=h.ppc?`<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`:`<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
     const ganCls=h.ganARS!=null?(h.ganARS>=0?"up":"dn"):"";
     const ganEl=h.ganARS!=null?`<span class="${ganCls}">${sgn(h.ganARS)}${fv(h.ganARS)}</span>`:`<span style="color:var(--muted2)">—</span>`;

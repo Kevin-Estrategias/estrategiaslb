@@ -247,7 +247,41 @@ function savePx(){localStorage.setItem(CFG.PST,JSON.stringify(S.px));}
 function savePPC(){localStorage.setItem(CFG.PPT,JSON.stringify(S.ppc));}
 function saveFund(){localStorage.setItem(CFG.FT,JSON.stringify(S.fund));}
 async function fetchDolar(){try{const r=await fetch(CFG.DOLAR),d=await r.json();S.dolar.mep=d.find(x=>x.casa==="bolsa")?.venta||null;S.dolar.ccl=d.find(x=>x.casa==="contadoconliqui")?.venta||null;return true;}catch{return false;}}
-async function fetchPx(){try{const[rA,rC,rM]=await Promise.all([fetch(CFG.ARG+"?v="+Date.now()),fetch(CFG.CED+"?v="+Date.now()),fetch(CFG.META+"?v="+Date.now())]);const[dA,dC,meta]=await Promise.all([rA.json(),rC.json(),rM.json()]);const all=[...(Array.isArray(dA)?dA:[]),...(Array.isArray(dC)?dC:[])];if(!all.length)throw new Error("empty");for(const it of all){const tk=(it.s||it.ticker||it.symbol||"").toUpperCase();if(!tk)continue;S.px[tk]={p:it.c||it.close||it.price||it.ultimo||it.px||it.precio||0,ch:it.pct||it.changePct||it.variacion||it.cambio||0,ts:Date.now()};}if(meta?.updated)S.lu=meta.updated;savePx();return true;}catch{return false;}}
+async function fetchPx(){
+  // Intento 1: data912 directo desde el browser (no bloqueado como GitHub Actions)
+  try{
+    const TO=8000;
+    const sig=()=>AbortSignal.timeout?AbortSignal.timeout(TO):undefined;
+    const[rC,rA]=await Promise.all([
+      fetch("https://data912.com/live/cedears",{signal:sig()}),
+      fetch("https://data912.com/live/arg_stocks",{signal:sig()})
+    ]);
+    let loaded=0;
+    const parse=(d)=>{
+      if(!Array.isArray(d)||!d.length)return;
+      for(const it of d){
+        const tk=(it.symbol||it.ticker||it.s||it.especie||"").toUpperCase().replace(/\s.*/,"");
+        if(!tk||tk.length>8)continue;
+        const p=it.last||it.close||it.c||it.price||it.ultimo||it.px||0;
+        const ch=it.pct_change||it.changePct||it.variacion||it.pct||0;
+        if(p>0){S.px[tk]={p,ch,ts:Date.now()};loaded++;}
+      }
+    };
+    if(rC.ok)parse(await rC.json());
+    if(rA.ok)parse(await rA.json());
+    if(loaded>0){S.lu=new Date().toISOString();savePx();return true;}
+  }catch{}
+  // Intento 2: JSON estáticos del repo (actualizados por GitHub Actions)
+  try{
+    const[rA,rC,rM]=await Promise.all([fetch(CFG.ARG+"?v="+Date.now()),fetch(CFG.CED+"?v="+Date.now()),fetch(CFG.META+"?v="+Date.now())]);
+    const[dA,dC,meta]=await Promise.all([rA.json(),rC.json(),rM.json()]);
+    const all=[...(Array.isArray(dA)?dA:[]),...(Array.isArray(dC)?dC:[])];
+    if(!all.length)throw new Error("empty");
+    for(const it of all){const tk=(it.s||it.ticker||it.symbol||"").toUpperCase();if(!tk)continue;S.px[tk]={p:it.c||it.close||it.price||it.ultimo||it.px||it.precio||0,ch:it.pct||it.changePct||it.variacion||0,ts:Date.now()};}
+    if(meta?.updated)S.lu=meta.updated;
+    savePx();return true;
+  }catch{return false;}
+}
 async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");}
 function pxOf(tk){return S.px[tk]?.p||null;}
 function fa(n,d=0){if(n==null)return"—";return"$"+Number(n.toFixed(d)).toLocaleString("es-AR");}

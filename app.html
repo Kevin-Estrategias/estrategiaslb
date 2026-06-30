@@ -647,15 +647,19 @@ const IDX_DEF=[
 async function fetchYahoo(symbol){
   // Proxies CORS para Yahoo Finance (el endpoint directo bloquea CORS desde browser)
   const url="https://query1.finance.yahoo.com/v8/finance/chart/"+encodeURIComponent(symbol)+"?interval=1d&range=1d";
+  const eu=encodeURIComponent(url);
   const proxies=[
-    "https://corsproxy.io/?url="+encodeURIComponent(url),
-    "https://api.allorigins.win/raw?url="+encodeURIComponent(url)
+    {u:"https://corsproxy.io/?url="+eu,wrap:false},
+    {u:"https://api.codetabs.com/v1/proxy/?quest="+eu,wrap:false},
+    {u:"https://api.allorigins.win/raw?url="+eu,wrap:false},
+    {u:"https://api.allorigins.win/get?url="+eu,wrap:true}
   ];
-  for(const pu of proxies){
+  for(const px of proxies){
     try{
-      const r=await fetch(pu,{signal:AbortSignal.timeout?AbortSignal.timeout(7000):undefined});
+      const r=await fetch(px.u,{signal:AbortSignal.timeout?AbortSignal.timeout(7000):undefined});
       if(!r.ok)continue;
-      const j=await r.json();
+      let j=await r.json();
+      if(px.wrap&&j&&j.contents){try{j=JSON.parse(j.contents);}catch{continue;}}
       const res=j?.chart?.result?.[0];
       if(!res)continue;
       const meta=res.meta;
@@ -671,23 +675,8 @@ async function fetchYahoo(symbol){
 async function renderIndices(){
   const el=document.getElementById("idx-list");
   if(!el)return;
-  // MERVAL: intentar data912 primero (confiable desde browser), resto Yahoo
-  const results=await Promise.all(IDX_DEF.map(async i=>{
-    if(i.name==="MERVAL"){
-      const candidates=["https://data912.com/live/arg_indices","https://data912.com/live/arg_index","https://data912.com/live/indices"];
-      for(const url of candidates){
-        try{
-          const r=await fetch(url,{signal:AbortSignal.timeout?AbortSignal.timeout(7000):undefined});
-          if(r.ok){
-            const j=await r.json();
-            const m=Array.isArray(j)?j.find(x=>(x.symbol||x.ticker||"").toUpperCase().includes("MERV")):null;
-            if(m){const price=m.c||m.last||m.close||0,ch=m.pct_change||m.pct||0;if(price>0)return{def:i,data:{price,ch}};}
-          }
-        }catch{}
-      }
-    }
-    return{def:i,data:await fetchYahoo(i.sym)};
-  }));
+  // Todos los índices desde Yahoo Finance (data912 no tiene endpoint de índices)
+  const results=await Promise.all(IDX_DEF.map(async i=>({def:i,data:await fetchYahoo(i.sym)})));
   const rows=results.map(({def,data})=>{
     if(!data)return `<div class="idx-row"><span class="idx-name">${def.name}</span><span class="idx-val"><span class="idx-price" style="color:var(--muted2)">—</span></span></div>`;
     const up=data.ch>=0;

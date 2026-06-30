@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>:root{--bg:#06101a;--bg2:#040c13;--panel:#0d1b2c;--line:#1c3047;--line2:#263f59;--txt:#e6edf5;--muted:#7d92a6;--muted2:#536475;--gold:#D4AF37;--gold2:#e4c455;--gd:rgba(212,175,55,.12);--green:#4ade80;--red:#f1665a;--usd:#7dcfff;--bz:#3b82f6;--iol:#f97316;--cos:#a855f7;--bul:#22c55e;--man:#D4AF37;--r:12px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{height:100%}body{background:var(--bg);color:var(--txt);font-family:"Montserrat",sans-serif;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}a{color:inherit;text-decoration:none}button{font-family:"Montserrat",sans-serif;cursor:pointer;border:none;background:none;color:inherit}input,select{font-family:"Montserrat",sans-serif;font-size:14px;color:var(--txt)}.mono{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums}
 .topnav{display:flex;align-items:center;gap:8px;height:60px;padding:0 24px;background:rgba(6,16,26,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}.logo{display:flex;align-items:center;gap:9px;font-family:"Montserrat",sans-serif;font-weight:600;font-size:18px;white-space:nowrap;margin-right:8px}.logo-m{width:30px;height:30px;border-radius:8px;background:var(--gd);border:1px solid rgba(212,175,55,.35);display:grid;place-items:center}.logo-n{background:linear-gradient(90deg,#D4AF37,#e8d080 60%,#D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.beta{background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.4);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 8px;border-radius:20px;text-transform:uppercase}
 .ntabs{display:flex;gap:2px;margin-right:auto}.ntab{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);transition:.15s;white-space:nowrap}.ntab:hover{color:var(--txt);background:rgba(255,255,255,.04)}.ntab.on{color:var(--txt);background:rgba(255,255,255,.07)}.ccyg{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:3px}.ccy{padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;color:var(--muted);transition:.15s}.ccy.on{background:var(--gold);color:#0a0700}.bref{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--line2);color:var(--muted);font-size:13px;transition:.15s}.bref:hover{color:var(--gold);border-color:var(--gold)}.bgear{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;border:1px solid var(--line2);color:var(--muted);font-size:16px;transition:.15s}.bgear:hover{color:var(--gold);border-color:var(--gold)}@keyframes spin{to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}
@@ -18,7 +19,7 @@
 .bb{display:flex;flex-direction:column;gap:9px}.bbr{display:flex;align-items:center;gap:10px;font-size:13px}.bbl{width:70px;flex-shrink:0;font-weight:500}.bbt{flex:1;height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}.bbf{height:100%;border-radius:3px;transition:width .5s ease}.bbv{font-size:12px;color:var(--muted);min-width:75px;text-align:right}
 .btabs-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}.btabs{display:flex;gap:4px;flex-wrap:wrap}.btab{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line2);color:var(--muted);transition:.2s;display:flex;align-items:center;gap:6px}.btab:hover{color:var(--txt)}.btab.on{color:var(--txt);background:rgba(255,255,255,.07);border-color:var(--line2)}.btab-dot{width:7px;height:7px;border-radius:50%}
 .tw{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.ht{width:100%;border-collapse:collapse;font-size:13.5px}.ht th{padding:8px 12px;text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);background:var(--bg2);white-space:nowrap}.ht td{padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}.ht tr:last-child td{border-bottom:none}.ht tr:hover td{background:rgba(255,255,255,.02)}.ht .nr{text-align:right}
-.tp{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:600}.pa{background:rgba(74,222,128,.1);color:var(--green)}.pc{background:rgba(125,207,255,.1);color:var(--usd)}.pb{background:rgba(212,175,55,.1);color:var(--gold)}.pf{background:rgba(247,168,62,.1);color:#f7a83e}.pl{background:rgba(212,175,55,.08);color:var(--gold)}.pk{background:rgba(247,168,62,.1);color:#f7a83e}
+.tp{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:600}.pa{background:rgba(74,222,128,.1);color:var(--green)}.pc{background:rgba(125,207,255,.1);color:var(--usd)}.pb{background:rgba(212,175,55,.1);color:var(--gold)}.pf{background:rgba(247,168,62,.1);color:#f7a83e}.pl{background:rgba(212,175,55,.08);color:var(--gold)}.pk{background:rgba(247,168,62,.1);color:#f7a83e}.pon{background:rgba(168,85,247,.12);color:#c98bff}
 .bkdots{display:flex;gap:4px;align-items:center}.bkdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
 .px-cell{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
@@ -48,7 +49,25 @@
 /* Layout con sidebars */
 .dash-grid{display:grid;grid-template-columns:1fr;gap:14px}
 .side-col{display:flex;flex-direction:column;gap:16px}
-@media(min-width:1280px){.dash-grid.with-sides{grid-template-columns:215px 1fr 225px}}
+.imp-btns{display:flex;gap:8px;align-items:center}
+.imp-tabs{display:flex;gap:6px;margin:4px 0 16px;border-bottom:1px solid var(--line)}
+.imp-tab{padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:7px;margin-bottom:-1px}
+.imp-tab:hover{color:var(--txt)}
+.imp-tab.on{color:var(--gold2);border-bottom-color:var(--gold)}
+.imp-tab-badge{font-size:9px;font-weight:600;background:rgba(74,222,128,.14);color:var(--green);padding:2px 6px;border-radius:10px;letter-spacing:.02em}
+.xls-opt{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.xls-opt-n{font-size:13.5px;font-weight:600;color:var(--gold2);margin-bottom:5px}
+.xls-opt-d{font-size:12.5px;color:var(--muted);line-height:1.5}
+.btmpl{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:13px;font-weight:600;color:var(--navy);background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:8px;padding:9px 15px;cursor:pointer;transition:.15s}
+.btmpl:hover{opacity:.9;transform:translateY(-1px)}
+.clr-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 16px;margin-bottom:9px;border:1px solid var(--line2);border-radius:9px;color:var(--txt);font-size:14px;cursor:pointer;transition:.15s;background:var(--bg2)}
+.clr-btn:hover{border-color:rgba(241,102,90,.4);background:rgba(241,102,90,.07)}
+.clr-x{opacity:.6}
+.clr-all{border-color:rgba(241,102,90,.35);color:#ff8b7d}
+.clr-all:hover{background:rgba(241,102,90,.14)}
+.bdel{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid rgba(241,102,90,.3);color:var(--red);transition:.2s;flex-shrink:0}
+.bdel:hover{background:rgba(241,102,90,.12);border-color:var(--red)}
+@media(min-width:1280px){.dash-grid.with-sides{grid-template-columns:250px 1fr}}
 .side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
 .side-title{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:6px}
 .idx-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
@@ -115,7 +134,7 @@
   <div class="sg">
     <div class="sc hi"><div class="sc-l">Valor total</div><div class="sc-v mono" id="t-tot">$0</div><div class="sc-s" id="t-sub">Importá un PDF para empezar</div></div>
     <div class="sc"><div class="sc-l">En MEP</div><div class="sc-v mono" id="t-mep" style="font-size:22px;color:var(--usd)">—</div><div class="sc-s" id="t-mep-r"></div></div>
-    <div class="sc" id="sc-gan"><div class="sc-l">Ganancia / Pérdida</div><div class="sc-v mono" id="t-gan" style="font-size:22px">—</div><div class="sc-s" id="t-gan-pct">Ingresá tu PPC en la tabla</div></div>
+    <div class="sc" id="sc-gan"><div class="sc-l">Variación de hoy</div><div class="sc-v mono" id="t-gan" style="font-size:22px">—</div><div class="sc-s" id="t-gan-pct">Movimiento del día</div></div>
     <div class="sc"><div class="sc-l">Posiciones</div><div class="sc-v" id="t-cnt" style="font-size:34px">0</div><div class="sc-s" id="t-brk">—</div></div>
   </div>
   <div class="cr">
@@ -129,27 +148,27 @@
   </div>
   <div class="btabs-row">
     <div class="btabs" id="broker-tabs"></div>
-    <button class="bimp" onclick="openImp()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Importar PDF</button>
+    <div class="imp-btns">
+      <button class="bimp" onclick="openImp()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Importar PDF / Excel</button>
+      <button class="bdel" onclick="openClear()" title="Borrar cartera"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10"/></svg></button>
+    </div>
   </div>
   <div class="dash-grid with-sides">
-    <!-- IZQUIERDA: índices globales -->
+    <!-- IZQUIERDA: índices + señales apilados -->
     <div class="side-col">
       <div class="side-card">
         <div class="side-title">🌎 Índices & Mercados</div>
         <div id="idx-list"><div class="sig-load">Cargando…</div></div>
       </div>
-    </div>
-    <!-- CENTRO: tabla -->
-    <div>
-      <div class="tw"><table class="ht" id="main-t"><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
-    </div>
-    <!-- DERECHA: señales técnicas -->
-    <div class="side-col">
       <div class="side-card">
         <div class="side-title">📡 Señales técnicas <span style="margin-left:auto;font-size:9px;color:var(--muted2)">QQcross</span></div>
         <div id="sig-list"><div class="sig-load">Calculando señales…</div></div>
         <div class="sig-disc">Señal basada en el cruce de medias QQcross (sistema de Luis E. Barberán). Cruce de EMA corta sobre WMA de 21 ruedas. Información educativa, no constituye recomendación de inversión ni garantiza resultados. EstrategiasLB · CNV M.N. 2220</div>
       </div>
+    </div>
+    <!-- DERECHA: tabla -->
+    <div>
+      <div class="tw"><table class="ht" id="main-t"><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
     </div>
   </div>
   <div style="margin-top:12px;font-size:12px;color:var(--muted2)">
@@ -212,17 +231,58 @@
 <div class="mbg" id="imp-m">
   <div class="mb">
     <button class="mc" onclick="closeImp()">&times;</button>
-    <h3>Importar cartera desde PDF</h3>
+    <h3>Importar cartera</h3>
     <p class="sub">El archivo se procesa en tu navegador — nunca se sube a ningún servidor.</p>
-    <div class="ib"><strong>¿Cómo exportar?</strong><br><strong>Balanz:</strong> Mi Cuenta → Resumen de Cuenta → Descargar PDF<br><strong>IOL:</strong> Mi Cuenta → Estado de Cuenta → Descargar PDF</div>
-    <div id="is1"><div class="dz" id="dzone" onclick="document.getElementById('pfi').click()"><div class="dzi">📄</div><div class="dzt">Arrastrá el PDF acá o hacé clic para seleccionar</div><div class="dzs">Balanz · IOL</div></div><input type="file" id="pfi" accept=".pdf" style="display:none" onchange="onPDF(this.files[0])"></div>
-    <div id="is2" style="display:none">
-      <div id="i-broker" style="margin-bottom:12px"></div>
-      <div class="ib"><strong>ℹ️ Sobre el PPC:</strong> El PDF no incluye tu precio de compra original. Una vez importado, hacé clic en "<strong>+ Ingresar costo</strong>" en cada fila de la tabla para ver tu ganancia real.</div>
-      <div id="i-prev"></div>
-      <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmImp()">Importar posiciones</button><button onclick="resetImp()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
+    <div class="imp-tabs">
+      <button class="imp-tab on" id="it-pdf" onclick="impTab('pdf')">📄 Rápido (PDF)</button>
+      <button class="imp-tab" id="it-xls" onclick="impTab('xls')">📊 Preciso (Excel) <span class="imp-tab-badge">con tu ganancia real</span></button>
     </div>
+
+    <!-- TAB PDF -->
+    <div id="tab-pdf">
+      <div class="ib"><strong>¿Cómo exportar?</strong><br><strong>Balanz:</strong> Mi Cuenta → Resumen de Cuenta → Descargar PDF<br><strong>IOL:</strong> Mi Cuenta → Estado de Cuenta → Descargar PDF</div>
+      <div id="is1"><div class="dz" id="dzone" onclick="document.getElementById('pfi').click()"><div class="dzi">📄</div><div class="dzt">Arrastrá el PDF acá o hacé clic para seleccionar</div><div class="dzs">Balanz · IOL</div></div><input type="file" id="pfi" accept=".pdf" style="display:none" onchange="onPDF(this.files[0])"></div>
+      <div id="is2" style="display:none">
+        <div id="i-broker" style="margin-bottom:12px"></div>
+        <div class="ib"><strong>ℹ️ Sobre el PPC:</strong> El PDF no incluye tu precio de compra original. Para ver tu ganancia real, usá la pestaña <strong>"Preciso (Excel)"</strong> o ingresá el costo manualmente en cada fila.</div>
+        <div id="i-prev"></div>
+        <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmImp()">Importar posiciones</button><button onclick="resetImp()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
+      </div>
+    </div>
+
+    <!-- TAB EXCEL -->
+    <div id="tab-xls" style="display:none">
+      <div class="ib"><strong>📊 Para tener tu ganancia 100% exacta</strong><br>Necesitamos tu <strong>precio de compra</strong> (PPC), que el PDF no trae. Tenés dos formas:</div>
+      <div class="xls-opt">
+        <div class="xls-opt-n">Opción 1 · Balanz lo exporta directo</div>
+        <div class="xls-opt-d">En Balanz: <strong>Cartera → Mis Instrumentos → Exportar a Excel</strong>. Ese archivo ya trae el "Precio promedio de compra". Importalo tal cual.</div>
+      </div>
+      <div class="xls-opt">
+        <div class="xls-opt-n">Opción 2 · Usá nuestra plantilla</div>
+        <div class="xls-opt-d">Para IOL u otros brokers: descargá la plantilla, completá Ticker, Cantidad y Precio de compra de cada papel, y subila.</div>
+        <button class="btmpl" onclick="downloadTemplate()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Descargar plantilla Excel</button>
+      </div>
+      <div style="margin:14px 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Subí tu archivo</div>
+      <div id="xs1"><div class="dz" id="dzonex" onclick="document.getElementById('xfi').click()"><div class="dzi">📊</div><div class="dzt">Arrastrá el Excel/CSV acá o hacé clic</div><div class="dzs">.xlsx · .csv — Balanz o plantilla EstrategiasLB</div></div><input type="file" id="xfi" accept=".xlsx,.xls,.csv" style="display:none" onchange="onXLS(this.files[0])"></div>
+      <div id="xs2" style="display:none">
+        <div id="x-broker" style="margin-bottom:12px"></div>
+        <div id="x-prev"></div>
+        <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmXLS()">Importar con PPC</button><button onclick="resetXLS()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
+      </div>
+    </div>
+
     <div id="i-err" style="display:none;background:rgba(241,102,90,.1);border:1px solid rgba(241,102,90,.2);border-radius:9px;padding:14px;color:var(--red);font-size:14px;margin-top:14px"></div>
+  </div>
+</div>
+
+<!-- BORRAR CARTERA MODAL -->
+<div class="mbg" id="clear-m">
+  <div class="mb">
+    <button class="mc" onclick="closeClear()">&times;</button>
+    <h3>🗑️ Borrar cartera</h3>
+    <p class="sub">Elegí qué querés borrar. Esta acción no se puede deshacer.</p>
+    <div id="clear-opts"></div>
+    <div style="margin-top:16px"><button onclick="closeClear()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
   </div>
 </div>
 
@@ -275,7 +335,7 @@
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -329,11 +389,11 @@ const DIVS=[
   {s:"KO",n:"Coca-Cola",y:3.1,d:0.485},{s:"XOM",n:"ExxonMobil",y:3.3,d:0.99},{s:"MCD",n:"McDonald's",y:2.4,d:1.77},
   {s:"MSFT",n:"Microsoft",y:0.8,d:0.83},{s:"AAPL",n:"Apple",y:0.5,d:0.25},{s:"V",n:"Visa",y:0.8,d:0.59},{s:"HPQ",n:"HP",y:1.7,d:0.18},
 ];
-const TC={accion:"#4ade80",cedear:"#7dcfff",bono:"#D4AF37",fci:"#f7a83e",cripto:"#f7a83e",letra:"#D4AF37"};
+const TC={accion:"#4ade80",cedear:"#7dcfff",bono:"#D4AF37",fci:"#f7a83e",cripto:"#f7a83e",letra:"#D4AF37",on:"#a855f7"};
 const BC={balanz:"#3b82f6",iol:"#f97316",cocos:"#a855f7",bull:"#22c55e",manual:"#D4AF37"};
-const TPC={accion:"pa",cedear:"pc",bono:"pb",fci:"pf",letra:"pl",cripto:"pk"};
-let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{}};
-function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}}
+const TPC={accion:"pa",cedear:"pc",bono:"pb",fci:"pf",letra:"pl",cripto:"pk",on:"pon"};
+let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{}};
+function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}}
 function save(){localStorage.setItem(CFG.ST,JSON.stringify({portfolios:S.portfolios,manual:S.manual}));}
 function savePx(){localStorage.setItem(CFG.PST,JSON.stringify(S.px));}
 function savePPC(){localStorage.setItem(CFG.PPT,JSON.stringify(S.ppc));}
@@ -387,6 +447,20 @@ async function fetchPx(){
 async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");renderIndices();renderSignals();}
 function pxOf(tk){return S.px[tk]?.p||null;}
 function chOf(tk){const c=S.px[tk]?.ch;return(c===0||c)?c:null;}
+function nameOf(tk){return DB[tk]?.n||S.learned[tk]?.n||"";}
+function typeOf(tk){return DB[tk]?.t||S.learned[tk]?.t||"accion";}
+// Bonos, ON y letras cotizan "por cada 100 nominales": el valor es cant × precio / 100
+function priceFactor(tipo){return(tipo==="bono"||tipo==="on"||tipo==="letra")?0.01:1;}
+function saveLearned(){localStorage.setItem(CFG.LRN,JSON.stringify(S.learned));}
+function learnHoldings(holdings){
+  for(const h of holdings){
+    if(!h.ticker)continue;
+    if(!DB[h.ticker]){ // solo aprender lo que no está en la base oficial
+      S.learned[h.ticker]={n:h.nombre||S.learned[h.ticker]?.n||"",t:h.tipo||S.learned[h.ticker]?.t||"accion"};
+    }
+  }
+  saveLearned();
+}
 function fa(n,d=0){if(n==null)return"—";return"$"+Number(n.toFixed(d)).toLocaleString("es-AR");}
 function fu(n){if(n==null)return"—";return"U$S "+Number(n.toFixed(0)).toLocaleString("es-AR");}
 function fk(n){if(n==null)return"—";if(Math.abs(n)>=1e6)return"$"+(n/1e6).toFixed(2)+"M";return fa(n);}
@@ -395,17 +469,15 @@ function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):"";}
 function sgn(n){if(n==null)return"";return n>=0?"+":"";}
 function getFund(ticker){return S.fund[ticker]||FUND_DB[ticker]||null;}
 function getRec(ganPct,ticker,source){
-  if(ganPct==null)return null;
-  // Con ganancia estimada desde el resumen (PDF), no damos señal de toma de ganancia fuerte
-  if(source==="pdf"){
-    if(ganPct<0){
-      const f0=getFund(ticker);
-      if(f0&&f0.r==="A")return{cls:"rec-buy-a",txt:"Sumar posición",icon:"📈"};
-      if(f0&&f0.r==="B")return{cls:"rec-buy-b",txt:"Sumar con cautela",icon:"⚖️"};
-      if(f0&&f0.r==="C")return{cls:"rec-review",txt:"Revisar tesis",icon:"⚠️"};
-    }
-    return{cls:"rec-hold",txt:"Cargá tu PPC",icon:"✎"};
+  // Sin PPC real: recomendación orientativa según fundamental del papel
+  if(source!=="ppc"||ganPct==null){
+    const f0=getFund(ticker);
+    if(!f0)return null;
+    if(f0.r==="A")return{cls:"rec-buy-a",txt:"Fundamental sólido",icon:"📈"};
+    if(f0.r==="B")return{cls:"rec-buy-b",txt:"Fundamental bueno",icon:"⚖️"};
+    return{cls:"rec-review",txt:"Especulativo",icon:"⚠️"};
   }
+  // Con PPC real: recomendación según ganancia real
   if(ganPct>=30)return{cls:"rec-sell-hi",txt:"Tomá ganancia",icon:"🎯"};
   if(ganPct>=20)return{cls:"rec-sell-md",txt:"Reducir parcialmente",icon:"📉"};
   if(ganPct>=0)return{cls:"rec-hold",txt:"Mantener",icon:"↔"};
@@ -418,7 +490,7 @@ function getRec(ganPct,ticker,source){
 function getConsolidated(){
   const map={};
   const add=(ticker,tipo,cant,broker,pdfPx,pdfVal)=>{
-    if(!map[ticker])map[ticker]={ticker,tipo:tipo||(DB[ticker]?.t||"accion"),cant:0,pdfVal:0,pdfPx:0,brokers:[]};
+    if(!map[ticker])map[ticker]={ticker,tipo:tipo||typeOf(ticker),cant:0,pdfVal:0,pdfPx:0,brokers:[]};
     map[ticker].cant+=cant;map[ticker].pdfVal+=(pdfVal||0);
     if(pdfPx>0)map[ticker].pdfPx=pdfPx; // precio unitario del PDF (último que aparezca)
     if(!map[ticker].brokers.includes(broker))map[ticker].brokers.push(broker);
@@ -428,12 +500,13 @@ function getConsolidated(){
   return Object.values(map).filter(h=>h.cant>0).map(h=>{
     const lp=pxOf(h.ticker);
     const precio=lp||h.pdfPx||null;        // FALLBACK al precio del PDF (igual que getBrokerH)
-    const val=precio?h.cant*precio:h.pdfVal;
+    const ff=priceFactor(h.tipo);
+    const val=precio?h.cant*precio*ff:h.pdfVal;
     const ppcReal=S.ppc[h.ticker]||null;
     // base de costo: PPC real si existe, sino precio del PDF (costo base automático)
     const base=ppcReal||h.pdfPx||null;
     const ganSource=ppcReal?"ppc":(h.pdfPx?"pdf":null);
-    const ganARS=(precio&&base)?((precio-base)*h.cant):null;
+    const ganARS=(precio&&base)?((precio-base)*h.cant*ff):null;
     const ganPct=(precio&&base)?((precio-base)/base*100):null;
     return{...h,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker,ganSource)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
@@ -443,11 +516,12 @@ function getBrokerH(broker){
   return src.map(it=>{
     const lp=pxOf(it.ticker);
     const precio=lp||it.precio||null;
-    const val=precio?it.cant*precio:(it.valorARS||0);
+    const ff=priceFactor(it.tipo);
+    const val=precio?it.cant*precio*ff:(it.valorARS||0);
     const ppcReal=S.ppc[it.ticker]||null;
     const base=ppcReal||it.precio||null;
     const ganSource=ppcReal?"ppc":(it.precio?"pdf":null);
-    const ganARS=(precio&&base)?((precio-base)*it.cant):null;
+    const ganARS=(precio&&base)?((precio-base)*it.cant*ff):null;
     const ganPct=(precio&&base)?((precio-base)/base*100):null;
     return{...it,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(it.ticker),live:!!lp,rec:getRec(ganPct,it.ticker,ganSource)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
@@ -459,12 +533,17 @@ function renderD(){
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
   hs.forEach(h=>{h.peso=tot>0?(h.valorARS/tot*100):0;});
   const bks=getActiveBrokers();
-  const withGan=hs.filter(h=>h.ganARS!=null);
-  const totGan=withGan.reduce((s,h)=>s+(h.ganARS||0),0);
-  const totCosto=withGan.reduce((s,h)=>s+((h.base||0)*h.cant),0);
-  const ganPct=totCosto>0?(totGan/totCosto)*100:null;
-  const hasReal=hs.some(h=>h.ganSource==="ppc");
-  const allPdf=withGan.length>0&&!hasReal;
+  // Variación del día del patrimonio: suma de (valor × variación%) ponderada
+  let varARS=0,baseAyer=0,conCh=0;
+  for(const h of hs){
+    if(h.ch!=null&&h.live&&h.valorARS){
+      const valAyer=h.valorARS/(1+h.ch/100);
+      varARS+=(h.valorARS-valAyer);
+      baseAyer+=valAyer;
+      conCh++;
+    }
+  }
+  const varPct=baseAyer>0?(varARS/baseAyer*100):null;
   document.getElementById("t-tot").textContent=fv(tot)||"$0";
   document.getElementById("t-mep").textContent=S.dolar.mep?fu(tot/S.dolar.mep):"—";
   document.getElementById("t-mep-r").textContent=S.dolar.mep?"MEP $"+S.dolar.mep.toLocaleString("es-AR",{maximumFractionDigits:2}):"";
@@ -472,14 +551,13 @@ function renderD(){
   document.getElementById("t-brk").textContent=bks.length?bks.join(", "):"Sin posiciones";
   document.getElementById("t-sub").textContent=hs.length?hs.length+" posiciones · "+bks.length+" broker"+(bks.length!==1?"s":""):"Importá un PDF para empezar";
   const ganEl=document.getElementById("t-gan"),ganPctEl=document.getElementById("t-gan-pct"),scGan=document.getElementById("sc-gan");
-  if(withGan.length>0){
-    const cls=totGan>=0?"up":"dn";
+  if(conCh>0&&varPct!=null){
+    const cls=varARS>=0?"up":"dn";
     ganEl.className="sc-v mono "+cls;ganEl.style.fontSize="22px";
-    ganEl.textContent=(totGan>=0?"+":"")+fv(totGan);
-    const lbl=allPdf?"desde el último resumen":"sobre tu costo de compra";
-    ganPctEl.innerHTML='<span class="'+cls+'">'+(ganPct>=0?"+":"")+(ganPct==null?"0":ganPct.toFixed(2))+'%</span> '+lbl;
-    scGan.className="sc "+(totGan>=0?"gn":"rd");
-  }else{ganEl.className="sc-v mono";ganEl.style.fontSize="22px";ganEl.textContent="—";ganPctEl.textContent="Ingresá tu PPC en la tabla";scGan.className="sc";}
+    ganEl.textContent=(varARS>=0?"+":"")+fv(varARS);
+    ganPctEl.innerHTML='<span class="'+cls+'">'+(varPct>=0?"▲ ":"▼ ")+Math.abs(varPct).toFixed(2)+'%</span> en el día';
+    scGan.className="sc "+(varARS>=0?"gn":"rd");
+  }else{ganEl.className="sc-v mono";ganEl.style.fontSize="22px";ganEl.textContent="—";ganPctEl.textContent="Actualizá para ver el movimiento";scGan.className="sc";}
   renderBrokerTabs(bks);
   try{renderDonut(hs);}catch(e){console.warn("donut",e);}
   try{renderBars(hs);}catch(e){console.warn("bars",e);}
@@ -514,7 +592,7 @@ function renderTable(hs){
   const head=document.getElementById("t-head"),body=document.getElementById("t-body");
   const isTodos=S.bTab==="todos";
   const bkColH=isTodos?"<th>Brokers</th>":"";
-  head.innerHTML=`<tr><th>Ticker</th><th>Nombre</th><th>Tipo</th>${bkColH}<th class="nr">Cantidad</th><th class="nr">Peso</th><th>PPC ✎</th><th class="nr">Precio actual</th><th class="nr">Valor</th><th class="nr">Gan./Pérd.</th><th class="nr">%</th><th>Recomendación</th></tr>`;
+  head.innerHTML=`<tr><th>Ticker</th><th>Nombre</th><th>Tipo</th>${bkColH}<th class="nr">Cantidad</th><th class="nr">Peso</th><th>PPC ✎</th><th class="nr">Precio actual</th><th class="nr">Valor</th><th class="nr">Resultado</th><th class="nr">%</th><th>Recomendación</th></tr>`;
   if(!hs.length){body.innerHTML=`<tr class="er"><td colspan="${isTodos?12:11}"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste ningún PDF":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el resumen de cuenta de tu broker</div><button class="bimp-lg" onclick="openImp()">📄 Importar PDF</button></td></tr>`;return;}
   body.innerHTML=hs.map(h=>{
     const tCls=TPC[h.tipo||"accion"]||"pa";
@@ -526,14 +604,26 @@ function renderTable(hs){
     const ppcEl=h.ppc
       ? `<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`
       : `<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
-    const ganCls=h.ganARS!=null?(h.ganARS>=0?"up":"dn"):"";
-    const ganTag=h.ganSource==="pdf"?'<span class="gan-tag" title="Ganancia estimada desde el precio del último resumen. Ingresá tu PPC real para la ganancia desde tu compra.">desde resumen</span>':"";
-    const ganEl=h.ganARS!=null?`<div class="gan-cell"><span class="${ganCls}">${sgn(h.ganARS)}${fv(h.ganARS)}</span>${ganTag}</div>`:`<span style="color:var(--muted2)">—</span>`;
-    const pctEl=h.ganPct!=null?`<span class="${ganCls}">${sgn(h.ganPct)}${h.ganPct.toFixed(2)}%</span>`:`<span style="color:var(--muted2)">—</span>`;
-    const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">Sin PPC</span>`;
+    // Resultado: si hay PPC real → ganancia real; sino → variación del día en pesos
+    let resEl,pctEl;
+    if(h.ganSource==="ppc"&&h.ganARS!=null){
+      const gc=h.ganARS>=0?"up":"dn";
+      resEl=`<div class="gan-cell"><span class="${gc}">${sgn(h.ganARS)}${fv(h.ganARS)}</span><span class="gan-tag">tu ganancia</span></div>`;
+      pctEl=`<span class="${gc}">${sgn(h.ganPct)}${h.ganPct.toFixed(2)}%</span>`;
+    }else if(h.ch!=null&&h.live&&h.valorARS){
+      const valAyer=h.valorARS/(1+h.ch/100);
+      const diaARS=h.valorARS-valAyer;
+      const dc=diaARS>=0?"up":"dn";
+      resEl=`<div class="gan-cell"><span class="${dc}">${sgn(diaARS)}${fv(diaARS)}</span><span class="gan-tag">hoy</span></div>`;
+      pctEl=`<span class="${dc}">${h.ch>=0?"▲":"▼"} ${Math.abs(h.ch).toFixed(2)}%</span>`;
+    }else{
+      resEl=`<span style="color:var(--muted2)">—</span>`;
+      pctEl=`<span style="color:var(--muted2)">—</span>`;
+    }
+    const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">—</span>`;
     const bkCell=isTodos?`<td><div class="bkdots">${bkDots}</div></td>`:"";
     const pesoEl=`<div class="peso-wrap"><span class="peso-n mono">${h.peso.toFixed(1)}%</span><span class="peso-bar"><span class="peso-fill" style="width:${Math.min(h.peso,100).toFixed(1)}%"></span></span></div>`;
-    return`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${DB[h.ticker]?.n||""}</td><td><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell">${ppcEl}</td><td class="nr">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${ganEl}</td><td class="nr">${pctEl}</td><td>${recEl}</td></tr>`;
+    return`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell">${ppcEl}</td><td class="nr">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr">${pctEl}</td><td>${recEl}</td></tr>`;
   }).join("");
 }
 function editPPC(ticker){
@@ -595,21 +685,228 @@ function hideSug(){setTimeout(()=>{document.getElementById("sg-l").style.display
 function saveMan(){const tk=document.getElementById("f-t").value.trim().toUpperCase(),cant=parseFloat(document.getElementById("f-q").value),pr=parseFloat(document.getElementById("f-p").value)||0,broker=document.getElementById("f-b").value||"manual";const tipo=document.getElementById("f-t").dataset.tipo||DB[tk]?.t||"accion";if(!tk){snk("⚠ Ticker requerido");return;}if(!cant||cant<=0){snk("⚠ Cantidad inválida");return;}S.manual=S.manual.filter(m=>!(m.ticker===tk&&m.broker===broker));S.manual.push({ticker:tk,tipo,cant,precio:pr,broker});save();["f-t","f-q","f-p"].forEach(id=>document.getElementById(id).value="");renderMan();renderD();snk("✓ "+tk+" agregado");}
 function renderMan(){const tb=document.getElementById("man-body");if(!S.manual.length){tb.innerHTML="<tr><td colspan='5' style='text-align:center;padding:24px;color:var(--muted2)'>Sin posiciones manuales.</td></tr>";return;}tb.innerHTML=S.manual.map(m=>`<tr><td><strong>${m.ticker}</strong></td><td style="color:var(--muted)">${m.tipo}</td><td class="mono">${m.cant.toLocaleString("es-AR")}</td><td style="color:${BC[m.broker]||"var(--gold)"}">${cap(m.broker)}</td><td><button class="db" onclick="delMan('${m.ticker}','${m.broker}')">×</button></td></tr>`).join("");}
 function delMan(tk,broker){S.manual=S.manual.filter(m=>!(m.ticker===tk&&m.broker===broker));save();renderMan();renderD();snk(tk+" eliminado");}
-function openImp(){document.getElementById("imp-m").classList.add("show");}
-function closeImp(){document.getElementById("imp-m").classList.remove("show");resetImp();}
+function openImp(){document.getElementById("imp-m").classList.add("show");impTab("pdf");resetImp();resetXLS();}
+function closeImp(){document.getElementById("imp-m").classList.remove("show");resetImp();resetXLS();}
 const dz=document.getElementById("dzone");
 dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("do");});
 dz.addEventListener("dragleave",()=>dz.classList.remove("do"));
 dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("do");const f=e.dataTransfer.files[0];if(f)onPDF(f);});
+const dzx=document.getElementById("dzonex");
+if(dzx){
+  dzx.addEventListener("dragover",e=>{e.preventDefault();dzx.classList.add("do");});
+  dzx.addEventListener("dragleave",()=>dzx.classList.remove("do"));
+  dzx.addEventListener("drop",e=>{e.preventDefault();dzx.classList.remove("do");const f=e.dataTransfer.files[0];if(f)onXLS(f);});
+}
 async function onPDF(file){if(!file||file.type!=="application/pdf"){showErr("Debe ser un PDF.");return;}try{setStatus("Procesando PDF...","info");const txt=await readPDF(file);const res=detectBroker(txt);if(!res||res.err){showErr(res?.err||"Broker no reconocido.");setStatus("","");return;}if(!res.holdings?.length){showErr("No se encontraron posiciones.");setStatus("","");return;}S.prev={...res,fecha:new Date().toISOString().slice(0,10)};showPrev(res);setStatus("","");}catch(e){showErr("Error: "+e.message);setStatus("","");}}
 async function readPDF(file){const ab=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:ab}).promise;let lines=[];for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const tc=await pg.getTextContent();const g={};for(const it of tc.items){if(!it.str.trim())continue;const y=Math.round(it.transform[5]/2)*2;if(!g[y])g[y]=[];g[y].push({x:it.transform[4],s:it.str});}const ys=Object.keys(g).map(Number).sort((a,b)=>b-a);for(const y of ys)lines.push(g[y].sort((a,b)=>a.x-b.x).map(x=>x.s).join(" "));}return lines.join("\n");}
 function pn(s){if(!s)return 0;const c=s.replace(/[$\s]/g,"").trim();if(c.includes(","))return parseFloat(c.replace(/\./g,"").replace(",","."))||0;return parseFloat(c.replace(/\./g,""))||0;}
 function detectBroker(txt){const up=txt.toUpperCase();if(up.includes("BALANZ"))return{broker:"balanz",...parseBal(txt)};if(up.includes("INVERTIRONLINE")||up.includes("IOL (465)")||txt.includes("BCBA"))return{broker:"iol",...parseIOL(txt)};return{err:"Broker no reconocido. Soportamos Balanz e IOL."};}
-function parseBal(txt){const hs=[];const lines=txt.split("\n");let tipo="accion";const SK=new Set(["ESPECIE","DESCRIPCION","DESCRIPCIÓN","CANTIDAD","GARANTIA","PRECIO","VALOR"]);for(const line of lines){const l=line.trim();if(/^Acciones\s*$/i.test(l)){tipo="accion";continue;}if(/^Cedears?\s*$/i.test(l)){tipo="cedear";continue;}if(/^Letras?/i.test(l)){tipo="letra";continue;}if(/^Bonos?\s*$/i.test(l)){tipo="bono";continue;}const m=l.match(/^([A-Z][A-Z0-9]{1,7}(?:\s[A-Z0-9]+)?)\s+.+?\s+([\d.]+,[\d]+)\s+[\d.,]+\s+\$?\s*([\d.,]+)\s+\$?\s*([\d.,]+)/);if(m){const ticker=m[1].trim().split(/\s/)[0];if(ticker.length<2||ticker.length>7||SK.has(ticker))continue;const cant=pn(m[2]),precio=pn(m[3]),valor=pn(m[4]);if(cant>0&&precio>0)hs.push({ticker,tipo,cant,precio,valorARS:valor});}}return{holdings:hs};}
-function parseIOL(txt){const hs=[];const lines=txt.split("\n");const SK=new Set(["TITULO","SIMBOLO","MERCADO"]);for(const line of lines){const m=line.match(/([A-Z][A-Z0-9]{1,7})\s+BCBA\s+([\d,]+)\s+AR\$\s+([\d.,]+)\s+([\d.,]+)/);if(m){const ticker=m[1].trim();if(SK.has(ticker))continue;const cant=pn(m[2]),precio=pn(m[3]),valor=pn(m[4]);const l=line.toLowerCase();let tipo="accion";if(l.includes("cedear")||l.includes("adr"))tipo="cedear";else if(l.includes("letra")||l.includes("bono"))tipo="bono";if(cant>0&&precio>0)hs.push({ticker,tipo,cant,precio,valorARS:valor});}}return{holdings:hs};}
+function parseBal(txt){
+  const hs=[];const lines=txt.split("\n");let tipo="accion";
+  const SK=new Set(["ESPECIE","DESCRIPCION","DESCRIPCIÓN","CANTIDAD","GARANTIA","GARANTÍA","PRECIO","VALOR","ACTUAL"]);
+  for(const line of lines){
+    const l=line.trim();
+    // Detectar sección
+    if(/^Acciones\s*$/i.test(l)){tipo="accion";continue;}
+    if(/^Cedears?\s*$/i.test(l)){tipo="cedear";continue;}
+    if(/^Letras?/i.test(l)){tipo="letra";continue;}
+    if(/^Bonos?\s*$/i.test(l)){tipo="bono";continue;}
+    if(/^Corporativos?\s*$/i.test(l)){tipo="on";continue;}
+    if(/^Fondos?\s*$/i.test(l)){tipo="fci";continue;}
+    // Formato: TICKER Descripción cantidad 0.00 $ precio $ valor
+    const m=l.match(/^([A-Z][A-Z0-9.]{1,7})\s+(.+?)\s+([\d.]+,\d+)\s+[\d.,]+\s+\$?\s*([\d.,]+)\s+\$?\s*([\d.,]+)\s*$/);
+    if(m){
+      const ticker=m[1].trim();
+      if(ticker.length<2||ticker.length>8||SK.has(ticker))continue;
+      let nombre=m[2].trim();
+      const cant=pn(m[3]),precio=pn(m[4]),valor=pn(m[5]);
+      if(cant<=0||precio<=0)continue;
+      // Limpiar nombre (sacar prefijo CEDEAR/ON, sufijos ESCRIT, etc.)
+      nombre=nombre.replace(/^(cedear|on)\s+/i,"").replace(/\s+(escrit|escr|ords?|esc)\b.*$/i,"").trim();
+      if(nombre.length>40)nombre=nombre.slice(0,40);
+      hs.push({ticker,tipo,cant,precio,valorARS:valor,nombre});
+    }
+  }
+  return{holdings:hs};
+}
+function parseIOL(txt){
+  const hs=[];const lines=txt.split("\n");
+  const SK=new Set(["TITULO","SIMBOLO","MERCADO","TÍTULO","SÍMBOLO"]);
+  for(const line of lines){
+    // Formato: [Descripción larga] SÍMBOLO BCBA cantidad AR$ cotización importe
+    const m=line.match(/^(.*?)\s+([A-Z][A-Z0-9.]{0,7})\s+BCBA\s+([\d.,]+)\s+(?:AR\$|US\$)\s+([\d.,]+)\s+([\d.,]+)/);
+    if(m){
+      const desc=m[1].trim();
+      const ticker=m[2].trim();
+      if(SK.has(ticker))continue;
+      const cant=pn(m[3]),precio=pn(m[4]),valor=pn(m[5]);
+      if(cant<=0||precio<=0)continue;
+      // Detectar tipo desde el prefijo de la descripción
+      const dl=desc.toLowerCase();
+      let tipo="accion";
+      if(dl.startsWith("cedear"))tipo="cedear";
+      else if(dl.startsWith("bono")||dl.startsWith("bonos"))tipo="bono";
+      else if(dl.startsWith("on ")||dl.includes("obligaci"))tipo="on";
+      else if(dl.includes("letra")||dl.includes("lecap"))tipo="letra";
+      else if(dl.includes("fci")||dl.includes("fondo"))tipo="fci";
+      // Nombre limpio (sacar el prefijo "Cedear"/"Bono")
+      let nombre=desc.replace(/^(cedear|bono|bonos|on)\s+/i,"").trim();
+      if(nombre.length>40)nombre=nombre.slice(0,40);
+      hs.push({ticker,tipo,cant,precio,valorARS:valor,nombre});
+    }
+  }
+  return{holdings:hs};
+}
 function showPrev(res){const bc=BC[res.broker]||"#D4AF37";document.getElementById("i-broker").innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700;color:${bc};background:${bc}20;border:1px solid ${bc}40">${cap(res.broker)}</span><span style="font-size:14px;color:var(--muted)">${res.holdings.length} posiciones encontradas</span></div>`;const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono">${fa(h.precio)}</td><td class="mono">${fa(h.valorARS)}</td></tr>`).join("");const more=res.holdings.length>8?`<tr><td colspan="5" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";document.getElementById("i-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>Precio PDF</th><th>Valor</th></tr></thead><tbody>${rows}${more}</tbody></table>`;document.getElementById("is1").style.display="none";document.getElementById("is2").style.display="block";document.getElementById("i-err").style.display="none";}
-function confirmImp(){if(!S.prev)return;S.portfolios=S.portfolios.filter(p=>p.broker!==S.prev.broker);S.portfolios.push({id:Date.now().toString(36),broker:S.prev.broker,fecha:S.prev.fecha,items:S.prev.holdings});save();closeImp();S.bTab=S.prev.broker;renderD();snk("✓ "+S.prev.holdings.length+" posiciones de "+cap(S.prev.broker)+" importadas");}
+function confirmImp(){if(!S.prev)return;learnHoldings(S.prev.holdings);S.portfolios=S.portfolios.filter(p=>p.broker!==S.prev.broker);S.portfolios.push({id:Date.now().toString(36),broker:S.prev.broker,fecha:S.prev.fecha,items:S.prev.holdings});save();closeImp();S.bTab=S.prev.broker;renderD();snk("✓ "+S.prev.holdings.length+" posiciones de "+cap(S.prev.broker)+" importadas");}
 function resetImp(){S.prev=null;document.getElementById("is1").style.display="block";document.getElementById("is2").style.display="none";document.getElementById("i-err").style.display="none";document.getElementById("pfi").value="";}
+
+// ── IMPORTAR EXCEL/CSV (con PPC real) ──
+function impTab(t){
+  document.getElementById("it-pdf").classList.toggle("on",t==="pdf");
+  document.getElementById("it-xls").classList.toggle("on",t==="xls");
+  document.getElementById("tab-pdf").style.display=t==="pdf"?"block":"none";
+  document.getElementById("tab-xls").style.display=t==="xls"?"block":"none";
+  document.getElementById("i-err").style.display="none";
+}
+function downloadTemplate(){
+  // Plantilla con hojas separadas por broker
+  const wb=XLSX.utils.book_new();
+  const cols=[["Ticker","Cantidad","Precio de compra (PPC)","Tipo (accion/cedear/bono/on/letra/fci)"]];
+  const ej=[["GGAL",1000,3500,"accion"],["MELI",200,18000,"cedear"],["AL30",5000,950,"bono"]];
+  for(const bk of ["Balanz","IOL","Otro"]){
+    const rows=bk==="Balanz"?[...cols,...ej]:[...cols];
+    const ws=XLSX.utils.aoa_to_sheet(rows);
+    ws["!cols"]=[{wch:12},{wch:12},{wch:22},{wch:38}];
+    XLSX.utils.book_append_sheet(wb,ws,bk);
+  }
+  XLSX.writeFile(wb,"plantilla_cartera_EstrategiasLB.xlsx");
+  snk("✓ Plantilla descargada — completala y subila");
+}
+function onXLS(file){
+  if(!file)return;
+  document.getElementById("i-err").style.display="none";
+  const rd=new FileReader();
+  rd.onload=(e)=>{
+    try{
+      const data=new Uint8Array(e.target.result);
+      const wb=XLSX.read(data,{type:"array"});
+      const res=parseXLSWorkbook(wb);
+      if(!res.holdings.length){showErr("No se encontraron posiciones válidas. Revisá que el archivo tenga Ticker, Cantidad y Precio de compra.");return;}
+      showPrevXLS(res);
+    }catch(err){showErr("No pude leer el archivo: "+err.message);}
+  };
+  rd.readAsArrayBuffer(file);
+}
+function parseXLSWorkbook(wb){
+  const holdings=[];let broker="manual";
+  for(const sheetName of wb.SheetNames){
+    const ws=wb.Sheets[sheetName];
+    const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:""});
+    if(!rows.length)continue;
+    // Detectar formato: Balanz nativo (tiene "Precio promedio de compra") o plantilla
+    const headerRow=rows.find(r=>r.some(c=>String(c).toLowerCase().includes("ticker")||String(c).toLowerCase().includes("precio promedio")))||rows[0];
+    const hdr=headerRow.map(c=>String(c).toLowerCase().trim());
+    const idxTicker=hdr.findIndex(h=>h==="ticker"||h==="símbolo"||h==="simbolo");
+    const idxPPC=hdr.findIndex(h=>h.includes("precio promedio")||h.includes("precio de compra")||h.includes("ppc")||h.includes("valor inicial")||h.includes("v. inicial"));
+    const idxCant=hdr.findIndex(h=>h.includes("nominales")||h.includes("cantidad")||h.includes("nominal"));
+    const idxTipo=hdr.findIndex(h=>h.includes("tipo"));
+    const idxDesc=hdr.findIndex(h=>h.includes("descrip"));
+    if(idxTicker<0||idxPPC<0)continue; // esta hoja no tiene datos válidos
+    const startIdx=rows.indexOf(headerRow)+1;
+    // nombre del broker desde la hoja de la plantilla, o detectar Balanz por su formato nativo
+    const sn=sheetName.toLowerCase();
+    if(sn.includes("balanz"))broker="balanz";
+    else if(sn.includes("iol"))broker="iol";
+    else if(hdr.some(h=>h.includes("precio promedio de compra"))&&hdr.some(h=>h.includes("tipo de instrumento")))broker="balanz";
+    else if(sn.includes("mis instrumentos"))broker="balanz";
+    for(let i=startIdx;i<rows.length;i++){
+      const r=rows[i];if(!r||!r.length)continue;
+      const ticker=String(r[idxTicker]||"").toUpperCase().trim().split(/\s/)[0];
+      if(!ticker||ticker.length<2||ticker.length>8)continue;
+      const ppc=parseNum(r[idxPPC]);
+      const cant=idxCant>=0?parseNum(r[idxCant]):0;
+      if(cant<=0||ppc<=0)continue;
+      let tipo=idxTipo>=0?String(r[idxTipo]||"").toLowerCase().trim():"";
+      if(!["accion","cedear","bono","on","letra","fci"].includes(tipo)){
+        // inferir tipo desde descripción o desde la hoja Balanz
+        const desc=idxDesc>=0?String(r[idxDesc]||"").toLowerCase():"";
+        if(desc.includes("cedear"))tipo="cedear";
+        else if(desc.includes("letra")||desc.includes("lecap"))tipo="letra";
+        else if(desc.includes("bono"))tipo="bono";
+        else if(desc.includes("on ")||desc.includes("oblig"))tipo="on";
+        else tipo=typeOf(ticker);
+      }
+      let nombre=idxDesc>=0?String(r[idxDesc]||"").replace(/^(cedear|on)\s+/i,"").trim():nameOf(ticker);
+      if(nombre.length>40)nombre=nombre.slice(0,40);
+      // Si la columna PPC era "Valor inicial" (total), dividir por cantidad
+      let ppcUnit=ppc;
+      if(hdr[idxPPC].includes("valor inicial")||hdr[idxPPC].includes("v. inicial"))ppcUnit=ppc/cant;
+      holdings.push({ticker,tipo,cant,ppc:ppcUnit,nombre});
+    }
+  }
+  return{holdings,broker};
+}
+function parseNum(v){
+  if(typeof v==="number")return v;
+  if(!v)return 0;
+  let s=String(v).replace(/[$\s]/g,"").trim();
+  // formato es-AR: 1.234,56 → 1234.56
+  if(s.includes(",")&&s.includes("."))s=s.replace(/\./g,"").replace(",",".");
+  else if(s.includes(","))s=s.replace(",",".");
+  return parseFloat(s)||0;
+}
+function showPrevXLS(res){
+  S.prevXLS=res;
+  const bc=BC[res.broker]||"#D4AF37";
+  document.getElementById("x-broker").innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700;color:${bc};background:${bc}20;border:1px solid ${bc}40">${cap(res.broker)}</span><span style="font-size:14px;color:var(--green)">✓ ${res.holdings.length} posiciones con PPC real</span></div>`;
+  const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono" style="color:var(--gold2)">${fa(h.ppc)}</td></tr>`).join("");
+  const more=res.holdings.length>8?`<tr><td colspan="4" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";
+  document.getElementById("x-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>PPC (tu compra)</th></tr></thead><tbody>${rows}${more}</tbody></table>`;
+  document.getElementById("xs1").style.display="none";
+  document.getElementById("xs2").style.display="block";
+  document.getElementById("i-err").style.display="none";
+}
+function confirmXLS(){
+  if(!S.prevXLS)return;
+  const res=S.prevXLS;
+  // Guardar PPC de cada ticker + crear/actualizar las posiciones
+  const items=res.holdings.map(h=>{S.ppc[h.ticker]=h.ppc;return{ticker:h.ticker,tipo:h.tipo,cant:h.cant,precio:h.ppc,valorARS:h.cant*h.ppc,nombre:h.nombre};});
+  learnHoldings(res.holdings);
+  savePPC();
+  S.portfolios=S.portfolios.filter(p=>p.broker!==res.broker);
+  S.portfolios.push({id:Date.now().toString(36),broker:res.broker,fecha:new Date().toISOString().slice(0,10),items});
+  save();closeImp();S.bTab=res.broker;renderD();
+  snk("✓ "+res.holdings.length+" posiciones importadas con tu PPC real");
+}
+function resetXLS(){S.prevXLS=null;document.getElementById("xs1").style.display="block";document.getElementById("xs2").style.display="none";document.getElementById("xfi").value="";document.getElementById("i-err").style.display="none";}
+
+// ── BORRAR CARTERA ──
+function openClear(){
+  const brokers=[...new Set(S.portfolios.map(p=>p.broker))];
+  let html="";
+  if(brokers.length===0&&!S.manual.length){html=`<div style="color:var(--muted2);font-size:14px;padding:8px 0">No tenés ninguna cartera cargada todavía.</div>`;}
+  else{
+    html=brokers.map(b=>`<button class="clr-btn" onclick="clearBroker('${b}')"><span>Borrar cartera de <strong>${cap(b)}</strong></span><span class="clr-x">🗑️</span></button>`).join("");
+    if(S.manual.length)html+=`<button class="clr-btn" onclick="clearBroker('manual')"><span>Borrar posiciones <strong>manuales</strong></span><span class="clr-x">🗑️</span></button>`;
+    html+=`<button class="clr-btn clr-all" onclick="clearAll()"><span><strong>Borrar TODO</strong> y empezar de cero</span><span class="clr-x">🗑️</span></button>`;
+  }
+  document.getElementById("clear-opts").innerHTML=html;
+  document.getElementById("clear-m").classList.add("show");
+}
+function closeClear(){document.getElementById("clear-m").classList.remove("show");}
+function clearBroker(b){
+  if(b==="manual")S.manual=[];
+  else S.portfolios=S.portfolios.filter(p=>p.broker!==b);
+  save();closeClear();
+  if(S.bTab===b)S.bTab="todos";
+  renderD();snk("✓ Cartera de "+cap(b)+" borrada");
+}
+function clearAll(){
+  S.portfolios=[];S.manual=[];S.ppc={};
+  save();savePPC();closeClear();S.bTab="todos";renderD();
+  snk("✓ Todo borrado — podés cargar de cero");
+}
 function showErr(msg){const el=document.getElementById("i-err");el.textContent=msg;el.style.display="block";}
 function renderCC(){const sel=document.getElementById("cc-s");if(sel.options.length>1)return;Object.entries(DB).filter(([,v])=>v.t==="cedear").sort(([a],[b])=>a.localeCompare(b)).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=k+" — "+v.n;sel.appendChild(o);});}
 function onCS(){const t=document.getElementById("cc-s").value;if(t&&DB[t]?.r)document.getElementById("cc-r").value=DB[t].r;if(t&&S.px[t])document.getElementById("cc-a").value=S.px[t].p;calcCCL();}

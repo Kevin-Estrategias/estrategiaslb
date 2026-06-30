@@ -25,6 +25,8 @@
 .px-main{color:var(--usd)}.px-main.px-stale{color:var(--muted)}
 .px-ch{font-size:10.5px;font-family:"JetBrains Mono",monospace;font-weight:600}
 .px-pdf{font-size:9px;color:var(--muted2);background:rgba(125,146,166,.12);padding:1px 5px;border-radius:4px;letter-spacing:.03em}
+.gan-cell{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.gan-tag{font-size:9px;color:var(--muted2);font-style:italic}
 .ppc-cell{cursor:pointer;min-width:100px}.ppc-set{color:var(--txt)}.ppc-set:hover{color:var(--gold)}.ppc-add{color:var(--muted2);font-size:12px;border:1px dashed var(--line2);padding:3px 9px;border-radius:6px;cursor:pointer;transition:.15s}.ppc-add:hover{border-color:var(--gold);color:var(--gold)}
 .rec{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;white-space:nowrap}.rec-buy-a{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}.rec-buy-b{background:rgba(125,207,255,.1);color:var(--usd);border:1px solid rgba(125,207,255,.2)}.rec-sell-hi{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.3)}.rec-sell-md{background:rgba(212,175,55,.1);color:var(--gold2);border:1px solid rgba(212,175,55,.2)}.rec-hold{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--line)}.rec-review{background:rgba(241,102,90,.1);color:var(--red);border:1px solid rgba(241,102,90,.2)}
 .er td{text-align:center;padding:48px 20px;color:var(--muted2)}.be-icon{font-size:40px;margin-bottom:14px}.be-txt{font-size:16px;font-weight:600;margin-bottom:8px}.be-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
@@ -346,25 +348,33 @@ async function fetchPx(){
       const tk=(it.symbol||it.ticker||it.s||it.especie||"").toUpperCase().replace(/\s.*/,"");
       if(!tk||tk.length>8)continue;
       const p=it.c||it.last||it.close||it.price||it.ultimo||it.px||it.px_ask||0;
-      const ch=it.pct_change||it.changePct||it.variacion||it.pct||0;
+      let ch=it.pct_change;
+      if(ch==null)ch=it.changePct;if(ch==null)ch=it.variacion;if(ch==null)ch=it.pct;if(ch==null)ch=0;
       if(p>0){S.px[tk]={p,ch,ts:Date.now()};n++;}
     }
     return n;
   };
-  // Cada endpoint por separado: si uno falla, el otro igual carga
-  let loaded=0;
-  const tryFetch=async(url)=>{
-    try{const r=await fetch(url,{signal:sig()});if(r.ok)return parse(await r.json());}catch(e){console.warn("fetch fail",url,e);}
+  // Prueba una lista de endpoints candidatos y usa el primero que devuelva datos
+  const tryEndpoints=async(urls)=>{
+    for(const url of urls){
+      try{
+        const r=await fetch(url,{signal:sig()});
+        if(r.ok){const n=parse(await r.json());if(n>0){console.log("✓ "+url+" → "+n+" tickers");return n;}}
+      }catch(e){/* probar siguiente */}
+    }
     return 0;
   };
-  const[nCed,nArg]=await Promise.all([
-    tryFetch("https://data912.com/live/cedears"),
-    tryFetch("https://data912.com/live/arg_stocks")
+  const BASE="https://data912.com/live/";
+  // Candidatos por tipo (el primero que funcione gana). arg_stocks confirmado OK.
+  const[nArg,nCed,nBond]=await Promise.all([
+    tryEndpoints([BASE+"arg_stocks"]),
+    tryEndpoints([BASE+"arg_cedears",BASE+"cedears",BASE+"arg_cedear"]),
+    tryEndpoints([BASE+"arg_bonds",BASE+"arg_notes"])
   ]);
-  loaded=nCed+nArg;
-  console.log("Precios cargados — CEDEARs:"+nCed+" Acciones:"+nArg);
+  const loaded=nArg+nCed+nBond;
+  console.log("Precios cargados — Acciones:"+nArg+" CEDEARs:"+nCed+" Bonos:"+nBond+" | TOTAL:"+loaded);
   if(loaded>0){S.lu=new Date().toISOString();savePx();return true;}
-  // Fallback: JSON estáticos del repo
+  // Fallback final: JSON estáticos del repo (por si data912 está caído del todo)
   try{
     const[rA,rC,rM]=await Promise.all([fetch(CFG.ARG+"?v="+Date.now()),fetch(CFG.CED+"?v="+Date.now()),fetch(CFG.META+"?v="+Date.now())]);
     const[dA,dC,meta]=await Promise.all([rA.json(),rC.json(),rM.json()]);
@@ -384,8 +394,18 @@ function fv(ars){if(ars==null)return"—";if(S.ccy==="ars")return fa(ars);const 
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):"";}
 function sgn(n){if(n==null)return"";return n>=0?"+":"";}
 function getFund(ticker){return S.fund[ticker]||FUND_DB[ticker]||null;}
-function getRec(ganPct,ticker){
+function getRec(ganPct,ticker,source){
   if(ganPct==null)return null;
+  // Con ganancia estimada desde el resumen (PDF), no damos señal de toma de ganancia fuerte
+  if(source==="pdf"){
+    if(ganPct<0){
+      const f0=getFund(ticker);
+      if(f0&&f0.r==="A")return{cls:"rec-buy-a",txt:"Sumar posición",icon:"📈"};
+      if(f0&&f0.r==="B")return{cls:"rec-buy-b",txt:"Sumar con cautela",icon:"⚖️"};
+      if(f0&&f0.r==="C")return{cls:"rec-review",txt:"Revisar tesis",icon:"⚠️"};
+    }
+    return{cls:"rec-hold",txt:"Cargá tu PPC",icon:"✎"};
+  }
   if(ganPct>=30)return{cls:"rec-sell-hi",txt:"Tomá ganancia",icon:"🎯"};
   if(ganPct>=20)return{cls:"rec-sell-md",txt:"Reducir parcialmente",icon:"📉"};
   if(ganPct>=0)return{cls:"rec-hold",txt:"Mantener",icon:"↔"};
@@ -409,10 +429,13 @@ function getConsolidated(){
     const lp=pxOf(h.ticker);
     const precio=lp||h.pdfPx||null;        // FALLBACK al precio del PDF (igual que getBrokerH)
     const val=precio?h.cant*precio:h.pdfVal;
-    const ppc=S.ppc[h.ticker]||null;
-    const ganARS=(precio&&ppc)?((precio-ppc)*h.cant):null;
-    const ganPct=(precio&&ppc)?((precio-ppc)/ppc*100):null;
-    return{...h,precio,valorARS:val,ppc,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker)};
+    const ppcReal=S.ppc[h.ticker]||null;
+    // base de costo: PPC real si existe, sino precio del PDF (costo base automático)
+    const base=ppcReal||h.pdfPx||null;
+    const ganSource=ppcReal?"ppc":(h.pdfPx?"pdf":null);
+    const ganARS=(precio&&base)?((precio-base)*h.cant):null;
+    const ganPct=(precio&&base)?((precio-base)/base*100):null;
+    return{...h,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker,ganSource)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getBrokerH(broker){
@@ -421,10 +444,12 @@ function getBrokerH(broker){
     const lp=pxOf(it.ticker);
     const precio=lp||it.precio||null;
     const val=precio?it.cant*precio:(it.valorARS||0);
-    const ppc=S.ppc[it.ticker]||null;
-    const ganARS=(precio&&ppc)?((precio-ppc)*it.cant):null;
-    const ganPct=(precio&&ppc)?((precio-ppc)/ppc*100):null;
-    return{...it,precio,valorARS:val,ppc,ganARS,ganPct,ch:chOf(it.ticker),live:!!lp,rec:getRec(ganPct,it.ticker)};
+    const ppcReal=S.ppc[it.ticker]||null;
+    const base=ppcReal||it.precio||null;
+    const ganSource=ppcReal?"ppc":(it.precio?"pdf":null);
+    const ganARS=(precio&&base)?((precio-base)*it.cant):null;
+    const ganPct=(precio&&base)?((precio-base)/base*100):null;
+    return{...it,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(it.ticker),live:!!lp,rec:getRec(ganPct,it.ticker,ganSource)};
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
@@ -434,10 +459,12 @@ function renderD(){
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
   hs.forEach(h=>{h.peso=tot>0?(h.valorARS/tot*100):0;});
   const bks=getActiveBrokers();
-  const withPPC=hs.filter(h=>h.ganARS!=null);
-  const totGan=withPPC.reduce((s,h)=>s+(h.ganARS||0),0);
-  const totCosto=withPPC.reduce((s,h)=>s+((h.ppc||0)*h.cant),0);
+  const withGan=hs.filter(h=>h.ganARS!=null);
+  const totGan=withGan.reduce((s,h)=>s+(h.ganARS||0),0);
+  const totCosto=withGan.reduce((s,h)=>s+((h.base||0)*h.cant),0);
   const ganPct=totCosto>0?(totGan/totCosto)*100:null;
+  const hasReal=hs.some(h=>h.ganSource==="ppc");
+  const allPdf=withGan.length>0&&!hasReal;
   document.getElementById("t-tot").textContent=fv(tot)||"$0";
   document.getElementById("t-mep").textContent=S.dolar.mep?fu(tot/S.dolar.mep):"—";
   document.getElementById("t-mep-r").textContent=S.dolar.mep?"MEP $"+S.dolar.mep.toLocaleString("es-AR",{maximumFractionDigits:2}):"";
@@ -445,11 +472,12 @@ function renderD(){
   document.getElementById("t-brk").textContent=bks.length?bks.join(", "):"Sin posiciones";
   document.getElementById("t-sub").textContent=hs.length?hs.length+" posiciones · "+bks.length+" broker"+(bks.length!==1?"s":""):"Importá un PDF para empezar";
   const ganEl=document.getElementById("t-gan"),ganPctEl=document.getElementById("t-gan-pct"),scGan=document.getElementById("sc-gan");
-  if(withPPC.length>0){
+  if(withGan.length>0){
     const cls=totGan>=0?"up":"dn";
     ganEl.className="sc-v mono "+cls;ganEl.style.fontSize="22px";
     ganEl.textContent=(totGan>=0?"+":"")+fv(totGan);
-    ganPctEl.innerHTML='<span class="'+cls+'">'+(ganPct>=0?"+":"")+ganPct?.toFixed(2)+'%</span> sobre posiciones con PPC';
+    const lbl=allPdf?"desde el último resumen":"sobre tu costo de compra";
+    ganPctEl.innerHTML='<span class="'+cls+'">'+(ganPct>=0?"+":"")+(ganPct==null?"0":ganPct.toFixed(2))+'%</span> '+lbl;
     scGan.className="sc "+(totGan>=0?"gn":"rd");
   }else{ganEl.className="sc-v mono";ganEl.style.fontSize="22px";ganEl.textContent="—";ganPctEl.textContent="Ingresá tu PPC en la tabla";scGan.className="sc";}
   renderBrokerTabs(bks);
@@ -495,9 +523,12 @@ function renderTable(hs){
     const prEl=h.precio
       ? `<div class="px-cell"><span class="mono px-main${h.live?"":" px-stale"}">${fa(h.precio)}</span>${chTxt}${h.live?"":'<span class="px-pdf" title="Precio del último resumen. Actualizá para traer el precio en vivo.">s/PDF</span>'}</div>`
       : `<span style="color:var(--muted2)">—</span>`;
-    const ppcEl=h.ppc?`<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`:`<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
+    const ppcEl=h.ppc
+      ? `<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`
+      : `<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
     const ganCls=h.ganARS!=null?(h.ganARS>=0?"up":"dn"):"";
-    const ganEl=h.ganARS!=null?`<span class="${ganCls}">${sgn(h.ganARS)}${fv(h.ganARS)}</span>`:`<span style="color:var(--muted2)">—</span>`;
+    const ganTag=h.ganSource==="pdf"?'<span class="gan-tag" title="Ganancia estimada desde el precio del último resumen. Ingresá tu PPC real para la ganancia desde tu compra.">desde resumen</span>':"";
+    const ganEl=h.ganARS!=null?`<div class="gan-cell"><span class="${ganCls}">${sgn(h.ganARS)}${fv(h.ganARS)}</span>${ganTag}</div>`:`<span style="color:var(--muted2)">—</span>`;
     const pctEl=h.ganPct!=null?`<span class="${ganCls}">${sgn(h.ganPct)}${h.ganPct.toFixed(2)}%</span>`:`<span style="color:var(--muted2)">—</span>`;
     const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">Sin PPC</span>`;
     const bkCell=isTodos?`<td><div class="bkdots">${bkDots}</div></td>`:"";
@@ -643,14 +674,17 @@ async function renderIndices(){
   // MERVAL: intentar data912 primero (confiable desde browser), resto Yahoo
   const results=await Promise.all(IDX_DEF.map(async i=>{
     if(i.name==="MERVAL"){
-      try{
-        const r=await fetch("https://data912.com/live/arg_indices",{signal:AbortSignal.timeout?AbortSignal.timeout(7000):undefined});
-        if(r.ok){
-          const j=await r.json();
-          const m=Array.isArray(j)?j.find(x=>(x.symbol||x.ticker||"").toUpperCase().includes("MERV")):null;
-          if(m){const price=m.last||m.close||m.c||0,ch=m.pct_change||m.pct||0;if(price>0)return{def:i,data:{price,ch}};}
-        }
-      }catch{}
+      const candidates=["https://data912.com/live/arg_indices","https://data912.com/live/arg_index","https://data912.com/live/indices"];
+      for(const url of candidates){
+        try{
+          const r=await fetch(url,{signal:AbortSignal.timeout?AbortSignal.timeout(7000):undefined});
+          if(r.ok){
+            const j=await r.json();
+            const m=Array.isArray(j)?j.find(x=>(x.symbol||x.ticker||"").toUpperCase().includes("MERV")):null;
+            if(m){const price=m.c||m.last||m.close||0,ch=m.pct_change||m.pct||0;if(price>0)return{def:i,data:{price,ch}};}
+          }
+        }catch{}
+      }
     }
     return{def:i,data:await fetchYahoo(i.sym)};
   }));

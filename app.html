@@ -172,6 +172,75 @@
 .pt-res-b strong{color:var(--gold);font-style:normal}
 .pt-legal{background:rgba(241,102,90,.06);border:1px solid rgba(241,102,90,.25);border-radius:10px;padding:12px 14px;font-size:10.5px;color:var(--muted);line-height:1.5;margin-bottom:20px;text-align:left}
 .pt-legal strong{color:var(--red);font-weight:700}
+/* CHART HISTÓRICO */
+.hist-btn{background:transparent;border:none;color:var(--muted);font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:inherit;letter-spacing:.03em;transition:.15s}
+.hist-btn:hover{background:rgba(255,255,255,.05);color:var(--txt)}
+.hist-btn.on{background:var(--panel);color:var(--gold);box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.hist-toggle{display:inline-flex;align-items:center;gap:5px;background:var(--bg2);border:1px solid var(--line2);border-radius:6px;padding:5px 10px;font-size:11px;color:var(--muted);cursor:pointer;user-select:none;transition:.15s}
+.hist-toggle:hover{border-color:rgba(212,175,55,.4);color:var(--txt)}
+.hist-toggle input{accent-color:var(--gold);cursor:pointer;margin:0}
+.hist-toggle:has(input:checked){border-color:var(--gold);color:var(--gold2)}
+.hist-load{padding:80px 20px;text-align:center;color:var(--muted2);font-size:12px;font-style:italic}
+.hist-empty{padding:60px 20px;text-align:center;color:var(--muted);font-size:12px}
+.hist-empty-t{font-size:14px;color:var(--txt);font-weight:600;margin-bottom:6px}
+.hist-legend-i{display:inline-flex;align-items:center;gap:6px}
+.hist-legend-d{width:14px;height:3px;border-radius:2px}
+/* ALERTAS DE CONCENTRACIÓN */
+.conc-a{background:linear-gradient(135deg,rgba(251,146,60,.10),rgba(251,146,60,.03));border:1px solid rgba(251,146,60,.35);border-radius:11px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.conc-a-c{background:linear-gradient(135deg,rgba(241,102,90,.12),rgba(241,102,90,.03));border:1px solid rgba(241,102,90,.40)}
+.conc-a-i{font-size:20px;line-height:1}
+.conc-a-b{flex:1;min-width:0}
+.conc-a-t{font-size:13px;font-weight:700;color:#fb923c;margin-bottom:3px}
+.conc-a-c .conc-a-t{color:var(--red)}
+.conc-a-d{font-size:12px;color:var(--muted);line-height:1.5}
+.conc-a-d strong{color:var(--txt)}
+/* P&L cell mejorado */
+.pnl-cell{display:flex;flex-direction:column;gap:2px;line-height:1.3}
+.pnl-tot{font-size:12px;font-weight:700}
+.pnl-day{font-size:10px;color:var(--muted2);font-weight:500}
+.pnl-day.up{color:rgba(74,222,128,.7)}
+.pnl-day.dn{color:rgba(241,102,90,.7)}
+/* Ordenamiento columnas */
+th.sortable{cursor:pointer;user-select:none;position:relative;padding-right:18px!important}
+th.sortable:hover{color:var(--gold);background:rgba(212,175,55,.04)}
+th.sortable::after{content:"↕";position:absolute;right:6px;opacity:.35;font-size:10px;top:50%;transform:translateY(-50%)}
+th.sortable.asc::after{content:"▲";opacity:1;color:var(--gold);font-size:9px}
+th.sortable.desc::after{content:"▼";opacity:1;color:var(--gold);font-size:9px}
+/* Tabla responsive: ocultar columnas secundarias en pantallas chicas */
+@media (max-width:900px){
+  .ht th.col-hide,.ht td.col-hide{display:none}
+  .ht th.col-hide-md,.ht td.col-hide-md{display:none}
+}
+@media (max-width:600px){
+  .ht th.col-hide-sm,.ht td.col-hide-sm{display:none}
+  .ht{font-size:12px}
+  .ht th,.ht td{padding:8px 6px!important}
+}
+.row-expand{background:none;border:none;color:var(--gold);cursor:pointer;padding:2px 6px;font-size:12px;display:none}
+@media (max-width:900px){.row-expand{display:inline-block}}
+tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!important;background:rgba(212,175,55,.04)}
+/* MÓDULO BB.PP. */
+.bbpp-card{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden}
+.bbpp-hd{padding:14px 18px;background:linear-gradient(135deg,rgba(212,175,55,.08),transparent);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.bbpp-hd-t{font-size:14px;font-weight:700;color:var(--txt);flex:1}
+.bbpp-hd-c{color:var(--muted2);transition:.2s;font-size:11px}
+.bbpp-card.open .bbpp-hd-c{transform:rotate(180deg)}
+.bbpp-body{padding:16px 18px;display:none}
+.bbpp-card.open .bbpp-body{display:block}
+.bbpp-disc{background:rgba(241,102,90,.08);border:1px solid rgba(241,102,90,.30);border-radius:8px;padding:11px 13px;font-size:10.5px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.bbpp-disc strong{color:var(--red);font-weight:700}
+.bbpp-esc{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+.bbpp-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border-radius:8px;border-left:3px solid transparent}
+.bbpp-row.exento{border-left-color:var(--green)}
+.bbpp-row.general{border-left-color:var(--gold)}
+.bbpp-row.exterior{border-left-color:var(--red)}
+.bbpp-l{display:flex;flex-direction:column;gap:2px}
+.bbpp-l-t{font-size:12px;font-weight:700;color:var(--txt)}
+.bbpp-l-s{font-size:10px;color:var(--muted2);line-height:1.4}
+.bbpp-v{font-size:15px;font-weight:700;color:var(--gold);font-family:"JetBrains Mono",monospace;text-align:right;white-space:nowrap}
+.bbpp-v.zero{color:var(--green)}
+.bbpp-cta{margin-top:10px;background:var(--gd);border:1px solid rgba(212,175,55,.4);color:var(--gold);font-size:11px;font-weight:700;padding:9px 16px;border-radius:8px;cursor:pointer;text-align:center;text-decoration:none;display:block;letter-spacing:.03em;transition:.15s}
+.bbpp-cta:hover{background:rgba(212,175,55,.16)}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -252,13 +321,57 @@
         <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce EMA 11 × WMA 21) con contexto de tendencia SMA 200, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
       </div>
     </div>
-    <!-- DERECHA: tabla -->
+    <!-- DERECHA: chart histórico + tabla -->
     <div>
+      <!-- CHART HISTÓRICO (Entrega B) -->
+      <div id="hist-card" style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:8px">📈 Evolución de tu cartera <span style="font-size:10px;color:var(--muted2);font-weight:500" id="hist-note"></span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <div class="hist-period-group" style="display:flex;gap:2px;background:var(--bg2);border-radius:8px;padding:3px">
+              <button class="hist-btn" data-p="1W" onclick="setHistPeriod('1W')">1S</button>
+              <button class="hist-btn" data-p="1M" onclick="setHistPeriod('1M')">1M</button>
+              <button class="hist-btn on" data-p="3M" onclick="setHistPeriod('3M')">3M</button>
+              <button class="hist-btn" data-p="6M" onclick="setHistPeriod('6M')">6M</button>
+              <button class="hist-btn" data-p="1Y" onclick="setHistPeriod('1Y')">1A</button>
+            </div>
+            <label class="hist-toggle" title="Comparar contra SPY (S&amp;P 500)"><input type="checkbox" id="hist-spy" onchange="renderHistoricalChart()" checked><span>vs SPY</span></label>
+            <label class="hist-toggle" title="Comparar contra dólar MEP"><input type="checkbox" id="hist-mep" onchange="renderHistoricalChart()"><span>+ MEP</span></label>
+          </div>
+        </div>
+        <div id="hist-info" style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.45"></div>
+        <div style="position:relative;height:260px"><canvas id="hist-canvas"></canvas></div>
+        <div id="hist-legend" style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px;justify-content:center"></div>
+      </div>
+
+      <!-- ALERTAS DE CONCENTRACIÓN (Entrega B) -->
+      <div id="conc-alerts" style="display:none"></div>
+
+      <!-- BUSCADOR + TABLA (Entrega A) -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px">
+        <div style="position:relative;flex:1;max-width:340px">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:14px;pointer-events:none">🔍</span>
+          <input id="ttbl-search" type="text" placeholder="Buscar ticker (ej: GGAL, AAPL, TSLA)…" oninput="renderD()" style="width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:9px 12px 9px 36px;color:var(--txt);font-size:13px;font-family:inherit">
+        </div>
+        <div id="ttbl-info" style="font-size:11px;color:var(--muted2)"></div>
+      </div>
       <div class="tw"><table class="ht" id="main-t"><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
     </div>
   </div>
   <div style="margin-top:12px;font-size:12px;color:var(--muted2)">
     <strong style="color:var(--gold)">PPC</strong> = Precio Promedio de Compra · Hacé clic en "+ Ingresar costo" para ingresar tu precio de compra y ver ganancia/pérdida · El <strong style="color:var(--gold)">Peso</strong> muestra cuánto pondera cada papel en tu cartera · <strong style="color:var(--gold)">Información orientativa</strong> — no constituye recomendación de inversión ni asesoramiento personalizado; toda decisión debe consultarse con el asesor antes de operar. EstrategiasLB · Asesor Idóneo CNV M.N. 2220
+  </div>
+
+  <!-- MÓDULO IMPOSITIVO BIENES PERSONALES (Entrega C) -->
+  <div class="bbpp-card" id="bbpp-card" style="display:none">
+    <div class="bbpp-hd" onclick="toggleBBPP()">
+      <span style="font-size:18px">🧾</span>
+      <div class="bbpp-hd-t">Estimación de Bienes Personales — orientativa</div>
+      <span class="bbpp-hd-c">▼</span>
+    </div>
+    <div class="bbpp-body"></div>
   </div>
 </div>
 
@@ -429,7 +542,7 @@
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -486,10 +599,12 @@ const DIVS=[
 const TC={accion:"#4ade80",cedear:"#7dcfff",bono:"#D4AF37",fci:"#f7a83e",cripto:"#f7a83e",letra:"#D4AF37",on:"#a855f7"};
 const BC={balanz:"#3b82f6",iol:"#f97316",cocos:"#a855f7",bull:"#22c55e",manual:"#D4AF37"};
 const TPC={accion:"pa",cedear:"pc",bono:"pb",fci:"pf",letra:"pl",cripto:"pk",on:"pon"};
-let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{},profile:null,caucionDismissed:null};
-function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}}
+let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{},profile:null,caucionDismissed:null,snapshots:{},bmkCache:{},histPeriod:"3M"};
+function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}try{S.snapshots=JSON.parse(localStorage.getItem(CFG.SNP))||{};}catch{}try{S.bmkCache=JSON.parse(localStorage.getItem(CFG.BMK))||{};}catch{}}
 function saveProfile(){if(S.profile)localStorage.setItem(CFG.PROF,JSON.stringify(S.profile));else localStorage.removeItem(CFG.PROF);}
 function saveCaucion(){if(S.caucionDismissed)localStorage.setItem(CFG.CAUC,S.caucionDismissed);}
+function saveSnapshots(){try{localStorage.setItem(CFG.SNP,JSON.stringify(S.snapshots));}catch(e){console.warn("Snapshot storage full",e);}}
+function saveBmkCache(){try{localStorage.setItem(CFG.BMK,JSON.stringify(S.bmkCache));}catch(e){console.warn("Benchmark cache storage full",e);}}
 function save(){localStorage.setItem(CFG.ST,JSON.stringify({portfolios:S.portfolios,manual:S.manual}));}
 function savePx(){localStorage.setItem(CFG.PST,JSON.stringify(S.px));}
 function savePPC(){localStorage.setItem(CFG.PPT,JSON.stringify(S.ppc));}
@@ -540,7 +655,7 @@ async function fetchPx(){
     savePx();return true;
   }catch{return false;}
 }
-async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");renderIndices();renderSignals();}
+async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");renderIndices();renderSignals();renderHistoricalChart();}
 function pxOf(tk){return S.px[tk]?.p||null;}
 function chOf(tk){const c=S.px[tk]?.ch;return(c===0||c)?c:null;}
 function nameOf(tk){return DB[tk]?.n||S.learned[tk]?.n||"";}
@@ -658,6 +773,8 @@ function renderD(){
   try{renderDonut(hs);}catch(e){console.warn("donut",e);}
   try{renderBars(hs);}catch(e){console.warn("bars",e);}
   renderTable(hs);
+  try{renderConcentrationAlerts();}catch(e){console.warn("conc",e);}
+  try{renderBBPP();}catch(e){console.warn("bbpp",e);}
 }
 function renderBrokerTabs(bks){
   const cont=document.getElementById("broker-tabs");
@@ -684,13 +801,58 @@ function renderBars(hs){
   document.getElementById("brk-b").innerHTML=Object.entries(bb).sort((a,b)=>b[1]-a[1]).map(([k,v])=>mkRow(k,v,BC[k]||"#7d92a6")).join("")||"<span style='color:var(--muted2);font-size:13px'>Sin datos</span>";
   document.getElementById("tip-b").innerHTML=Object.entries(bt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>mkRow(k,v,TC[k]||"#536475")).join("")||"<span style='color:var(--muted2);font-size:13px'>Sin datos</span>";
 }
+// Estado de ordenamiento de la tabla principal
+let sortCol="valor",sortDir="desc";
+function setSort(col){
+  if(sortCol===col){sortDir=sortDir==="asc"?"desc":"asc";}
+  else{sortCol=col;sortDir="desc";}
+  renderD();
+}
+function sortHoldings(hs){
+  const arr=[...hs];
+  arr.sort((a,b)=>{
+    let va,vb;
+    switch(sortCol){
+      case"ticker":va=(a.ticker||"").toString();vb=(b.ticker||"").toString();return sortDir==="asc"?va.localeCompare(vb):vb.localeCompare(va);
+      case"tipo":va=a.tipo||"";vb=b.tipo||"";return sortDir==="asc"?va.localeCompare(vb):vb.localeCompare(va);
+      case"cant":va=a.cant||0;vb=b.cant||0;break;
+      case"peso":va=a.peso||0;vb=b.peso||0;break;
+      case"ppc":va=a.ppc||0;vb=b.ppc||0;break;
+      case"precio":va=a.precio||0;vb=b.precio||0;break;
+      case"valor":va=a.valorARS||0;vb=b.valorARS||0;break;
+      case"resultado":va=(a.ganSource==="ppc"?a.ganARS:a.ch)||0;vb=(b.ganSource==="ppc"?b.ganARS:b.ch)||0;break;
+      case"pct":va=(a.ganSource==="ppc"?a.ganPct:a.ch)||0;vb=(b.ganSource==="ppc"?b.ganPct:b.ch)||0;break;
+      default:va=a.valorARS||0;vb=b.valorARS||0;
+    }
+    return sortDir==="asc"?va-vb:vb-va;
+  });
+  return arr;
+}
+function filterHoldings(hs){
+  const q=(document.getElementById("ttbl-search")?.value||"").trim().toUpperCase();
+  if(!q)return hs;
+  return hs.filter(h=>(h.ticker||"").toUpperCase().includes(q)||(nameOf(h.ticker)||"").toUpperCase().includes(q));
+}
+function thSort(col,label,extraCls){
+  const cls=sortCol===col?" "+sortDir:"";
+  const extra=extraCls?" "+extraCls:"";
+  return`<th class="sortable${cls}${extra}" onclick="setSort('${col}')">${label}</th>`;
+}
 function renderTable(hs){
-  const head=document.getElementById("t-head"),body=document.getElementById("t-body");
+  const head=document.getElementById("t-head"),body=document.getElementById("t-body"),info=document.getElementById("ttbl-info");
   const isTodos=S.bTab==="todos";
-  const bkColH=isTodos?"<th>Brokers</th>":"";
-  head.innerHTML=`<tr><th>Ticker</th><th>Nombre</th><th>Tipo</th>${bkColH}<th class="nr">Cantidad</th><th class="nr">Peso</th><th>PPC ✎</th><th class="nr">Precio actual</th><th class="nr">Valor</th><th class="nr">Resultado</th><th class="nr">%</th><th>Recomendación</th></tr>`;
-  if(!hs.length){body.innerHTML=`<tr class="er"><td colspan="${isTodos?12:11}"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste ningún PDF":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el resumen de cuenta de tu broker</div><button class="bimp-lg" onclick="openImp()">📄 Importar PDF</button></td></tr>`;return;}
-  body.innerHTML=hs.map(h=>{
+  const totalPre=hs.length;
+  hs=filterHoldings(hs);
+  hs=sortHoldings(hs);
+  const filtered=totalPre-hs.length;
+  if(info){info.textContent=filtered>0?`Mostrando ${hs.length} de ${totalPre} · ${filtered} filtrados`:`${totalPre} ${totalPre===1?"posición":"posiciones"}`;}
+  const bkColH=isTodos?'<th class="col-hide-md">Brokers</th>':"";
+  head.innerHTML=`<tr>${thSort("ticker","Ticker")}<th class="col-hide-md">Nombre</th>${thSort("tipo","Tipo","col-hide-sm")}${bkColH}${thSort("cant","Cantidad","nr col-hide-sm")}${thSort("peso","Peso","nr")}<th class="col-hide">PPC ✎</th>${thSort("precio","Precio actual","nr col-hide")}${thSort("valor","Valor","nr")}${thSort("resultado","Resultado","nr")}${thSort("pct","%","nr col-hide-sm")}<th class="col-hide">Recomendación</th><th style="width:32px"></th></tr>`;
+  if(!hs.length){
+    if(totalPre>0){body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">🔍</div><div class="be-txt">Sin resultados</div><div class="be-sub">Ningún ticker coincide con "${(document.getElementById("ttbl-search")?.value||"").trim()}"</div></td></tr>`;return;}
+    body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste ningún PDF":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el resumen de cuenta de tu broker</div><button class="bimp-lg" onclick="openImp()">📄 Importar PDF</button></td></tr>`;return;
+  }
+  body.innerHTML=hs.map((h,idx)=>{
     const tCls=TPC[h.tipo||"accion"]||"pa";
     const bkDots=(h.brokers||[h.broker||"manual"]).map(b=>`<span class="bkdot" style="background:${BC[b]||"#D4AF37"}" title="${cap(b)}"></span>`).join("");
     const chTxt=(h.ch!=null&&h.live)?`<span class="px-ch ${h.ch>=0?"up":"dn"}">${h.ch>=0?"▲":"▼"} ${Math.abs(h.ch).toFixed(2)}%</span>`:"";
@@ -700,15 +862,17 @@ function renderTable(hs){
     const ppcEl=h.ppc
       ? `<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`
       : `<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
-    // Resultado: si hay PPC real → ganancia real; sino → variación del día en pesos
+    // RESULTADO Y %: si hay PPC → total desde compra + linea chica con el día
     let resEl,pctEl;
+    const hasDay=h.ch!=null&&h.live&&h.valorARS;
+    const valAyer=hasDay?h.valorARS/(1+h.ch/100):null;
+    const diaARS=hasDay?h.valorARS-valAyer:null;
     if(h.ganSource==="ppc"&&h.ganARS!=null){
       const gc=h.ganARS>=0?"up":"dn";
-      resEl=`<div class="gan-cell"><span class="${gc}">${sgn(h.ganARS)}${fv(h.ganARS)}</span><span class="gan-tag">tu ganancia</span></div>`;
+      const dayLine=hasDay?`<span class="pnl-day ${diaARS>=0?"up":"dn"}">Hoy: ${sgn(diaARS)}${fv(diaARS)}</span>`:"";
+      resEl=`<div class="pnl-cell"><span class="pnl-tot ${gc}">${sgn(h.ganARS)}${fv(h.ganARS)}</span><span class="gan-tag">total</span>${dayLine}</div>`;
       pctEl=`<span class="${gc}">${sgn(h.ganPct)}${h.ganPct.toFixed(2)}%</span>`;
-    }else if(h.ch!=null&&h.live&&h.valorARS){
-      const valAyer=h.valorARS/(1+h.ch/100);
-      const diaARS=h.valorARS-valAyer;
+    }else if(hasDay){
       const dc=diaARS>=0?"up":"dn";
       resEl=`<div class="gan-cell"><span class="${dc}">${sgn(diaARS)}${fv(diaARS)}</span><span class="gan-tag">hoy</span></div>`;
       pctEl=`<span class="${dc}">${h.ch>=0?"▲":"▼"} ${Math.abs(h.ch).toFixed(2)}%</span>`;
@@ -717,9 +881,9 @@ function renderTable(hs){
       pctEl=`<span style="color:var(--muted2)">—</span>`;
     }
     const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">—</span>`;
-    const bkCell=isTodos?`<td><div class="bkdots">${bkDots}</div></td>`:"";
+    const bkCell=isTodos?`<td class="col-hide-md"><div class="bkdots">${bkDots}</div></td>`:"";
     const pesoEl=`<div class="peso-wrap"><span class="peso-n mono">${h.peso.toFixed(1)}%</span><span class="peso-bar"><span class="peso-fill" style="width:${Math.min(h.peso,100).toFixed(1)}%"></span></span></div>`;
-    return`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell">${ppcEl}</td><td class="nr">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr">${pctEl}</td><td>${recEl}</td></tr>`;
+    return`<tr data-idx="${idx}"><td><strong>${h.ticker}</strong></td><td class="col-hide-md" style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
   }).join("");
 }
 function editPPC(ticker){
@@ -1386,7 +1550,366 @@ function renderCaucionBanner(){
 }
 function dismissCaucion(){S.caucionDismissed=todayStr();saveCaucion();renderCaucionBanner();}
 
-async function init(){load();renderD();renderProfileBadge();renderCaucionBanner();setStatus("Actualizando datos de mercado...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");renderIndices();renderSignals();}
+// ═══════════════════════════════════════════════════════════
+// ── ENTREGA B: SNAPSHOT HISTÓRICO + BENCHMARK SPY + CONCENTRACIÓN ──
+// ═══════════════════════════════════════════════════════════
+
+// Base de sectores para tickers comunes (para alertas de concentración)
+// Se puede completar por el asesor con más tickers según necesidad
+const SECTORES={
+  // Tecnología
+  AAPL:"Tecnología",MSFT:"Tecnología",GOOGL:"Tecnología",GOOG:"Tecnología",META:"Tecnología",NVDA:"Tecnología",AMD:"Tecnología",INTC:"Tecnología",TSM:"Tecnología",CSCO:"Tecnología",ORCL:"Tecnología",CRM:"Tecnología",ADBE:"Tecnología",NFLX:"Tecnología",IBM:"Tecnología",QCOM:"Tecnología",AVGO:"Tecnología",MU:"Tecnología",AMAT:"Tecnología",MELI:"Tecnología",GLOB:"Tecnología",
+  // Consumo
+  AMZN:"Consumo",TSLA:"Consumo",WMT:"Consumo",HD:"Consumo",MCD:"Consumo",KO:"Consumo",PEP:"Consumo",NKE:"Consumo",SBUX:"Consumo",DIS:"Consumo",COST:"Consumo",TGT:"Consumo",LOW:"Consumo",EBAY:"Consumo",BABA:"Consumo",PDD:"Consumo",F:"Consumo",GM:"Consumo",NIO:"Consumo",
+  // Financiero
+  JPM:"Financiero",BAC:"Financiero",WFC:"Financiero",C:"Financiero",GS:"Financiero",MS:"Financiero",BLK:"Financiero",AXP:"Financiero",V:"Financiero",MA:"Financiero",PYPL:"Financiero",SQ:"Financiero",COIN:"Financiero",BRK:"Financiero",
+  GGAL:"Financiero",BMA:"Financiero",BBAR:"Financiero",SUPV:"Financiero",BHIP:"Financiero",VALO:"Financiero",BPAT:"Financiero",
+  // Energía
+  XOM:"Energía",CVX:"Energía",COP:"Energía",SLB:"Energía",OXY:"Energía",BP:"Energía",SHEL:"Energía",VIST:"Energía",YPF:"Energía",PAM:"Energía",TGNO4:"Energía",TGSU2:"Energía",EDN:"Energía",CEPU:"Energía",TRAN:"Energía",COME:"Energía",
+  // Salud
+  JNJ:"Salud",PFE:"Salud",MRK:"Salud",ABBV:"Salud",UNH:"Salud",LLY:"Salud",ABT:"Salud",TMO:"Salud",AMGN:"Salud",BMY:"Salud",GILD:"Salud",MRNA:"Salud",BIIB:"Salud",
+  // Industrial
+  BA:"Industrial",GE:"Industrial",CAT:"Industrial",HON:"Industrial",MMM:"Industrial",DE:"Industrial",LMT:"Industrial",UPS:"Industrial",FDX:"Industrial",TXT:"Industrial",
+  // Materiales
+  ALUA:"Materiales",TXAR:"Materiales",MIRG:"Materiales",LOMA:"Materiales",HAVA:"Materiales",HARG:"Materiales",AGRO:"Materiales",CRES:"Materiales",BIOX:"Materiales",MOLA:"Materiales",MOLI:"Materiales",
+  // Comunicaciones
+  T:"Comunicaciones",VZ:"Comunicaciones",TMUS:"Comunicaciones",TEO:"Comunicaciones",TECO2:"Comunicaciones",
+  // Utilities argentinos
+  METR:"Utilities",CGPA2:"Utilities",DGCU2:"Utilities",MOLA:"Utilities",
+  // ETFs
+  SPY:"ETF",QQQ:"ETF",EEM:"ETF",EWZ:"ETF",XLE:"ETF",XLF:"ETF",XLK:"ETF",XLV:"ETF"
+};
+function getSector(ticker){return SECTORES[ticker]||(DB[ticker]?.t==="bono"?"Bonos":DB[ticker]?.t==="cedear"?"CEDEARs sin clasificar":"Sin clasificar");}
+
+// SNAPSHOT DIARIO — guarda composición completa una vez por día
+function saveSnapshot(){
+  const hs=getConsolidated();
+  if(!hs.length)return;
+  const today=todayStr();
+  const tickers={};
+  hs.forEach(h=>{if(h.ticker&&h.cant){tickers[h.ticker]=(tickers[h.ticker]||0)+h.cant;}});
+  const totARS=hs.reduce((s,h)=>s+(h.valorARS||0),0);
+  const ccl=S.dolar.ccl||S.dolar.mep||1;
+  const totUSD=totARS/ccl;
+  const now=new Date();
+  const hour=now.getHours();
+  // Provisorio si antes del cierre (17hs); definitivo después
+  const provisorio=hour<17;
+  const existing=S.snapshots[today];
+  // Solo sobrescribir si el existente es provisorio o no hay
+  if(!existing||existing.provisorio){
+    S.snapshots[today]={fecha:today,tickers,valorARS:totARS,valorUSD:totUSD,provisorio,ts:now.toISOString()};
+    // Limpiar snapshots más viejos de 2 años (730 días)
+    const cutoff=new Date();cutoff.setDate(cutoff.getDate()-730);
+    const cutoffStr=cutoff.getFullYear()+"-"+String(cutoff.getMonth()+1).padStart(2,"0")+"-"+String(cutoff.getDate()).padStart(2,"0");
+    Object.keys(S.snapshots).forEach(k=>{if(k<cutoffStr)delete S.snapshots[k];});
+    saveSnapshots();
+  }
+}
+
+// Traer histórico de SPY desde data912 (CEDEARs)
+async function getSPYHistory(){
+  const cacheKey="SPY_"+todayStr();
+  if(S.bmkCache[cacheKey])return S.bmkCache[cacheKey];
+  try{
+    const r=await fetch("https://data912.com/historical/cedears/SPY",{signal:AbortSignal.timeout?AbortSignal.timeout(10000):undefined});
+    if(!r.ok)return null;
+    const j=await r.json();
+    if(!Array.isArray(j)||!j.length)return null;
+    // Formato: array de {date, close, ...}. Ordenar por fecha, tomar cierres
+    const sorted=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    S.bmkCache={};S.bmkCache[cacheKey]=sorted; // Solo guardar el actual, no acumular
+    saveBmkCache();
+    return sorted;
+  }catch(e){console.warn("SPY history error",e);return null;}
+}
+// Serie de dólar MEP: usamos SPY como proxy y ajustamos porque no hay endpoint público
+// Aproximación: usamos el ratio SPY_ARS/SPY_USD del día. Como no tenemos SPY en USD histórico gratis,
+// una alternativa es usar los snapshots del usuario que tienen ambos valores.
+async function getMEPHistoryFromSnapshots(){
+  const snaps=Object.values(S.snapshots).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  return snaps.filter(s=>s.valorARS&&s.valorUSD).map(s=>({fecha:s.fecha,mep:s.valorARS/s.valorUSD}));
+}
+
+// Reconstruir curva histórica de la cartera usando composición ACTUAL + precios históricos
+async function reconstructPortfolioHistory(days){
+  const hs=getConsolidated();
+  if(!hs.length)return [];
+  // Traer histórico de cada ticker (limitamos concurrencia por educación)
+  const tickers=hs.map(h=>({ticker:h.ticker,cant:h.cant})).filter(t=>t.ticker&&t.cant);
+  // Fetch en paralelo, cacheable
+  const histories=await Promise.all(tickers.map(async t=>{
+    try{
+      const isCedear=DB[t.ticker]?.t==="cedear";
+      const base=isCedear?"https://data912.com/historical/cedears/":"https://data912.com/historical/stocks/";
+      const r=await fetch(base+t.ticker,{signal:AbortSignal.timeout?AbortSignal.timeout(8000):undefined});
+      if(!r.ok)return {ticker:t.ticker,cant:t.cant,serie:null};
+      const j=await r.json();
+      if(!Array.isArray(j))return {ticker:t.ticker,cant:t.cant,serie:null};
+      const serie=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+      return {ticker:t.ticker,cant:t.cant,serie};
+    }catch{return {ticker:t.ticker,cant:t.cant,serie:null};}
+  }));
+  // Set de todas las fechas disponibles
+  const allDates=new Set();
+  histories.forEach(h=>{if(h.serie)h.serie.forEach(p=>allDates.add(p.fecha));});
+  const sortedDates=Array.from(allDates).sort();
+  if(!sortedDates.length)return [];
+  // Filtrar por período
+  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);
+  const cutoffStr=cutoff.getFullYear()+"-"+String(cutoff.getMonth()+1).padStart(2,"0")+"-"+String(cutoff.getDate()).padStart(2,"0");
+  const relevantDates=sortedDates.filter(d=>d>=cutoffStr);
+  if(!relevantDates.length)return [];
+  // Construir serie del portfolio
+  const priceCache={};
+  histories.forEach(h=>{if(h.serie){const m={};h.serie.forEach(p=>m[p.fecha]=p.close);priceCache[h.ticker]=m;}});
+  const portfolioSerie=relevantDates.map(fecha=>{
+    let totARS=0,coverage=0,total=0;
+    histories.forEach(h=>{
+      if(!h.serie)return;total++;
+      // Buscar el precio del día o el más reciente anterior
+      let price=priceCache[h.ticker][fecha];
+      if(price==null){
+        // Buscar hacia atrás
+        for(let i=h.serie.length-1;i>=0;i--){
+          if(h.serie[i].fecha<=fecha){price=h.serie[i].close;break;}
+        }
+      }
+      if(price!=null&&price>0){totARS+=price*h.cant;coverage++;}
+    });
+    return {fecha,valorARS:totARS,coverage:total>0?coverage/total:0};
+  }).filter(p=>p.coverage>=0.6); // al menos 60% de cobertura para incluir el punto
+  return portfolioSerie;
+}
+
+// Normalizar serie a base 100
+function normalizeBase100(serie,valueKey){
+  if(!serie.length)return [];
+  const first=serie[0][valueKey];
+  if(!first||first===0)return [];
+  return serie.map(p=>({fecha:p.fecha,valor:(p[valueKey]/first)*100}));
+}
+
+let histChart=null;
+function setHistPeriod(p){
+  S.histPeriod=p;
+  document.querySelectorAll(".hist-btn").forEach(b=>{b.classList.toggle("on",b.getAttribute("data-p")===p);});
+  renderHistoricalChart();
+}
+function periodDays(p){return {"1W":7,"1M":30,"3M":90,"6M":180,"1Y":365}[p]||90;}
+
+async function renderHistoricalChart(){
+  const card=document.getElementById("hist-card");
+  if(!card)return;
+  const hs=getConsolidated();
+  if(!hs.length){card.style.display="none";return;}
+  card.style.display="block";
+  const canvas=document.getElementById("hist-canvas");
+  const info=document.getElementById("hist-info");
+  const legend=document.getElementById("hist-legend");
+  const noteEl=document.getElementById("hist-note");
+  // Mostrar loading
+  info.innerHTML='<span style="color:var(--muted2)">⏳ Reconstruyendo evolución histórica…</span>';
+  if(histChart){histChart.destroy();histChart=null;}
+  const days=periodDays(S.histPeriod);
+  const [portfolioSerie,spySerie]=await Promise.all([
+    reconstructPortfolioHistory(days+15), // margen para no cortar los primeros días
+    document.getElementById("hist-spy")?.checked?getSPYHistory():Promise.resolve(null)
+  ]);
+  if(!portfolioSerie.length){
+    canvas.style.display="none";
+    info.innerHTML=`<div class="hist-empty"><div class="hist-empty-t">Sin histórico suficiente</div>data912 no devolvió series históricas para tus posiciones. Volvé a intentar más tarde.</div>`;
+    legend.innerHTML="";return;
+  }
+  canvas.style.display="block";
+  // Filtrar SPY al mismo rango de fechas
+  const startDate=portfolioSerie[0].fecha;
+  const endDate=portfolioSerie[portfolioSerie.length-1].fecha;
+  const spyFiltered=spySerie?spySerie.filter(p=>p.fecha>=startDate&&p.fecha<=endDate):null;
+  // Normalizar a base 100
+  const portfolioNorm=normalizeBase100(portfolioSerie,"valorARS");
+  const spyNorm=spyFiltered&&spyFiltered.length?normalizeBase100(spyFiltered,"close"):null;
+  // MEP desde snapshots del usuario si hay
+  const showMep=document.getElementById("hist-mep")?.checked;
+  let mepNorm=null;
+  if(showMep){
+    const mepSerie=await getMEPHistoryFromSnapshots();
+    const mepFiltered=mepSerie.filter(p=>p.fecha>=startDate&&p.fecha<=endDate);
+    if(mepFiltered.length>=2)mepNorm=normalizeBase100(mepFiltered,"mep");
+  }
+  // Preparar datasets Chart.js
+  const labels=portfolioNorm.map(p=>p.fecha);
+  const datasets=[{
+    label:"Tu cartera",data:portfolioNorm.map(p=>p.valor),
+    borderColor:"#D4AF37",backgroundColor:"rgba(212,175,55,0.10)",
+    borderWidth:2.5,fill:true,tension:0.15,pointRadius:0,pointHoverRadius:4
+  }];
+  if(spyNorm&&spyNorm.length){
+    // Interpolar SPY a las fechas de portfolio
+    const spyMap={};spyNorm.forEach(p=>spyMap[p.fecha]=p.valor);
+    const spyAligned=labels.map(f=>{
+      if(spyMap[f]!=null)return spyMap[f];
+      // Buscar fecha anterior más cercana
+      const prev=Object.keys(spyMap).filter(d=>d<=f).sort().pop();
+      return prev?spyMap[prev]:null;
+    });
+    datasets.push({label:"SPY (S&P 500)",data:spyAligned,borderColor:"#00B4D8",backgroundColor:"rgba(0,180,216,0.05)",borderWidth:2,fill:false,tension:0.15,pointRadius:0,pointHoverRadius:4,borderDash:[6,4]});
+  }
+  if(mepNorm){
+    const mepMap={};mepNorm.forEach(p=>mepMap[p.fecha]=p.valor);
+    const mepAligned=labels.map(f=>{
+      if(mepMap[f]!=null)return mepMap[f];
+      const prev=Object.keys(mepMap).filter(d=>d<=f).sort().pop();
+      return prev?mepMap[prev]:null;
+    });
+    datasets.push({label:"Dólar MEP",data:mepAligned,borderColor:"#10B981",backgroundColor:"rgba(16,185,129,0.05)",borderWidth:2,fill:false,tension:0.15,pointRadius:0,pointHoverRadius:4,borderDash:[3,3]});
+  }
+  const ctx=canvas.getContext("2d");
+  histChart=new Chart(ctx,{
+    type:"line",
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:"index",intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:"rgba(10,22,40,0.95)",titleColor:"#D4AF37",bodyColor:"#fff",
+          borderColor:"rgba(212,175,55,0.35)",borderWidth:1,padding:10,
+          callbacks:{
+            label:(ctx)=>{const v=ctx.parsed.y;const delta=v-100;return `${ctx.dataset.label}: ${v.toFixed(1)} (${delta>=0?"+":""}${delta.toFixed(1)}%)`;}
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:"rgba(255,255,255,0.04)"},ticks:{color:"#8B95A5",font:{size:10},maxTicksLimit:8,autoSkip:true}},
+        y:{grid:{color:"rgba(255,255,255,0.04)"},ticks:{color:"#8B95A5",font:{size:10},callback:v=>v.toFixed(0)},title:{display:true,text:"Base 100 al inicio",color:"#8B95A5",font:{size:10}}}
+      }
+    }
+  });
+  // Info interpretativa
+  const lastPortfolio=portfolioNorm[portfolioNorm.length-1].valor;
+  const deltaPortfolio=lastPortfolio-100;
+  let interpretacion=`Tu cartera: <strong style="color:${deltaPortfolio>=0?"#4ade80":"#f1665a"}">${deltaPortfolio>=0?"+":""}${deltaPortfolio.toFixed(1)}%</strong> en el período`;
+  if(spyNorm&&spyNorm.length){
+    const lastSpy=spyNorm[spyNorm.length-1].valor;
+    const deltaSpy=lastSpy-100;
+    const diff=deltaPortfolio-deltaSpy;
+    interpretacion+=` · SPY: <strong style="color:${deltaSpy>=0?"#4ade80":"#f1665a"}">${deltaSpy>=0?"+":""}${deltaSpy.toFixed(1)}%</strong> · Diferencia: <strong style="color:${diff>=0?"#D4AF37":"#8B95A5"}">${diff>=0?"+":""}${diff.toFixed(1)} pp</strong> ${diff>=0?"a tu favor":"a favor de SPY"}`;
+  }
+  info.innerHTML=interpretacion;
+  legend.innerHTML=datasets.map(d=>{const color=d.borderColor;return `<div class="hist-legend-i"><span class="hist-legend-d" style="background:${color}${d.borderDash?';background:repeating-linear-gradient(90deg,'+color+' 0 6px,transparent 6px 10px)':''}"></span>${d.label}</div>`;}).join("");
+  noteEl.textContent=" · reconstrucción sobre composición actual";
+}
+
+// ═══════════════════════════════════════════════════════════
+// ALERTAS DE CONCENTRACIÓN (por ticker y por sector, según perfil)
+// ═══════════════════════════════════════════════════════════
+function getConcentrationThresholds(){
+  const p=S.profile?.type||"moderado";
+  // umbrales de alerta por ticker y por sector
+  if(p==="conservador")return {tickerWarn:15,tickerCrit:25,sectorWarn:35,sectorCrit:50};
+  if(p==="agresivo")return {tickerWarn:35,tickerCrit:50,sectorWarn:60,sectorCrit:75};
+  return {tickerWarn:25,tickerCrit:40,sectorWarn:45,sectorCrit:60};
+}
+function renderConcentrationAlerts(){
+  const el=document.getElementById("conc-alerts");
+  if(!el)return;
+  const hs=getConsolidated();
+  if(!hs.length){el.style.display="none";el.innerHTML="";return;}
+  const total=hs.reduce((s,h)=>s+(h.valorARS||0),0);
+  if(total<=0){el.style.display="none";return;}
+  const thr=getConcentrationThresholds();
+  const alerts=[];
+  // Alertas por ticker
+  hs.forEach(h=>{
+    const pct=(h.valorARS/total)*100;
+    if(pct>=thr.tickerCrit){
+      alerts.push({level:"crit",title:"Concentración crítica en "+h.ticker,desc:`<strong>${h.ticker}</strong> representa el <strong>${pct.toFixed(1)}%</strong> de tu cartera. Un solo activo con este peso concentra demasiado riesgo. Consultá con el asesor si conviene diversificar.`});
+    }else if(pct>=thr.tickerWarn){
+      alerts.push({level:"warn",title:"Concentración alta en "+h.ticker,desc:`<strong>${h.ticker}</strong> representa el <strong>${pct.toFixed(1)}%</strong> de tu cartera. Está por encima del umbral recomendado para tu perfil (${thr.tickerWarn}%).`});
+    }
+  });
+  // Alertas por sector
+  const sectorTotals={};
+  hs.forEach(h=>{const s=getSector(h.ticker);sectorTotals[s]=(sectorTotals[s]||0)+(h.valorARS||0);});
+  Object.entries(sectorTotals).forEach(([sec,val])=>{
+    if(sec==="Sin clasificar"||sec==="CEDEARs sin clasificar")return;
+    const pct=(val/total)*100;
+    if(pct>=thr.sectorCrit){
+      alerts.push({level:"crit",title:"Concentración sectorial crítica",desc:`El sector <strong>${sec}</strong> representa el <strong>${pct.toFixed(1)}%</strong> de tu cartera. Cambios negativos en el sector afectarían a la mayoría de tus posiciones simultáneamente.`});
+    }else if(pct>=thr.sectorWarn){
+      alerts.push({level:"warn",title:"Exposición sectorial alta",desc:`El sector <strong>${sec}</strong> concentra el <strong>${pct.toFixed(1)}%</strong> de tu cartera. Considerá diversificar hacia otros sectores.`});
+    }
+  });
+  if(!alerts.length){el.style.display="none";el.innerHTML="";return;}
+  el.style.display="block";
+  el.innerHTML=alerts.slice(0,5).map(a=>`<div class="conc-a ${a.level==="crit"?"conc-a-c":""}"><div class="conc-a-i">${a.level==="crit"?"🚨":"⚠️"}</div><div class="conc-a-b"><div class="conc-a-t">${a.title}</div><div class="conc-a-d">${a.desc}</div></div></div>`).join("");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── ENTREGA C: MÓDULO IMPOSITIVO BIENES PERSONALES ──
+// ═══════════════════════════════════════════════════════════
+// Alícuotas simplificadas del período fiscal 2024 (declaración 2025).
+// IMPORTANTE: estos valores requieren actualización anual.
+const BBPP={
+  vigencia:"Período fiscal 2024 (declaración 2025)",
+  mni:292994661.20,           // Mínimo no imponible general (bienes en el país)
+  vivienda:698355975.62,      // MNI adicional casa habitación (no aplicamos porque no sabemos si el cliente la tiene)
+  aliqGeneral:0.005,           // Alícuota promedio general simplificada (varía por tramos 0.5% a 1.5%)
+  aliqExterior:0.0125,         // Alícuota promedio bienes en el exterior (0.7% a 2.25%) — simplificamos con 1.25%
+  aliqGeneralTxt:"~0.5% a 1.5% según tramos",
+  aliqExteriorTxt:"~0.7% a 2.25% según tramos"
+};
+function renderBBPP(){
+  const el=document.getElementById("bbpp-card");
+  if(!el)return;
+  const hs=getConsolidated();
+  const total=hs.reduce((s,h)=>s+(h.valorARS||0),0);
+  if(total<=0){el.style.display="none";return;}
+  el.style.display="block";
+  // Escenarios
+  const isExento=total<BBPP.mni;
+  const excedente=Math.max(0,total-BBPP.mni);
+  const bbppLocal=excedente*BBPP.aliqGeneral;
+  const bbppExterior=total*BBPP.aliqExterior; // sobre total, sin MNI (aproximación simplificada)
+  el.querySelector(".bbpp-body").innerHTML=`
+    <div class="bbpp-disc">
+      <strong>ESTIMACIÓN ORIENTATIVA — no constituye asesoramiento contable.</strong>
+      Calculada sobre el valor bruto de tu cartera importada (${fa(total)} ARS). Alícuotas simplificadas del ${BBPP.vigencia}.
+      <strong>NO contempla:</strong> mínimo no imponible personal · deducciones · exenciones sobre acciones argentinas · casa habitación · tenencias fuera de esta plataforma. Los valores reales dependen de tu situación completa. <strong>Consultá con tu contador antes de tomar decisiones.</strong>
+    </div>
+    <div class="bbpp-esc">
+      <div class="bbpp-row exento">
+        <div class="bbpp-l">
+          <div class="bbpp-l-t">Escenario 1: EXENTO</div>
+          <div class="bbpp-l-s">Si tu patrimonio total (incluyendo esta cartera y tus demás bienes) está por debajo del mínimo no imponible: <strong>${fa(BBPP.mni)}</strong></div>
+        </div>
+        <div class="bbpp-v zero">$ 0</div>
+      </div>
+      <div class="bbpp-row general">
+        <div class="bbpp-l">
+          <div class="bbpp-l-t">Escenario 2: Bienes en el país</div>
+          <div class="bbpp-l-s">Alícuota general ${BBPP.aliqGeneralTxt} sobre el excedente del MNI (${fa(excedente)})</div>
+        </div>
+        <div class="bbpp-v">${fa(bbppLocal)}</div>
+      </div>
+      <div class="bbpp-row exterior">
+        <div class="bbpp-l">
+          <div class="bbpp-l-t">Escenario 3: Bienes en el exterior</div>
+          <div class="bbpp-l-s">Alícuota agravada ${BBPP.aliqExteriorTxt} sobre el total (aplica a CEDEARs, acciones USA, etc.)</div>
+        </div>
+        <div class="bbpp-v">${fa(bbppExterior)}</div>
+      </div>
+    </div>
+    <a href="https://wa.me/5491136172201?text=Hola,%20quiero%20consultar%20por%20mi%20situación%20impositiva%20con%20la%20cartera%20de%20EstrategiasUNE" target="_blank" rel="noopener" class="bbpp-cta">💬 Consultá con tu contador — WhatsApp EstrategiasLB</a>`;
+}
+function toggleBBPP(){document.getElementById("bbpp-card").classList.toggle("open");}
+
+// Hook post-render para mantener chart, alertas y BB.PP. sincronizados
+const _origRenderD=typeof renderD==="function"?renderD:null;
+
+async function init(){load();renderD();renderProfileBadge();renderCaucionBanner();setStatus("Actualizando datos de mercado...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';renderD();setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");renderIndices();renderSignals();saveSnapshot();renderHistoricalChart();renderConcentrationAlerts();renderBBPP();}
 // Cerrar modal del test al click en el overlay
 document.addEventListener("click",e=>{const m=document.getElementById("pt-modal");if(e.target===m)closeProfileTest();});
 init();

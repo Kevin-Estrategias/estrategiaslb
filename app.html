@@ -97,6 +97,81 @@
 .sig-hold{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--line2)}
 .sig-load{font-size:12px;color:var(--muted2);text-align:center;padding:16px 0}
 .sig-disc{font-size:10px;color:var(--muted2);margin-top:10px;line-height:1.45;font-style:italic}
+/* Banner Caución (viernes) */
+.cauc-b{background:linear-gradient(135deg,rgba(212,175,55,.12),rgba(212,175,55,.04));border:1px solid rgba(212,175,55,.35);border-radius:11px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;position:relative}
+.cauc-b-i{font-size:18px;line-height:1;margin-top:1px}
+.cauc-b-c{flex:1;min-width:0}
+.cauc-b-t{font-size:12.5px;font-weight:700;color:var(--gold2);margin-bottom:4px;line-height:1.3}
+.cauc-b-d{font-size:11px;color:var(--muted);line-height:1.5}
+.cauc-b-d a{color:var(--gold);text-decoration:none;border-bottom:1px dashed rgba(212,175,55,.4)}
+.cauc-b-d a:hover{border-bottom-color:var(--gold)}
+.cauc-b-x{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--muted2);font-size:16px;cursor:pointer;line-height:1;padding:2px 6px;border-radius:4px}.cauc-b-x:hover{background:rgba(255,255,255,.06);color:var(--txt)}
+/* Perfil */
+.prof-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;border:1px solid}
+.prof-conservador{background:rgba(96,165,250,.12);color:#60a5fa;border-color:rgba(96,165,250,.3)}
+.prof-moderado{background:rgba(212,175,55,.12);color:var(--gold);border-color:rgba(212,175,55,.3)}
+.prof-agresivo{background:rgba(241,102,90,.12);color:var(--red);border-color:rgba(241,102,90,.3)}
+.prof-none{background:var(--bg2);color:var(--muted);border-color:var(--line2);font-weight:600}
+.prof-badge:hover{filter:brightness(1.15)}
+.prof-empty{background:var(--bg2);border:1px dashed var(--line2);border-radius:10px;padding:14px;margin-bottom:12px;text-align:center}
+.prof-empty-t{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.prof-empty-b{background:var(--gd);color:var(--gold);border:1px solid rgba(212,175,55,.35);font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;cursor:pointer;transition:.15s;letter-spacing:.03em}.prof-empty-b:hover{background:rgba(212,175,55,.18)}
+/* Recomendación */
+.reco-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.03em;white-space:nowrap;text-transform:uppercase}
+.reco-comprar{background:rgba(74,222,128,.16);color:var(--green);border:1px solid rgba(74,222,128,.35)}
+.reco-vender{background:rgba(241,102,90,.16);color:var(--red);border:1px solid rgba(241,102,90,.35)}
+.reco-mantener{background:rgba(96,165,250,.12);color:#60a5fa;border:1px solid rgba(96,165,250,.3)}
+.reco-observar{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--line2)}
+.reco-reducir{background:rgba(251,146,60,.14);color:#fb923c;border:1px solid rgba(251,146,60,.3)}
+.reco-tomar{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.35)}
+.reco-cautela{background:rgba(74,222,128,.08);color:var(--green);border:1px solid rgba(74,222,128,.2);opacity:.9}
+/* Barra M200 */
+.m200-wrap{margin-top:5px;display:flex;align-items:center;gap:6px}
+.m200-bar{position:relative;height:4px;background:var(--bg2);border-radius:2px;flex:1;overflow:visible;border:1px solid var(--line2)}
+.m200-mark{position:absolute;top:-2px;bottom:-2px;left:50%;width:1px;background:var(--muted2);opacity:.55}
+.m200-dot{position:absolute;top:-2.5px;width:9px;height:9px;border-radius:50%;transform:translateX(-50%);border:1.5px solid var(--panel);transition:.2s}
+.m200-dot.green{background:var(--green)}
+.m200-dot.yellow{background:var(--gold)}
+.m200-dot.red{background:var(--red)}
+.m200-txt{font-size:9.5px;color:var(--muted);font-family:"JetBrains Mono",monospace;min-width:60px;text-align:right}
+.m200-txt.up{color:var(--green)}
+.m200-txt.dn{color:var(--red)}
+/* Modal test perfil */
+.pt-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;backdrop-filter:blur(4px)}
+.pt-ov.on{display:flex}
+.pt-md{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;padding:0}
+.pt-hd{padding:22px 28px 16px;border-bottom:1px solid var(--line)}
+.pt-hd-e{font-size:11px;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.pt-hd-t{font-size:22px;font-weight:700;color:var(--txt);font-family:'Montserrat',sans-serif}
+.pt-hd-s{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+.pt-body{padding:24px 28px}
+.pt-prog{display:flex;gap:5px;margin-bottom:20px}
+.pt-prog-i{flex:1;height:3px;background:var(--bg2);border-radius:2px;transition:.2s}
+.pt-prog-i.done{background:var(--gold)}
+.pt-prog-i.active{background:var(--gold);box-shadow:0 0 8px rgba(212,175,55,.4)}
+.pt-q{font-size:13px;color:var(--muted);margin-bottom:8px}
+.pt-q-t{font-size:17px;color:var(--txt);font-weight:600;margin-bottom:20px;line-height:1.4}
+.pt-opts{display:flex;flex-direction:column;gap:10px}
+.pt-opt{background:var(--bg2);border:1.5px solid var(--line2);border-radius:10px;padding:14px 16px;cursor:pointer;transition:.15s;font-size:14px;color:var(--txt);text-align:left;width:100%;font-family:inherit}
+.pt-opt:hover{border-color:rgba(212,175,55,.5);background:var(--gd)}
+.pt-opt.on{border-color:var(--gold);background:var(--gd);color:var(--gold2)}
+.pt-nav{display:flex;justify-content:space-between;gap:12px;padding:16px 28px 22px;border-top:1px solid var(--line)}
+.pt-nav-b{background:var(--bg2);border:1px solid var(--line2);color:var(--txt);font-size:13px;font-weight:600;padding:9px 20px;border-radius:20px;cursor:pointer;font-family:inherit;transition:.15s}
+.pt-nav-b:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.pt-nav-b:disabled{opacity:.3;cursor:not-allowed}
+.pt-nav-b.prim{background:var(--gold);color:#0A1628;border-color:var(--gold)}
+.pt-nav-b.prim:hover{filter:brightness(1.1)}
+.pt-res{padding:32px 28px;text-align:center}
+.pt-res-e{font-size:11px;color:var(--gold);letter-spacing:.18em;font-weight:700;text-transform:uppercase;margin-bottom:12px}
+.pt-res-t{font-size:38px;font-weight:800;font-family:'Montserrat',sans-serif;margin-bottom:8px;letter-spacing:-.5px}
+.pt-res-t.conservador{color:#60a5fa}
+.pt-res-t.moderado{color:var(--gold)}
+.pt-res-t.agresivo{color:var(--red)}
+.pt-res-d{font-size:14px;color:var(--muted);line-height:1.6;max-width:460px;margin:0 auto 24px}
+.pt-res-b{background:var(--gd);border:1px solid rgba(212,175,55,.35);border-radius:10px;padding:14px;font-size:12px;color:var(--muted);line-height:1.55;text-align:left;margin-bottom:20px;font-style:italic}
+.pt-res-b strong{color:var(--gold);font-style:normal}
+.pt-legal{background:rgba(241,102,90,.06);border:1px solid rgba(241,102,90,.25);border-radius:10px;padding:12px 14px;font-size:10.5px;color:var(--muted);line-height:1.5;margin-bottom:20px;text-align:left}
+.pt-legal strong{color:var(--red);font-weight:700}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -171,9 +246,10 @@
         <div id="idx-list"><div class="sig-load">Cargando…</div></div>
       </div>
       <div class="side-card">
-        <div class="side-title">📡 Señales técnicas <span style="margin-left:auto;font-size:9px;color:var(--muted2)">QQcross</span></div>
-        <div id="sig-list"><div class="sig-load">Calculando señales…</div></div>
-        <div class="sig-disc">Señal basada en el cruce de medias QQcross (sistema de Luis E. Barberán). Cruce de EMA corta sobre WMA de 21 ruedas. Información educativa, no constituye recomendación de inversión ni garantiza resultados. EstrategiasLB · CNV M.N. 2220</div>
+        <div class="side-title">📊 Análisis de tu cartera <span id="prof-slot" style="margin-left:auto"></span></div>
+        <div id="cauc-slot"></div>
+        <div id="sig-list"><div class="sig-load">Calculando análisis…</div></div>
+        <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce EMA 11 × WMA 21) con contexto de tendencia SMA 200, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
       </div>
     </div>
     <!-- DERECHA: tabla -->
@@ -182,7 +258,7 @@
     </div>
   </div>
   <div style="margin-top:12px;font-size:12px;color:var(--muted2)">
-    <strong style="color:var(--gold)">PPC</strong> = Precio Promedio de Compra · Hacé clic en "+ Ingresar costo" para ingresar tu precio de compra y ver ganancia/pérdida · El <strong style="color:var(--gold)">Peso</strong> muestra cuánto pondera cada papel en tu cartera · Las recomendaciones son orientativas y no constituyen asesoramiento de inversión · EstrategiasLB · CNV M.N. 2220
+    <strong style="color:var(--gold)">PPC</strong> = Precio Promedio de Compra · Hacé clic en "+ Ingresar costo" para ingresar tu precio de compra y ver ganancia/pérdida · El <strong style="color:var(--gold)">Peso</strong> muestra cuánto pondera cada papel en tu cartera · <strong style="color:var(--gold)">Información orientativa</strong> — no constituye recomendación de inversión ni asesoramiento personalizado; toda decisión debe consultarse con el asesor antes de operar. EstrategiasLB · Asesor Idóneo CNV M.N. 2220
   </div>
 </div>
 
@@ -342,10 +418,18 @@
 </div>
 
 <div class="snk" id="snk"></div>
+
+<!-- MODAL: Test de Perfil de Inversor -->
+<div class="pt-ov" id="pt-modal">
+  <div class="pt-md" id="pt-container">
+    <!-- Contenido dinámico inyectado por JS -->
+  </div>
+</div>
+
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -402,8 +486,10 @@ const DIVS=[
 const TC={accion:"#4ade80",cedear:"#7dcfff",bono:"#D4AF37",fci:"#f7a83e",cripto:"#f7a83e",letra:"#D4AF37",on:"#a855f7"};
 const BC={balanz:"#3b82f6",iol:"#f97316",cocos:"#a855f7",bull:"#22c55e",manual:"#D4AF37"};
 const TPC={accion:"pa",cedear:"pc",bono:"pb",fci:"pf",letra:"pl",cripto:"pk",on:"pon"};
-let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{}};
-function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}}
+let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{},profile:null,caucionDismissed:null};
+function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}}
+function saveProfile(){if(S.profile)localStorage.setItem(CFG.PROF,JSON.stringify(S.profile));else localStorage.removeItem(CFG.PROF);}
+function saveCaucion(){if(S.caucionDismissed)localStorage.setItem(CFG.CAUC,S.caucionDismissed);}
 function save(){localStorage.setItem(CFG.ST,JSON.stringify({portfolios:S.portfolios,manual:S.manual}));}
 function savePx(){localStorage.setItem(CFG.PST,JSON.stringify(S.px));}
 function savePPC(){localStorage.setItem(CFG.PPT,JSON.stringify(S.ppc));}
@@ -993,7 +1079,11 @@ async function renderIndices(){
   el.innerHTML=rows;
 }
 
-// ── SEÑALES TÉCNICAS M11/M21 ──
+// ═══════════════════════════════════════════════════════════
+// ── SISTEMA QQCROSS + PERFIL DE INVERSOR + M200 ──
+// EMA 11 × WMA 21 (cruce operativo) + SMA 200 (contexto de tendencia)
+// Recomendaciones adaptadas al perfil declarado por el usuario
+// ═══════════════════════════════════════════════════════════
 async function fetchHistory(ticker){
   // Histórico de CEDEARs/acciones desde data912
   const isCedear=DB[ticker]?.t==="cedear";
@@ -1024,8 +1114,13 @@ function wma(arr,n){
   for(let i=0;i<n;i++){const w=i+1;num+=slice[i]*w;den+=w;}
   return num/den;
 }
-// QQcross de Luis: EMA corta vs WMA larga(21). Corta=EMA3 (suavizado para timeframe diario)
-const QQ_CORTA=3, QQ_LARGA=21;
+
+// Criterio Barberán:
+// - QQ Corta: EMA 11 (fuente Cierre)
+// - QQ Larga: WMA 21
+// - Contexto de tendencia: SMA 200 (distancia % del precio)
+const QQ_CORTA=11, QQ_LARGA=21, CTX_SMA_LP=200;
+
 function computeSignal(closes){
   if(!closes||closes.length<QQ_LARGA+1)return null;
   const cNow=ema(closes,QQ_CORTA), lNow=wma(closes,QQ_LARGA);
@@ -1034,46 +1129,266 @@ function computeSignal(closes){
   if(cNow==null||lNow==null||cPrev==null||lPrev==null)return null;
   const crossUp=cPrev<=lPrev&&cNow>lNow;
   const crossDown=cPrev>=lPrev&&cNow<lNow;
-  if(crossUp)return{type:"buy",txt:"COMPRA",sub:"Cruce QQ alcista hoy"};
-  if(crossDown)return{type:"sell",txt:"VENTA",sub:"Cruce QQ bajista hoy"};
-  if(cNow>lNow)return{type:"hold",txt:"ALCISTA",sub:"QQ corta sobre larga"};
-  return{type:"hold",txt:"BAJISTA",sub:"QQ corta bajo larga"};
+  // Contexto SMA200
+  const price=closes[closes.length-1];
+  const sma200=closes.length>=CTX_SMA_LP?sma(closes,CTX_SMA_LP):null;
+  const distM200=sma200?((price-sma200)/sma200)*100:null;
+  const base={priceValue:price,sma200:sma200,distM200:distM200};
+  if(crossUp)return{...base,type:"buy",txt:"Cruce alza",sub:"QQ 11 cruza a WMA 21"};
+  if(crossDown)return{...base,type:"sell",txt:"Cruce baja",sub:"QQ 11 cruza bajo WMA 21"};
+  if(cNow>lNow)return{...base,type:"alcista",txt:"Tendencia alcista",sub:"QQ 11 sobre WMA 21"};
+  return{...base,type:"bajista",txt:"Tendencia bajista",sub:"QQ 11 bajo WMA 21"};
 }
+
+// Motor de recomendación: matriz señal técnica × perfil de inversor
+function recommend(sig,profile){
+  if(!sig)return null;
+  const p=profile?.type||"moderado"; // default moderado si no hay perfil
+  const dist=sig.distM200;
+  const sobreM200=dist!=null&&dist>=0;
+  const lejosArriba=dist!=null&&dist>30;
+  const muyLejosAbajo=dist!=null&&dist<-15;
+
+  // Muy lejos por encima de M200: tomar ganancias (excepto agresivos)
+  if(lejosArriba&&sig.type!=="sell"){
+    if(p==="conservador")return{cls:"reco-tomar",txt:"TOMAR GANANCIA",why:"Precio muy por encima de M200"};
+    if(p==="moderado")return{cls:"reco-tomar",txt:"TOMAR GANANCIA PARCIAL",why:"Precio muy por encima de M200"};
+    return{cls:"reco-mantener",txt:"MANTENER",why:"Tendencia fuerte, seguir"};
+  }
+  // CRUCE ALCISTA
+  if(sig.type==="buy"){
+    if(p==="conservador")return{cls:"reco-observar",txt:"OBSERVAR",why:"Cruce alcista — evaluar con asesor"};
+    if(p==="moderado")return sobreM200?{cls:"reco-comprar",txt:"COMPRAR",why:"Cruce alcista sobre M200"}:{cls:"reco-observar",txt:"OBSERVAR",why:"Cruce alcista pero bajo M200"};
+    return sobreM200?{cls:"reco-comprar",txt:"COMPRAR",why:"Cruce alcista confirmado"}:{cls:"reco-cautela",txt:"COMPRAR CON CAUTELA",why:"Cruce alcista bajo M200"};
+  }
+  // CRUCE BAJISTA
+  if(sig.type==="sell"){
+    if(p==="conservador")return{cls:"reco-vender",txt:"VENDER",why:"Cruce bajista — protegerse"};
+    if(p==="moderado")return{cls:"reco-reducir",txt:"REDUCIR POSICIÓN",why:"Cruce bajista"};
+    return{cls:"reco-vender",txt:"VENDER",why:"Cruce bajista"};
+  }
+  // ALCISTA sostenido
+  if(sig.type==="alcista"){
+    return{cls:"reco-mantener",txt:"MANTENER",why:"Tendencia alcista sostenida"};
+  }
+  // BAJISTA sostenido
+  if(sig.type==="bajista"){
+    if(p==="conservador")return{cls:"reco-vender",txt:"VENDER",why:"Bajista bajo tu perfil"};
+    if(p==="moderado")return muyLejosAbajo?{cls:"reco-vender",txt:"VENDER",why:"Bajista + lejos bajo M200"}:{cls:"reco-reducir",txt:"REDUCIR",why:"Tendencia bajista"};
+    return{cls:"reco-observar",txt:"OBSERVAR",why:"Bajista — esperar rebote"};
+  }
+  return{cls:"reco-observar",txt:"OBSERVAR",why:"Sin señal clara"};
+}
+
+// Render de la barra visual de distancia a M200
+function renderM200Bar(dist){
+  if(dist==null)return "";
+  // Rango visual: -50% a +50%. Fuera de ese rango queda pegado al extremo.
+  const clamped=Math.max(-50,Math.min(50,dist));
+  const pct=50+clamped; // 0..100
+  let color="green";
+  if(dist<-15)color="red";
+  else if(dist>25||dist<-5)color="yellow";
+  const sign=dist>=0?"+":"";
+  const cls=dist>=0?"up":"dn";
+  return `<div class="m200-wrap" title="Distancia del precio a la SMA 200 días"><div class="m200-bar"><div class="m200-mark"></div><div class="m200-dot ${color}" style="left:${pct}%"></div></div><span class="m200-txt ${cls}">${sign}${dist.toFixed(1)}%</span></div>`;
+}
+
 async function renderSignals(){
   const el=document.getElementById("sig-list");
   if(!el)return;
+  // Renderizar badge de perfil arriba del panel
+  renderProfileBadge();
+  renderCaucionBanner();
   // top 10 por peso de la cartera consolidada
   const hs=getConsolidated();
   hs.forEach(h=>{const tot=hs.reduce((s,x)=>s+(x.valorARS||0),0);h.peso=tot>0?h.valorARS/tot*100:0;});
   const top=hs.slice(0,10);
-  if(!top.length){el.innerHTML='<div class="sig-load">Importá tu cartera para ver señales</div>';return;}
-  const results=await Promise.all(top.map(async h=>({h,sig:computeSignal(await fetchHistory(h.ticker))})));
-  // contar oportunidades activas
-  const nBuy=results.filter(r=>r.sig?.type==="buy").length;
-  const nSell=results.filter(r=>r.sig?.type==="sell").length;
+  if(!top.length){el.innerHTML='<div class="sig-load">Importá tu cartera para ver el análisis</div>';return;}
+  const results=await Promise.all(top.map(async h=>{const closes=await fetchHistory(h.ticker);const sig=computeSignal(closes);return{h,sig,reco:recommend(sig,S.profile)};}));
+  // contar oportunidades activas (por recomendación, no por señal técnica pura)
+  const nBuy=results.filter(r=>r.reco?.txt==="COMPRAR"||r.reco?.txt==="COMPRAR CON CAUTELA").length;
+  const nSell=results.filter(r=>r.reco?.txt==="VENDER"||r.reco?.txt==="REDUCIR POSICIÓN"||r.reco?.txt==="TOMAR GANANCIA"||r.reco?.txt==="TOMAR GANANCIA PARCIAL").length;
   let head="";
   if(nBuy||nSell){
     head=`<div class="sig-summary">`+
-      (nBuy?`<div class="sig-sm sig-sm-buy"><span class="sig-sm-n">${nBuy}</span><span class="sig-sm-l">${nBuy===1?"señal de COMPRA":"señales de COMPRA"}</span></div>`:"")+
-      (nSell?`<div class="sig-sm sig-sm-sell"><span class="sig-sm-n">${nSell}</span><span class="sig-sm-l">${nSell===1?"señal de VENTA":"señales de VENTA"}</span></div>`:"")+
+      (nBuy?`<div class="sig-sm sig-sm-buy"><span class="sig-sm-n">${nBuy}</span><span class="sig-sm-l">${nBuy===1?"orientación de compra":"orientaciones de compra"}</span></div>`:"")+
+      (nSell?`<div class="sig-sm sig-sm-sell"><span class="sig-sm-n">${nSell}</span><span class="sig-sm-l">${nSell===1?"orientación de venta/reducción":"orientaciones de venta/reducción"}</span></div>`:"")+
       `</div>`;
   }else{
-    head=`<div class="sig-summary"><div class="sig-sm sig-sm-none">Sin cruces nuevos hoy · seguí monitoreando</div></div>`;
+    head=`<div class="sig-summary"><div class="sig-sm sig-sm-none">Sin orientaciones nuevas hoy · mantener seguimiento</div></div>`;
   }
-  // ordenar: primero compras, después ventas, después el resto
-  const order={buy:0,sell:1,hold:2};
-  results.sort((a,b)=>(order[a.sig?.type]??3)-(order[b.sig?.type]??3));
-  const rows=results.map(({h,sig})=>{
-    if(!sig)return `<div class="sig-row"><div><div class="sig-tk">${h.ticker}</div><div class="sig-sub">Sin histórico suficiente</div></div><span class="sig-badge sig-hold">—</span></div>`;
-    const cls=sig.type==="buy"?"sig-buy":sig.type==="sell"?"sig-sell":"sig-hold";
-    const rowCls=sig.type==="buy"?"sig-row sig-row-buy":sig.type==="sell"?"sig-row sig-row-sell":"sig-row";
-    const icon=sig.type==="buy"?"▲ ":sig.type==="sell"?"▼ ":"";
-    return `<div class="${rowCls}"><div><div class="sig-tk">${h.ticker}</div><div class="sig-sub">${sig.sub}</div></div><span class="sig-badge ${cls}">${icon}${sig.txt}</span></div>`;
+  // ordenar: primero compras, después ventas/reducción/tomar ganancia, después el resto
+  const order=r=>{
+    const t=r.reco?.txt||"";
+    if(t.includes("COMPRAR"))return 0;
+    if(t.includes("VENDER")||t.includes("REDUCIR")||t.includes("TOMAR"))return 1;
+    return 2;
+  };
+  results.sort((a,b)=>order(a)-order(b));
+  const rows=results.map(({h,sig,reco})=>{
+    if(!sig||!reco)return `<div class="sig-row"><div><div class="sig-tk">${h.ticker}</div><div class="sig-sub">Sin histórico suficiente</div></div><span class="sig-badge sig-hold">—</span></div>`;
+    const isBuy=reco.txt.includes("COMPRAR");
+    const isSell=reco.txt.includes("VENDER")||reco.txt.includes("REDUCIR")||reco.txt.includes("TOMAR");
+    const rowCls=isBuy?"sig-row sig-row-buy":isSell?"sig-row sig-row-sell":"sig-row";
+    const icon=isBuy?"▲ ":isSell?"▼ ":"";
+    const m200=sig.distM200!=null?renderM200Bar(sig.distM200):"";
+    return `<div class="${rowCls}"><div style="flex:1;min-width:0"><div class="sig-tk">${h.ticker}</div><div class="sig-sub">${reco.why}</div>${m200}</div><span class="reco-badge ${reco.cls}">${icon}${reco.txt}</span></div>`;
   }).join("");
   el.innerHTML=head+rows;
 }
 
-async function init(){load();renderD();setStatus("Actualizando datos de mercado...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");renderIndices();renderSignals();}
+// ── PERFIL DE INVERSOR ──
+function renderProfileBadge(){
+  const slot=document.getElementById("prof-slot");
+  if(!slot)return;
+  if(S.profile){
+    const t=S.profile.type;
+    const label=t.charAt(0).toUpperCase()+t.slice(1);
+    slot.innerHTML=`<span class="prof-badge prof-${t}" onclick="openProfileTest()" title="Rehacer test">${label}</span>`;
+  }else{
+    slot.innerHTML=`<span class="prof-badge prof-none" onclick="openProfileTest()">Definir perfil</span>`;
+  }
+}
+
+// Preguntas del test (basado en el modelo del test de inversor de Balanz)
+const PT_QUESTIONS=[
+  {q:"¿Cuál es tu edad?",opts:[
+    {t:"Menos de 35 años",p:6},
+    {t:"Entre 35 y 55 años",p:4},
+    {t:"Más de 55 años",p:2}
+  ]},
+  {q:"¿Qué porcentaje de tu patrimonio total representa lo que invertís?",opts:[
+    {t:"Menos del 25%",p:6},
+    {t:"Entre el 25% y el 50%",p:4},
+    {t:"Más del 50%",p:2}
+  ]},
+  {q:"¿Cuál es tu horizonte de inversión?",opts:[
+    {t:"Más de 3 años",p:6},
+    {t:"Entre 1 y 3 años",p:4},
+    {t:"Menos de 1 año",p:2}
+  ]},
+  {q:"¿Cuál es tu objetivo principal al invertir?",opts:[
+    {t:"Maximizar el crecimiento del capital",p:6},
+    {t:"Obtener renta periódica moderada",p:4},
+    {t:"Preservar el capital sobre todo",p:2}
+  ]},
+  {q:"¿Qué experiencia previa tenés operando en el mercado?",opts:[
+    {t:"Regular — opero seguido",p:6},
+    {t:"Ocasional — algunas operaciones",p:4},
+    {t:"Ninguna o casi ninguna",p:2}
+  ]},
+  {q:"Si tu cartera cayera un 20% en un mes, ¿qué harías?",opts:[
+    {t:"Comprar más para aprovechar el precio",p:6},
+    {t:"Mantener y esperar la recuperación",p:4},
+    {t:"Vender para no seguir perdiendo",p:2}
+  ]},
+  {q:"¿Qué instrumentos financieros conocés y usás con confianza?",opts:[
+    {t:"Acciones, CEDEARs, opciones",p:6},
+    {t:"Bonos, ONs y fondos comunes",p:4},
+    {t:"Plazo fijo y letras",p:2}
+  ]}
+];
+
+let PT_ANS=[],PT_IDX=0;
+
+function openProfileTest(){
+  PT_ANS=new Array(PT_QUESTIONS.length).fill(null);
+  PT_IDX=0;
+  renderProfileTest();
+  document.getElementById("pt-modal").classList.add("on");
+}
+function closeProfileTest(){
+  document.getElementById("pt-modal").classList.remove("on");
+}
+function renderProfileTest(){
+  const q=PT_QUESTIONS[PT_IDX];
+  const total=PT_QUESTIONS.length;
+  const prog=PT_QUESTIONS.map((_,i)=>{
+    const cls=i<PT_IDX?"done":(i===PT_IDX?"active":"");
+    return `<div class="pt-prog-i ${cls}"></div>`;
+  }).join("");
+  const opts=q.opts.map((o,i)=>{
+    const cls=PT_ANS[PT_IDX]===i?"on":"";
+    return `<button class="pt-opt ${cls}" onclick="selectOpt(${i})">${o.t}</button>`;
+  }).join("");
+  const isLast=PT_IDX===total-1;
+  const canAdv=PT_ANS[PT_IDX]!==null;
+  document.getElementById("pt-container").innerHTML=`
+    <div class="pt-hd">
+      <div class="pt-hd-e">Test de Perfil de Inversor</div>
+      <div class="pt-hd-t">Contanos sobre vos</div>
+      <div class="pt-hd-s">Con estas respuestas ajustamos las orientaciones de tu cartera. Se guardan localmente en tu navegador.</div>
+    </div>
+    <div class="pt-body">
+      <div class="pt-prog">${prog}</div>
+      <div class="pt-q">Pregunta ${PT_IDX+1} de ${total}</div>
+      <div class="pt-q-t">${q.q}</div>
+      <div class="pt-opts">${opts}</div>
+    </div>
+    <div class="pt-nav">
+      <button class="pt-nav-b" onclick="prevQ()" ${PT_IDX===0?"disabled":""}>← Anterior</button>
+      <button class="pt-nav-b prim" onclick="${isLast?"finishProfileTest()":"nextQ()"}" ${!canAdv?"disabled":""}>${isLast?"Ver resultado":"Siguiente →"}</button>
+    </div>`;
+}
+function selectOpt(i){PT_ANS[PT_IDX]=i;renderProfileTest();}
+function nextQ(){if(PT_ANS[PT_IDX]==null)return;PT_IDX++;if(PT_IDX>=PT_QUESTIONS.length)PT_IDX=PT_QUESTIONS.length-1;renderProfileTest();}
+function prevQ(){if(PT_IDX>0){PT_IDX--;renderProfileTest();}}
+
+function finishProfileTest(){
+  if(PT_ANS.some(a=>a==null)){snk("⚠ Completá todas las preguntas");return;}
+  const score=PT_ANS.reduce((s,ai,i)=>s+PT_QUESTIONS[i].opts[ai].p,0);
+  // Rangos: 14-22 conservador · 23-32 moderado · 33-42 agresivo
+  let type="moderado";
+  if(score<=22)type="conservador";
+  else if(score>=33)type="agresivo";
+  S.profile={type,score,completedAt:new Date().toISOString()};
+  saveProfile();
+  showProfileResult();
+}
+function showProfileResult(){
+  const t=S.profile.type;
+  const label=t.charAt(0).toUpperCase()+t.slice(1);
+  const desc={
+    conservador:"Priorizás la preservación del capital. Las orientaciones te van a sugerir ser cauto ante cruces — vas a ver más señales de <strong>observar</strong> y <strong>mantener</strong>. Cuando hay riesgo, te vamos a sugerir vender antes.",
+    moderado:"Buscás crecimiento equilibrando riesgo y estabilidad. Las orientaciones te van a ofrecer un balance: <strong>comprar</strong> cuando hay confirmación de tendencia, <strong>reducir</strong> ante debilidad clara, sin extremos.",
+    agresivo:"Tolerás volatilidad y buscás maximizar rendimiento. Vas a ver orientaciones más rápidas para <strong>entrar</strong> y <strong>salir</strong>, incluso en cruces contra la tendencia de fondo — con la advertencia correspondiente."
+  }[t];
+  document.getElementById("pt-container").innerHTML=`
+    <div class="pt-res">
+      <div class="pt-res-e">TU PERFIL</div>
+      <div class="pt-res-t ${t}">${label}</div>
+      <div class="pt-res-d">${desc}</div>
+      <div class="pt-res-b"><strong>¿Cómo lo usamos?</strong> Cruzamos este perfil con los papeles reales que tenés en tu cartera. La orientación de cada papel se ajusta según lo que declaraste hoy. Esto es 100% para <strong>tu cartera</strong>, no una señal genérica de mercado.</div>
+      <div class="pt-legal"><strong>⚠ IMPORTANTE — ORIENTACIÓN, NO RECOMENDACIÓN.</strong> Las orientaciones son informativas y educativas, generadas por análisis técnico automatizado combinado con tu perfil declarado. NO constituyen recomendación personalizada de inversión según la CNV. Toda operación debe evaluarse con criterio propio y consultarse con tu asesor antes de ejecutarse. EstrategiasLB no garantiza resultados ni se responsabiliza por decisiones tomadas exclusivamente a partir de esta información. Asesor Idóneo CNV M.N. 2220.</div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="pt-nav-b prim" onclick="closeProfileTest();renderSignals()">Entendido, ver mi cartera</button>
+      </div>
+    </div>`;
+}
+
+// ── BANNER DE CAUCIÓN (VIERNES) ──
+function isFriday(){return new Date().getDay()===5;}
+function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function renderCaucionBanner(){
+  const slot=document.getElementById("cauc-slot");
+  if(!slot)return;
+  if(!isFriday()){slot.innerHTML="";return;}
+  if(S.caucionDismissed===todayStr()){slot.innerHTML="";return;}
+  slot.innerHTML=`<div class="cauc-b">
+    <span class="cauc-b-i">🔔</span>
+    <div class="cauc-b-c">
+      <div class="cauc-b-t">Es viernes: caucioná tu liquidez</div>
+      <div class="cauc-b-d">Colocá los pesos ociosos a caución 1 día para generar rendimiento el fin de semana. Sin riesgo de mercado, con garantía BYMA. Tasa de referencia en pesos: <strong>30–45% TNA</strong>. <a href="https://www.bolsar.info/" target="_blank" rel="noopener">Ver tasas actuales →</a></div>
+    </div>
+    <button class="cauc-b-x" onclick="dismissCaucion()" title="Cerrar por hoy">×</button>
+  </div>`;
+}
+function dismissCaucion(){S.caucionDismissed=todayStr();saveCaucion();renderCaucionBanner();}
+
+async function init(){load();renderD();renderProfileBadge();renderCaucionBanner();setStatus("Actualizando datos de mercado...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);if(S.lu)document.getElementById("upd-t").textContent="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});renderD();setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");renderIndices();renderSignals();}
+// Cerrar modal del test al click en el overlay
+document.addEventListener("click",e=>{const m=document.getElementById("pt-modal");if(e.target===m)closeProfileTest();});
 init();
 
 </script>

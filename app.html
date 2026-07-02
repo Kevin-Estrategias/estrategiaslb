@@ -299,6 +299,98 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
 .note-md-b{background:var(--bg2);border:1px solid var(--line2);color:var(--txt);font-size:12px;font-weight:600;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit}
 .note-md-b.prim{background:var(--gold);color:#0A1628;border-color:var(--gold)}
 .note-md-b.dng{color:var(--red);border-color:rgba(241,102,90,.4)}
+/* BANNER REBALANCEO MENSUAL (R3) */
+.rebal-b{background:linear-gradient(135deg,rgba(0,180,216,.10),rgba(0,180,216,.02));border:1px solid rgba(0,180,216,.30);border-radius:11px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;position:relative}
+.rebal-b-i{font-size:18px;line-height:1;margin-top:1px;color:var(--teal)}
+.rebal-b-c{flex:1;min-width:0}
+.rebal-b-t{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:4px;line-height:1.3}
+.rebal-b-d{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.rebal-b-wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;font-size:11px;font-weight:700;padding:6px 14px;border-radius:16px;cursor:pointer;font-family:inherit}
+.rebal-b-x{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--muted2);font-size:16px;cursor:pointer;line-height:1;padding:2px 6px;border-radius:4px}
+.rebal-b-x:hover{background:rgba(255,255,255,.06);color:var(--txt)}
+/* COMPARACIÓN MENSUAL (R3) */
+.month-comp{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.month-comp-t{font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:600;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.month-comp-g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:640px){.month-comp-g{grid-template-columns:1fr 1fr;gap:8px}}
+.month-comp-c{background:var(--bg2);border-radius:8px;padding:10px 12px;border-left:3px solid var(--line2)}
+.month-comp-c.cart{border-left-color:var(--gold)}
+.month-comp-c.infl{border-left-color:#fb923c}
+.month-comp-c.diff{border-left-color:var(--teal)}
+.month-comp-cl{font-size:10px;color:var(--muted2);margin-bottom:3px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.month-comp-cv{font-size:18px;font-weight:800;font-family:"JetBrains Mono",monospace;line-height:1.1}
+.month-comp-cv.up{color:var(--green)}
+.month-comp-cv.dn{color:var(--red)}
+.month-comp-cv.nn{color:var(--txt)}
+.month-comp-cs{font-size:10px;color:var(--muted2);margin-top:2px;font-style:italic}
+.month-comp-i{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:10px;padding:8px 10px;background:rgba(0,180,216,.05);border-radius:6px;border-left:2px solid var(--teal)}
+.month-comp-i strong{color:var(--txt)}
+/* CONTEXTO DE MERCADO (R3) */
+.mctx-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.mctx-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px}
+.mctx-t{font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:600;text-transform:uppercase}
+.mctx-tag{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:.03em;text-transform:uppercase}
+.mctx-tag.calmo{background:rgba(74,222,128,.14);color:var(--green);border:1px solid rgba(74,222,128,.35)}
+.mctx-tag.moderado{background:rgba(212,175,55,.14);color:var(--gold);border:1px solid rgba(212,175,55,.35)}
+.mctx-tag.turb{background:rgba(241,102,90,.14);color:var(--red);border:1px solid rgba(241,102,90,.35)}
+.mctx-tag.neutro{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--line2)}
+.mctx-g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+@media(max-width:640px){.mctx-g{grid-template-columns:1fr 1fr}}
+.mctx-i{background:var(--bg2);border-radius:8px;padding:8px 10px}
+.mctx-il{font-size:9.5px;color:var(--muted2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px;font-weight:600}
+.mctx-iv{font-size:14px;font-weight:800;font-family:"JetBrains Mono",monospace;color:var(--txt)}
+.mctx-is{font-size:9.5px;color:var(--muted2);margin-top:2px;font-style:italic}
+.mctx-d{font-size:11.5px;color:var(--muted);line-height:1.5}
+/* AVISO DIVIDENDOS (R3) */
+.div-b{background:linear-gradient(135deg,rgba(74,222,128,.10),rgba(74,222,128,.02));border:1px solid rgba(74,222,128,.30);border-radius:11px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px}
+.div-b-i{font-size:18px;line-height:1;color:var(--green)}
+.div-b-c{flex:1;min-width:0}
+.div-b-t{font-size:12.5px;font-weight:700;color:var(--green);margin-bottom:4px;line-height:1.3}
+.div-b-d{font-size:11px;color:var(--muted);line-height:1.5}
+.div-b-d strong{color:var(--txt)}
+/* HISTORIAL DE SEÑALES (R4) */
+.sig-hist-btn{background:none;border:1px solid var(--line2);color:var(--muted);font-size:11px;font-weight:600;padding:5px 12px;border-radius:14px;cursor:pointer;font-family:inherit;margin-top:12px;display:inline-flex;align-items:center;gap:5px;transition:.15s}
+.sig-hist-btn:hover{border-color:var(--gold);color:var(--gold)}
+.sig-hist-md{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:640px;width:100%;padding:0;max-height:82vh;display:flex;flex-direction:column}
+.sig-hist-hd{padding:18px 22px 12px;border-bottom:1px solid var(--line)}
+.sig-hist-t{font-size:16px;font-weight:700;color:var(--txt);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.sig-hist-s{font-size:11.5px;color:var(--muted);line-height:1.4}
+.sig-hist-b{overflow-y:auto;flex:1;padding:14px 22px 20px}
+.sig-hist-empty{text-align:center;padding:40px 20px;color:var(--muted2);font-size:12px}
+.sh-row{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.sh-row:last-child{border-bottom:none}
+.sh-l{flex:1;min-width:0}
+.sh-tk{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:2px}
+.sh-tk .sh-date{font-size:10.5px;color:var(--muted2);font-weight:500;margin-left:6px}
+.sh-r{font-size:11px;color:var(--muted);line-height:1.5}
+.sh-r strong{color:var(--txt)}
+.sh-badge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:12px;white-space:nowrap;text-transform:uppercase;letter-spacing:.03em}
+.sh-badge.buy{background:rgba(74,222,128,.15);color:var(--green);border:1px solid rgba(74,222,128,.35)}
+.sh-badge.sell{background:rgba(241,102,90,.15);color:var(--red);border:1px solid rgba(241,102,90,.35)}
+.sh-badge.tomar{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.35)}
+.sh-badge.reducir{background:rgba(251,146,60,.14);color:#fb923c;border:1px solid rgba(251,146,60,.30)}
+.sh-outcome{font-size:11px;margin-top:5px;padding:5px 8px;border-radius:5px;background:var(--bg2);color:var(--muted);display:inline-block}
+.sh-outcome.win{color:var(--green);background:rgba(74,222,128,.05)}
+.sh-outcome.loss{color:var(--red);background:rgba(241,102,90,.05)}
+.sh-outcome.open{color:var(--gold);background:rgba(212,175,55,.05)}
+/* TEMA CLARO (R4) */
+body.theme-light{--bg:#F6F7FA;--bg2:#FFFFFF;--panel:#FFFFFF;--line:rgba(10,22,40,.08);--line2:rgba(10,22,40,.14);--txt:#0A1628;--muted:#4B5563;--muted2:#6B7280;--gd:linear-gradient(135deg,rgba(212,175,55,.12),rgba(212,175,55,.03))}
+body.theme-light .cauc-b{background:linear-gradient(135deg,rgba(212,175,55,.10),rgba(212,175,55,.02))}
+body.theme-light .moment-panel{background:linear-gradient(135deg,rgba(212,175,55,.10),rgba(212,175,55,.02))}
+body.theme-light .conc-a{background:linear-gradient(135deg,rgba(251,146,60,.09),rgba(251,146,60,.02))}
+body.theme-light .conc-a-c{background:linear-gradient(135deg,rgba(241,102,90,.10),rgba(241,102,90,.02))}
+body.theme-light .rebal-b{background:linear-gradient(135deg,rgba(0,180,216,.09),rgba(0,180,216,.02))}
+body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),rgba(74,222,128,.02))}
+/* TOGGLE TEMA (R4) */
+.theme-tgl{background:var(--bg2);border:1px solid var(--line2);color:var(--muted);font-size:14px;padding:5px 10px;border-radius:16px;cursor:pointer;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:5px}
+.theme-tgl:hover{border-color:var(--gold);color:var(--gold)}
+/* MODAL ATAJOS TECLADO (R4) */
+.kbd-md{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:460px;width:100%;padding:24px}
+.kbd-md-t{font-size:15px;font-weight:700;color:var(--txt);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.kbd-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+.kbd-row:last-child{border-bottom:none}
+.kbd-lbl{color:var(--muted)}
+.kbd-key{background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:2px 8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--txt);font-weight:600}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -332,6 +424,8 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
     </button>
     <span id="upd-t" style="font-size:12px;color:var(--muted2)"></span>
     <button class="bgear" onclick="openFund()" title="Editor de Fundamentales">⚙️</button>
+    <button class="theme-tgl" onclick="toggleTheme()" id="theme-tgl" title="Cambiar tema (T)">🌙</button>
+    <button class="theme-tgl" onclick="document.getElementById('kbd-modal').classList.add('on')" title="Ver atajos de teclado (?)" style="padding:5px 9px">⌨️</button>
     <div class="ccyg">
       <button class="ccy on" data-c="ars" onclick="setCcy('ars')">ARS</button>
       <button class="ccy" data-c="mep" onclick="setCcy('mep')">MEP</button>
@@ -376,11 +470,24 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
         <div class="side-title">📊 Análisis de tu cartera <span id="prof-slot" style="margin-left:auto"></span></div>
         <div id="cauc-slot"></div>
         <div id="sig-list"><div class="sig-load">Calculando análisis…</div></div>
+        <button class="sig-hist-btn" onclick="openSigHistory()" title="Ver historial de orientaciones pasadas (H)">📋 Ver historial de orientaciones</button>
         <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce EMA 11 × WMA 21) con contexto de tendencia SMA 200, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
       </div>
     </div>
     <!-- DERECHA: chart histórico + tabla -->
     <div>
+      <!-- BANNER REBALANCEO MENSUAL (R3) -->
+      <div id="rebal-slot"></div>
+
+      <!-- CONTEXTO DE MERCADO (R3) -->
+      <div id="mctx-slot"></div>
+
+      <!-- COMPARACIÓN MENSUAL CON INFLACIÓN (R3) -->
+      <div id="month-comp-slot"></div>
+
+      <!-- AVISO DE DIVIDENDOS PRÓXIMOS (R3) -->
+      <div id="div-slot"></div>
+
       <!-- PANEL MOMENTO DE MIRAR (Ronda 2) -->
       <div id="moment-slot"></div>
 
@@ -663,6 +770,32 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
   </div>
 </div>
 
+<!-- MODAL: Historial de señales pasadas (R4) -->
+<div class="pt-ov" id="sighist-modal">
+  <div class="sig-hist-md">
+    <div class="sig-hist-hd">
+      <div class="sig-hist-t">📋 Historial de orientaciones</div>
+      <div class="sig-hist-s">Cada vez que UNE detectó una orientación fuerte para tu perfil, se guardó acá con el precio de ese día. Cuando la orientación se cierra, ves cómo evolucionó.</div>
+    </div>
+    <div class="sig-hist-b" id="sig-hist-body"></div>
+  </div>
+</div>
+
+<!-- MODAL: Atajos de teclado (R4) -->
+<div class="pt-ov" id="kbd-modal">
+  <div class="kbd-md">
+    <div class="kbd-md-t">⌨️ Atajos de teclado</div>
+    <div class="kbd-row"><span class="kbd-lbl">Buscar ticker</span><span class="kbd-key">/</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Actualizar datos</span><span class="kbd-key">R</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Cerrar modales</span><span class="kbd-key">Esc</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Ver historial de orientaciones</span><span class="kbd-key">H</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Compartir con asesor</span><span class="kbd-key">W</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Cambiar tema</span><span class="kbd-key">T</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Ver este menú</span><span class="kbd-key">?</span></div>
+    <button class="pt-nav-b prim" style="margin-top:14px;width:100%" onclick="document.getElementById('kbd-modal').classList.remove('on')">Cerrar</button>
+  </div>
+</div>
+
 <!-- MODAL: Test de Perfil de Inversor -->
 <div class="pt-ov" id="pt-modal">
   <div class="pt-md" id="pt-container">
@@ -673,7 +806,7 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ONB:"elb_onb_v1",PREFS:"elb_prefs_v1",NOTES:"elb_notes_v1",SIGHIST:"elb_sighist_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ONB:"elb_onb_v1",PREFS:"elb_prefs_v1",NOTES:"elb_notes_v1",SIGHIST:"elb_sighist_v1",REBAL:"elb_rebal_v1",INFL:"elb_infl_v1",MCTX:"elb_mctx_v1",THEME:"elb_theme_v1",INFL_URL:"https://api.argentinadatos.com/v1/finanzas/indices/inflacion",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -822,7 +955,7 @@ async function fetchPx(){
 async function refresh(){const ic=document.getElementById("ref-ic");ic.classList.add("spin");setStatus("Actualizando...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);ic.classList.remove("spin");if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';renderD();setStatus(d&&p?"":"Precios con demora · TCambio OK",d&&p?"":"warn");renderIndices();renderSignals();renderHistoricalChart();}
 function pxOf(tk){return S.px[tk]?.p||null;}
 function chOf(tk){const c=S.px[tk]?.ch;return(c===0||c)?c:null;}
-function nameOf(tk){return DB[tk]?.n||S.learned[tk]?.n||"";}
+function nameOf(tk){return (typeof TICKER_NAMES_ES!=="undefined"&&TICKER_NAMES_ES[tk])||DB[tk]?.n||S.learned[tk]?.n||"";}
 function typeOf(tk){return DB[tk]?.t||S.learned[tk]?.t||"accion";}
 // Bonos, ON y letras cotizan "por cada 100 nominales": el valor es cant × precio / 100
 function priceFactor(tipo){return(tipo==="bono"||tipo==="on"||tipo==="letra")?0.01:1;}
@@ -1571,6 +1704,8 @@ async function renderSignals(){
   el.innerHTML=head+rows;
   // Pasar orientaciones al panel Momento de Mirar
   try{renderMomentPanel(results);}catch(e){console.warn("moment",e);}
+  // Registrar señales fuertes en el historial (R4)
+  try{recordSignalsFromResults(results);}catch(e){console.warn("sigHist",e);}
 }
 
 // ── PERFIL DE INVERSOR ──
@@ -2262,28 +2397,430 @@ function shareWithAdvisor(){
   window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
 }
 
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 3.2: RECORDATORIO DE DIVIDENDOS PRÓXIMOS ──
+// ═══════════════════════════════════════════════════════════
+// Calendario básico de dividendos aproximados (montos en USD por CEDEAR)
+// Fechas reales las publica cada emisor — esto es orientativo
+const DIV_CAL={
+  AAPL:{pagos:[{mes:2,monto:0.024},{mes:5,monto:0.024},{mes:8,monto:0.025},{mes:11,monto:0.025}]},
+  MSFT:{pagos:[{mes:3,monto:0.075},{mes:6,monto:0.075},{mes:9,monto:0.083},{mes:12,monto:0.083}]},
+  KO:{pagos:[{mes:4,monto:0.049},{mes:7,monto:0.049},{mes:10,monto:0.049},{mes:12,monto:0.049}]},
+  PEP:{pagos:[{mes:1,monto:0.135},{mes:3,monto:0.135},{mes:6,monto:0.140},{mes:9,monto:0.140}]},
+  JNJ:{pagos:[{mes:3,monto:0.124},{mes:6,monto:0.124},{mes:9,monto:0.124},{mes:12,monto:0.124}]},
+  JPM:{pagos:[{mes:1,monto:0.115},{mes:4,monto:0.115},{mes:7,monto:0.125},{mes:10,monto:0.125}]},
+  V:{pagos:[{mes:3,monto:0.052},{mes:6,monto:0.052},{mes:9,monto:0.052},{mes:12,monto:0.058}]},
+  MA:{pagos:[{mes:2,monto:0.066},{mes:5,monto:0.066},{mes:8,monto:0.076},{mes:11,monto:0.076}]},
+  PG:{pagos:[{mes:2,monto:0.094},{mes:5,monto:0.100},{mes:8,monto:0.100},{mes:11,monto:0.100}]},
+  XOM:{pagos:[{mes:3,monto:0.095},{mes:6,monto:0.095},{mes:9,monto:0.099},{mes:12,monto:0.099}]},
+  CVX:{pagos:[{mes:3,monto:0.163},{mes:6,monto:0.163},{mes:9,monto:0.163},{mes:12,monto:0.163}]},
+  T:{pagos:[{mes:2,monto:0.028},{mes:5,monto:0.028},{mes:8,monto:0.028},{mes:11,monto:0.028}]},
+  VZ:{pagos:[{mes:2,monto:0.067},{mes:5,monto:0.067},{mes:8,monto:0.068},{mes:11,monto:0.068}]},
+  IBM:{pagos:[{mes:3,monto:0.033},{mes:6,monto:0.033},{mes:9,monto:0.033},{mes:12,monto:0.033}]},
+  MCD:{pagos:[{mes:3,monto:0.167},{mes:6,monto:0.167},{mes:9,monto:0.167},{mes:12,monto:0.167}]},
+  WMT:{pagos:[{mes:1,monto:0.021},{mes:4,monto:0.021},{mes:6,monto:0.021},{mes:9,monto:0.021}]},
+  HD:{pagos:[{mes:3,monto:0.230},{mes:6,monto:0.230},{mes:9,monto:0.230},{mes:12,monto:0.230}]},
+  DIS:{pagos:[{mes:1,monto:0.075},{mes:7,monto:0.075}]},
+  SPY:{pagos:[{mes:3,monto:0.180},{mes:6,monto:0.190},{mes:9,monto:0.190},{mes:12,monto:0.190}]}
+};
+// Aviso conservador: solo si hay evento estimado en las próximas 2 semanas
+// El calendario tiene fechas anuales aproximadas, no fechas ciertas
+function renderDividendReminder(){
+  const slot=document.getElementById("div-slot");
+  if(!slot)return;
+  const hs=getConsolidated();
+  if(!hs.length){slot.innerHTML="";return;}
+  if(typeof DIV_CAL==="undefined"||!DIV_CAL){slot.innerHTML="";return;}
+  const now=new Date();
+  const cutoff=new Date();cutoff.setDate(cutoff.getDate()+14);
+  const upcoming=[];
+  hs.forEach(h=>{
+    const cal=DIV_CAL[h.ticker];
+    if(!cal||!cal.pagos)return;
+    cal.pagos.forEach(p=>{
+      // p.mes es 1-12, asumir día 15 como estimación central
+      const mes=(p.mes||0)-1;
+      let evento=new Date(now.getFullYear(),mes,15);
+      if(evento<now)evento.setFullYear(now.getFullYear()+1);
+      if(evento<=cutoff&&evento>=now){
+        const monto=(p.monto||0)*h.cant;
+        upcoming.push({ticker:h.ticker,fecha:evento,monto,cant:h.cant,montoUnit:p.monto||0});
+      }
+    });
+  });
+  if(!upcoming.length){slot.innerHTML="";return;}
+  upcoming.sort((a,b)=>a.fecha-b.fecha);
+  const items=upcoming.slice(0,3).map(u=>{
+    const fecha=u.fecha.toLocaleDateString("es-AR",{day:"2-digit",month:"short"});
+    return `<strong>${u.ticker}</strong> — estimado ${fecha} · ≈ US$ ${u.monto.toFixed(2)} por ${u.cant.toLocaleString("es-AR")} papeles`;
+  }).join("<br>");
+  const plural=upcoming.length>1?"pagos":"pago";
+  slot.innerHTML=`<div class="div-b">
+    <div class="div-b-i">💰</div>
+    <div class="div-b-c">
+      <div class="div-b-t">Dividendos estimados en las próximas 2 semanas</div>
+      <div class="div-b-d">Papeles de tu cartera con ${plural} de dividendo estimado en el corto plazo:<br><br>${items}<br><br><em style="color:var(--muted2)">Fechas aproximadas según calendario anual. La fecha exacta la publica cada emisor.</em></div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 3.3: COMPARACIÓN MENSUAL CON INFLACIÓN ──
+// ═══════════════════════════════════════════════════════════
+// Endpoint público de argentinadatos.com, cache por mes
+async function getInflacionMensual(){
+  const cacheKey="infl_"+new Date().toISOString().slice(0,7);
+  try{
+    const cached=JSON.parse(localStorage.getItem(CFG.INFL)||"{}");
+    if(cached[cacheKey])return cached[cacheKey];
+  }catch{}
+  try{
+    const r=await fetchRobust(CFG.INFL_URL,{timeout:10000,retries:1});
+    const j=await r.json();
+    if(!Array.isArray(j)||!j.length)return null;
+    // Devuelve array de {fecha, valor} — valor es la variación mensual
+    const sorted=j.map(x=>({fecha:(x.fecha||"").slice(0,7),valor:parseFloat(x.valor)||0})).filter(x=>x.fecha&&!isNaN(x.valor)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    try{localStorage.setItem(CFG.INFL,JSON.stringify({[cacheKey]:sorted}));}catch{}
+    return sorted;
+  }catch(e){console.warn("Inflación",e);return null;}
+}
+function monthlyReturnFromSnapshots(month){
+  // month: "YYYY-MM"
+  const snaps=Object.values(S.snapshots).filter(s=>s.fecha&&s.fecha.startsWith(month)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  if(snaps.length<2)return null;
+  const start=snaps[0].valorARS,end=snaps[snaps.length-1].valorARS;
+  if(!start||!end)return null;
+  return((end-start)/start)*100;
+}
+async function renderMonthlyComparison(){
+  const slot=document.getElementById("month-comp-slot");
+  if(!slot)return;
+  const now=new Date();
+  const currMonth=now.toISOString().slice(0,7);
+  const prevDate=new Date(now.getFullYear(),now.getMonth()-1,15);
+  const prevMonth=prevDate.toISOString().slice(0,7);
+  const curReturn=monthlyReturnFromSnapshots(currMonth);
+  const prevReturn=monthlyReturnFromSnapshots(prevMonth);
+  // Requiere al menos datos del mes actual para tener sentido
+  if(curReturn==null&&prevReturn==null){slot.innerHTML="";return;}
+  const inflSerie=await getInflacionMensual();
+  const inflMap={};if(inflSerie)inflSerie.forEach(x=>{inflMap[x.fecha]=x.valor;});
+  const showRow=(month,label,ret)=>{
+    if(ret==null)return "";
+    const infl=inflMap[month];
+    const retCls=ret>=0?"up":"dn";
+    const cards=[
+      `<div class="month-comp-c cart"><div class="month-comp-cl">Cartera</div><div class="month-comp-cv ${retCls}">${ret>=0?"+":""}${ret.toFixed(1)}%</div><div class="month-comp-cs">nominal ARS</div></div>`
+    ];
+    if(infl!=null){
+      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn">${infl.toFixed(1)}%</div><div class="month-comp-cs">INDEC</div></div>`);
+      const diff=ret-infl;
+      const diffCls=diff>=0?"up":"dn";
+      const diffTxt=diff>=0?"a favor de tu cartera":"a favor de la inflación";
+      cards.push(`<div class="month-comp-c diff"><div class="month-comp-cl">Real</div><div class="month-comp-cv ${diffCls}">${diff>=0?"+":""}${diff.toFixed(1)} pp</div><div class="month-comp-cs">${diffTxt}</div></div>`);
+    }else{
+      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn" style="font-size:12px">—</div><div class="month-comp-cs">sin dato</div></div>`);
+      cards.push(`<div class="month-comp-c diff"><div class="month-comp-cl">Real</div><div class="month-comp-cv nn" style="font-size:12px">—</div><div class="month-comp-cs">requiere INDEC</div></div>`);
+    }
+    let interp="";
+    if(infl!=null){
+      const diff=ret-infl;
+      if(diff>=1)interp=`Tu cartera <strong>le ganó a la inflación por ${diff.toFixed(1)} puntos</strong> ${label}. Estás ganando poder de compra.`;
+      else if(diff>=-1)interp=`Tu cartera <strong>empató a la inflación</strong> ${label}. Preservación del poder de compra.`;
+      else interp=`Tu cartera <strong>perdió ${Math.abs(diff).toFixed(1)} puntos contra inflación</strong> ${label}. Vale la pena revisar la estrategia con tu asesor.`;
+    }
+    return `<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--muted2);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase;font-weight:600">${label}</div><div class="month-comp-g">${cards.join("")}</div>${interp?`<div class="month-comp-i">${interp}</div>`:""}</div>`;
+  };
+  const monthName=(m)=>{const d=new Date(m+"-01");return d.toLocaleDateString("es-AR",{month:"long",year:"numeric"});};
+  slot.innerHTML=`<div class="month-comp">
+    <div class="month-comp-t">📊 Rendimiento vs Inflación</div>
+    ${showRow(currMonth,"en "+monthName(currMonth),curReturn)}
+    ${showRow(prevMonth,"en "+monthName(prevMonth),prevReturn)}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 3.4: CONTEXTO DE MERCADO (VIX + Merval + interpretación) ──
+// ═══════════════════════════════════════════════════════════
+async function getVIX(){
+  // Yahoo Finance a través de una URL alternativa que funciona sin CORS
+  const cacheKey="vix_"+todayStr();
+  try{
+    const cached=JSON.parse(localStorage.getItem(CFG.MCTX)||"{}");
+    if(cached[cacheKey])return cached[cacheKey];
+  }catch{}
+  try{
+    // usamos data912 que tiene índice VIX si está disponible; caso contrario intento con yahoo query
+    const r=await fetchRobust("https://query1.finance.yahoo.com/v8/finance/chart/^VIX?interval=1d&range=5d",{timeout:8000,retries:1});
+    const j=await r.json();
+    const result=j?.chart?.result?.[0];
+    if(!result)return null;
+    const closes=result.indicators?.quote?.[0]?.close?.filter(x=>x!=null)||[];
+    if(!closes.length)return null;
+    const current=closes[closes.length-1];
+    const prev=closes.length>=2?closes[closes.length-2]:current;
+    const data={value:current,change:((current-prev)/prev)*100};
+    try{const c=JSON.parse(localStorage.getItem(CFG.MCTX)||"{}");c[cacheKey]=data;localStorage.setItem(CFG.MCTX,JSON.stringify(c));}catch{}
+    return data;
+  }catch(e){console.warn("VIX",e);return null;}
+}
+async function renderMarketContext(){
+  const slot=document.getElementById("mctx-slot");
+  if(!slot)return;
+  const vix=await getVIX();
+  // Spread MEP-CCL ya disponible en dolar
+  const mep=S.dolar.mep,ccl=S.dolar.ccl;
+  const brecha=(mep&&ccl)?((ccl-mep)/mep)*100:null;
+  // Necesita al menos un dato para renderizar
+  if(!vix&&brecha==null){slot.innerHTML="";return;}
+  // Interpretación cualitativa basada en VIX
+  let mood="neutro",moodLabel="Contexto general",moodDesc="";
+  if(vix){
+    if(vix.value<=17){mood="calmo";moodLabel="Mercado calmo";}
+    else if(vix.value<=25){mood="moderado";moodLabel="Volatilidad moderada";}
+    else{mood="turb";moodLabel="Turbulencia";}
+  }
+  if(mood==="calmo")moodDesc="El VIX está bajo — el mercado internacional está tranquilo. Buenos momentos para revisar posiciones sin presión emocional.";
+  else if(mood==="moderado")moodDesc="Volatilidad dentro de rangos normales. Sirve estar atento pero no es momento de reaccionar por impulso.";
+  else if(mood==="turb")moodDesc="El VIX está alto — hay nerviosismo internacional. Buen momento para consultar con Luis antes de cualquier decisión importante.";
+  else moodDesc="Contexto general del mercado. Considerá el momento antes de tomar decisiones.";
+  const items=[];
+  if(vix){
+    items.push(`<div class="mctx-i"><div class="mctx-il">VIX</div><div class="mctx-iv">${vix.value.toFixed(1)}</div><div class="mctx-is">${vix.change>=0?"+":""}${vix.change.toFixed(1)}% vs ayer</div></div>`);
+  }
+  if(brecha!=null){
+    items.push(`<div class="mctx-i"><div class="mctx-il">Brecha CCL/MEP</div><div class="mctx-iv">${brecha.toFixed(1)}%</div><div class="mctx-is">${brecha<3?"comprimida":brecha<8?"normal":"amplia"}</div></div>`);
+  }
+  if(mep){
+    items.push(`<div class="mctx-i"><div class="mctx-il">MEP</div><div class="mctx-iv">$${mep.toLocaleString("es-AR",{maximumFractionDigits:0})}</div><div class="mctx-is">venta</div></div>`);
+  }
+  slot.innerHTML=`<div class="mctx-card">
+    <div class="mctx-hdr"><span class="mctx-t">🌡️ Contexto de mercado</span><span class="mctx-tag ${mood}">${moodLabel}</span></div>
+    <div class="mctx-g">${items.join("")}</div>
+    <div class="mctx-d">${moodDesc}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 3.1: BANNER REBALANCEO MENSUAL (día 1 al 5) ──
+// ═══════════════════════════════════════════════════════════
+function renderRebalanceBanner(){
+  const slot=document.getElementById("rebal-slot");
+  if(!slot)return;
+  const now=new Date();
+  const day=now.getDate();
+  if(day>5){slot.innerHTML="";return;}
+  const monthKey=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
+  const dismissed=localStorage.getItem(CFG.REBAL+"_"+monthKey);
+  if(dismissed){slot.innerHTML="";return;}
+  const hs=getConsolidated();
+  if(!hs.length){slot.innerHTML="";return;}
+  const mesName=now.toLocaleDateString("es-AR",{month:"long"});
+  slot.innerHTML=`<div class="rebal-b">
+    <div class="rebal-b-i">🔄</div>
+    <div class="rebal-b-c">
+      <div class="rebal-b-t">Empezó ${mesName}: momento de revisar tu cartera</div>
+      <div class="rebal-b-d">Cada inicio de mes es una buena oportunidad para chequear si tu asignación sigue alineada con tus objetivos. Hablalo con Luis para evaluar si conviene rebalancear.</div>
+      <button class="rebal-b-wa" onclick="shareRebalanceWithAdvisor()">💬 Consultar con Luis</button>
+    </div>
+    <button class="rebal-b-x" onclick="dismissRebalance()" title="Cerrar por este mes">×</button>
+  </div>`;
+}
+function dismissRebalance(){
+  const now=new Date();
+  const monthKey=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
+  try{localStorage.setItem(CFG.REBAL+"_"+monthKey,"1");}catch{}
+  document.getElementById("rebal-slot").innerHTML="";
+}
+function shareRebalanceWithAdvisor(){
+  const hs=getConsolidated();
+  const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
+  const perfil=S.profile?.type||"moderado";
+  const mesName=new Date().toLocaleDateString("es-AR",{month:"long"});
+  const msg=`Hola Luis, empezó ${mesName} y quería revisar mi cartera con vos. Perfil: ${perfil}. Patrimonio actual: $${fv(tot)} ARS. ¿Cuándo podemos hablar?`;
+  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 4.1: TEMA CLARO/OSCURO ──
+// ═══════════════════════════════════════════════════════════
+function applyTheme(theme){
+  document.body.classList.toggle("theme-light",theme==="light");
+  const btn=document.getElementById("theme-tgl");
+  if(btn)btn.textContent=theme==="light"?"☀️":"🌙";
+}
+function toggleTheme(){
+  const cur=localStorage.getItem(CFG.THEME)||"dark";
+  const nxt=cur==="dark"?"light":"dark";
+  try{localStorage.setItem(CFG.THEME,nxt);}catch{}
+  applyTheme(nxt);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 4.2: NOMBRES LOCALIZADOS DE TICKERS COMUNES ──
+// La sobreescritura de nameOf() está en su definición original.
+// TICKER_NAMES_ES tiene prioridad sobre DB y S.learned.
+// ═══════════════════════════════════════════════════════════
+const TICKER_NAMES_ES={
+  AAPL:"Apple",MSFT:"Microsoft",GOOGL:"Google (Alphabet A)",GOOG:"Google (Alphabet C)",AMZN:"Amazon",META:"Meta (Facebook)",TSLA:"Tesla",NVDA:"Nvidia",NFLX:"Netflix",DIS:"Disney",KO:"Coca-Cola",PEP:"PepsiCo",MCD:"McDonald's",SBUX:"Starbucks",NKE:"Nike",WMT:"Walmart",TGT:"Target",COST:"Costco",HD:"Home Depot",LOW:"Lowe's",JNJ:"Johnson & Johnson",PFE:"Pfizer",MRK:"Merck",UNH:"UnitedHealth",LLY:"Eli Lilly",ABBV:"AbbVie",JPM:"JPMorgan",BAC:"Bank of America",WFC:"Wells Fargo",C:"Citigroup",GS:"Goldman Sachs",MS:"Morgan Stanley",V:"Visa",MA:"Mastercard",PYPL:"PayPal",XOM:"ExxonMobil",CVX:"Chevron",BA:"Boeing",GE:"General Electric",CAT:"Caterpillar",T:"AT&T",VZ:"Verizon",IBM:"IBM",ORCL:"Oracle",INTC:"Intel",AMD:"AMD",QCOM:"Qualcomm",BABA:"Alibaba",MELI:"Mercado Libre",VIST:"Vista Oil & Gas",SPY:"S&P 500 ETF",QQQ:"Nasdaq 100 ETF",EWZ:"Brasil ETF",GGAL:"Grupo Financiero Galicia",YPFD:"YPF",PAMP:"Pampa Energía",BMA:"Banco Macro",BBAR:"BBVA Argentina",SUPV:"Grupo Supervielle",ALUA:"Aluar",TXAR:"Ternium Argentina",TGSU2:"Transportadora Gas Sur",TGNO4:"Transportadora Gas Norte",CEPU:"Central Puerto",EDN:"Edenor",COME:"Sociedad Comercial del Plata",CRES:"Cresud",MIRG:"Mirgor",LOMA:"Loma Negra",VALO:"BYMA",BHIP:"Banco Hipotecario"
+};
+// Compatibilidad: nameOfLocalized apunta a nameOf que ya usa TICKER_NAMES_ES
+function nameOfLocalized(ticker){return nameOf(ticker)||"";}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 4.3: HISTORIAL DE SEÑALES (registro + UI) ──
+// ═══════════════════════════════════════════════════════════
+// Cooldown de 14 días por ticker para no sobrestimular
+const SIG_COOLDOWN_DAYS=14;
+function registerSignal(ticker,recoTxt,priceValue){
+  if(!ticker||!recoTxt)return;
+  // Solo señales fuertes se registran
+  const isStrong=recoTxt.includes("COMPRAR")||recoTxt.includes("VENDER")||recoTxt.includes("REDUCIR")||recoTxt.includes("TOMAR");
+  if(!isStrong)return;
+  // Chequear cooldown: no duplicar si ya hay una activa reciente para este ticker
+  const now=Date.now();
+  const cooldownMs=SIG_COOLDOWN_DAYS*24*60*60*1000;
+  const recent=S.sigHistory.find(s=>s.ticker===ticker&&!s.closed&&(now-new Date(s.date).getTime())<cooldownMs);
+  if(recent){
+    // Actualizar la señal actual si cambió el texto/precio (misma acción)
+    if(recent.reco!==recoTxt){recent.reco=recoTxt;recent.updated=new Date().toISOString();}
+    return;
+  }
+  S.sigHistory.push({
+    ticker,
+    reco:recoTxt,
+    price:priceValue,
+    date:new Date().toISOString(),
+    closed:false
+  });
+  saveSigHistory();
+}
+function closeOppositeSignals(ticker,newRecoTxt){
+  // Si la nueva señal es contraria, cerrar las anteriores abiertas del mismo ticker
+  const isBuy=newRecoTxt.includes("COMPRAR");
+  const isSell=newRecoTxt.includes("VENDER")||newRecoTxt.includes("REDUCIR")||newRecoTxt.includes("TOMAR");
+  if(!isBuy&&!isSell)return;
+  const currentPx=(S.px?.[ticker]?.px)||null;
+  S.sigHistory.forEach(s=>{
+    if(s.ticker!==ticker||s.closed)return;
+    const sIsBuy=s.reco.includes("COMPRAR");
+    const sIsSell=s.reco.includes("VENDER")||s.reco.includes("REDUCIR")||s.reco.includes("TOMAR");
+    if((sIsBuy&&isSell)||(sIsSell&&isBuy)){
+      s.closed=true;
+      s.closedAt=new Date().toISOString();
+      s.closedPrice=currentPx;
+    }
+  });
+  saveSigHistory();
+}
+function recordSignalsFromResults(results){
+  if(!Array.isArray(results))return;
+  results.forEach(r=>{
+    if(!r.reco||!r.h)return;
+    closeOppositeSignals(r.h.ticker,r.reco.txt);
+    registerSignal(r.h.ticker,r.reco.txt,r.h.precio);
+  });
+}
+function openSigHistory(){
+  renderSigHistoryBody();
+  document.getElementById("sighist-modal").classList.add("on");
+}
+function renderSigHistoryBody(){
+  const body=document.getElementById("sig-hist-body");
+  if(!body)return;
+  const hist=[...S.sigHistory].reverse();
+  if(!hist.length){
+    body.innerHTML=`<div class="sig-hist-empty">Todavía no hay señales registradas. A medida que uses UNE, cada orientación fuerte queda registrada acá para que veas cómo evolucionaron.</div>`;
+    return;
+  }
+  body.innerHTML=hist.slice(0,80).map(s=>{
+    const cls=s.reco.includes("COMPRAR")?"buy":s.reco.includes("VENDER")?"sell":s.reco.includes("TOMAR")?"tomar":"reducir";
+    const date=new Date(s.date).toLocaleDateString("es-AR",{day:"2-digit",month:"short",year:"2-digit"});
+    let outcome="";
+    if(s.closed&&s.closedPrice&&s.price){
+      const chg=((s.closedPrice-s.price)/s.price)*100;
+      const wasBuy=s.reco.includes("COMPRAR");
+      const good=wasBuy?chg>0:chg<0;
+      const outCls=good?"win":"loss";
+      const dateEnd=s.closedAt?" · cerrada "+new Date(s.closedAt).toLocaleDateString("es-AR",{day:"2-digit",month:"short"}):"";
+      outcome=`<div class="sh-outcome ${outCls}">Precio al cierre de la orientación: ${fa(s.closedPrice)} (${chg>=0?"+":""}${chg.toFixed(1)}%${dateEnd})</div>`;
+    }else if(!s.closed){
+      const curPx=S.px?.[s.ticker]?.px;
+      if(curPx&&s.price){
+        const chg=((curPx-s.price)/s.price)*100;
+        outcome=`<div class="sh-outcome open">Precio actual: ${fa(curPx)} (${chg>=0?"+":""}${chg.toFixed(1)}%) — orientación activa</div>`;
+      }else{
+        outcome=`<div class="sh-outcome open">Orientación activa</div>`;
+      }
+    }
+    const priceInit=s.price?" · precio del día: "+fa(s.price):"";
+    return `<div class="sh-row"><div class="sh-l"><div class="sh-tk">${s.ticker}<span class="sh-date">${date}</span></div><div class="sh-r"><strong>${nameOfLocalized(s.ticker)||s.ticker}</strong>${priceInit}</div>${outcome}</div><span class="sh-badge ${cls}">${s.reco}</span></div>`;
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 4.4: ATAJOS DE TECLADO ──
+// ═══════════════════════════════════════════════════════════
+function handleKeyboard(e){
+  // No interferir en inputs, textareas, etc.
+  const tag=(e.target?.tagName||"").toUpperCase();
+  if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT"){
+    // Excepción: Esc siempre funciona
+    if(e.key==="Escape")closeAllModals();
+    return;
+  }
+  // Esc → cerrar modales
+  if(e.key==="Escape"){closeAllModals();return;}
+  // ? → mostrar menú de atajos
+  if(e.key==="?"||(e.shiftKey&&e.key==="/")){e.preventDefault();document.getElementById("kbd-modal").classList.add("on");return;}
+  // / → focus en buscador
+  if(e.key==="/"){e.preventDefault();const s=document.getElementById("ttbl-search");if(s){s.focus();s.select();}return;}
+  // Ignorar teclas con modificadores para el resto
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  // R → refresh
+  if(e.key==="r"||e.key==="R"){e.preventDefault();refresh();return;}
+  // H → historial
+  if(e.key==="h"||e.key==="H"){e.preventDefault();openSigHistory();return;}
+  // W → compartir con asesor
+  if(e.key==="w"||e.key==="W"){e.preventDefault();shareWithAdvisor();return;}
+  // T → toggle tema
+  if(e.key==="t"||e.key==="T"){e.preventDefault();toggleTheme();return;}
+}
+function closeAllModals(){
+  document.querySelectorAll(".pt-ov,.onb-ov").forEach(m=>m.classList.remove("on"));
+}
+
 // Hook post-render para mantener chart, alertas y BB.PP. sincronizados
 const _origRenderD=typeof renderD==="function"?renderD:null;
 
 async function init(){
   load();
+  // Aplicar tema (R4)
+  try{applyTheme(localStorage.getItem(CFG.THEME)||"dark");}catch{}
   // Aplicar preferencias visuales al UI
   document.querySelectorAll(".hist-btn").forEach(b=>{b.classList.toggle("on",b.getAttribute("data-p")===S.histPeriod);});
   renderD();renderProfileBadge();renderCaucionBanner();
+  // Renders de Ronda 3 que no dependen de fetch
+  try{renderRebalanceBanner();}catch(e){console.warn("rebal",e);}
+  try{renderDividendReminder();}catch(e){console.warn("divs",e);}
   setStatus("Actualizando datos de mercado...","info");
   const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);
   if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';
   renderD();
   setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");
   renderIndices();renderSignals();saveSnapshot();renderHistoricalChart();renderConcentrationAlerts();renderBBPP();
+  // Renders con fetch de red (R3) — en paralelo pero sin bloquear
+  renderMarketContext();
+  renderMonthlyComparison();
   // Mostrar onboarding si es la primera visita
   if(!S.onboarded){setTimeout(showOnboarding,600);}
 }
-// Cerrar modal del test al click en el overlay
+// Cerrar modales al click en overlay + atajos de teclado (R4)
 document.addEventListener("click",e=>{
-  const m=document.getElementById("pt-modal");if(e.target===m)closeProfileTest();
-  const n=document.getElementById("note-modal");if(e.target===n)closeNoteModal();
+  const overlays=["pt-modal","note-modal","onb-modal","sighist-modal","kbd-modal"];
+  overlays.forEach(id=>{const m=document.getElementById(id);if(m&&e.target===m)m.classList.remove("on");});
 });
+document.addEventListener("keydown",handleKeyboard);
 init();
 
 </script>

@@ -241,6 +241,64 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
 .bbpp-v.zero{color:var(--green)}
 .bbpp-cta{margin-top:10px;background:var(--gd);border:1px solid rgba(212,175,55,.4);color:var(--gold);font-size:11px;font-weight:700;padding:9px 16px;border-radius:8px;cursor:pointer;text-align:center;text-decoration:none;display:block;letter-spacing:.03em;transition:.15s}
 .bbpp-cta:hover{background:rgba(212,175,55,.16)}
+/* ONBOARDING */
+.onb-ov{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:220;padding:20px;backdrop-filter:blur(6px)}
+.onb-ov.on{display:flex}
+.onb-md{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+.onb-hdr{padding:32px 32px 20px;background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(0,180,216,.06));border-bottom:1px solid var(--line);text-align:center}
+.onb-brand{font-size:12px;color:var(--gold);letter-spacing:.3em;font-weight:700;margin-bottom:10px}
+.onb-brand .u{color:var(--teal)}
+.onb-title{font-size:26px;font-weight:800;color:var(--txt);font-family:'Montserrat',sans-serif;margin-bottom:8px}
+.onb-sub{font-size:14px;color:var(--muted);line-height:1.5}
+.onb-body{padding:28px 32px}
+.onb-step{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.onb-step:last-child{border-bottom:none}
+.onb-step-n{width:32px;height:32px;border-radius:50%;background:var(--gd);color:var(--gold);border:1.5px solid rgba(212,175,55,.4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:"JetBrains Mono",monospace;flex-shrink:0}
+.onb-step-c{flex:1}
+.onb-step-t{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:3px}
+.onb-step-d{font-size:12.5px;color:var(--muted);line-height:1.5}
+.onb-nav{padding:18px 32px 28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.onb-check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none}
+.onb-check input{accent-color:var(--gold)}
+.onb-cta{background:var(--gold);color:#0A1628;border:none;font-size:14px;font-weight:800;padding:11px 26px;border-radius:22px;cursor:pointer;font-family:inherit;letter-spacing:.03em;transition:.15s}
+.onb-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+/* BOTONES DE HERRAMIENTAS (EXPORT/BACKUP/SHARE) */
+.tools-row{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.tool-btn{background:var(--bg2);border:1px solid var(--line2);color:var(--muted);font-size:11px;font-weight:600;padding:6px 12px;border-radius:16px;cursor:pointer;font-family:inherit;letter-spacing:.02em;display:inline-flex;align-items:center;gap:5px;transition:.15s}
+.tool-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gd)}
+.tool-btn.share-wa{background:linear-gradient(135deg,rgba(37,211,102,.14),rgba(37,211,102,.04));border-color:rgba(37,211,102,.35);color:#25d366}
+.tool-btn.share-wa:hover{background:rgba(37,211,102,.2);color:#25d366}
+/* NOTAS POR POSICIÓN */
+.note-btn{background:none;border:none;color:var(--muted2);cursor:pointer;padding:0 4px;font-size:12px;opacity:.5;transition:.15s}
+.note-btn:hover{opacity:1;color:var(--gold)}
+.note-btn.has-note{color:var(--gold);opacity:.9}
+/* MOMENTO DE MIRAR — Panel destacado */
+.moment-panel{background:linear-gradient(135deg,rgba(212,175,55,.14),rgba(212,175,55,.03));border:1.5px solid rgba(212,175,55,.45);border-radius:14px;padding:16px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.moment-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--teal))}
+.moment-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.moment-icon{font-size:20px;line-height:1}
+.moment-title{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:.03em}
+.moment-count{background:var(--gold);color:#0A1628;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;font-family:"JetBrains Mono",monospace}
+.moment-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.moment-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(0,0,0,.15);border-radius:8px;gap:10px;flex-wrap:wrap}
+.moment-item-l{flex:1;min-width:0}
+.moment-item-tk{font-size:13px;font-weight:700;color:var(--txt)}
+.moment-item-r{font-size:11px;color:var(--muted);margin-top:2px}
+.moment-item-b{font-size:10px;font-weight:800;padding:3px 9px;border-radius:12px;white-space:nowrap}
+.moment-item-b.buy{background:var(--green);color:#0A1628}
+.moment-item-b.sell{background:var(--red);color:#fff}
+.moment-item-b.reduce{background:#fb923c;color:#0A1628}
+.moment-wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;font-size:12px;font-weight:700;padding:9px 18px;border-radius:22px;cursor:pointer;font-family:inherit;letter-spacing:.02em;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.moment-wa:hover{filter:brightness(1.1);transform:translateY(-1px)}
+/* NOTA MODAL */
+.note-md{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:460px;width:100%;padding:24px}
+.note-md-t{font-size:16px;font-weight:700;color:var(--txt);margin-bottom:4px}
+.note-md-s{font-size:12px;color:var(--muted);margin-bottom:14px}
+.note-md-txt{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:12px;color:var(--txt);font-family:inherit;font-size:13px;min-height:100px;resize:vertical;margin-bottom:12px}
+.note-md-nav{display:flex;justify-content:space-between;gap:10px}
+.note-md-b{background:var(--bg2);border:1px solid var(--line2);color:var(--txt);font-size:12px;font-weight:600;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit}
+.note-md-b.prim{background:var(--gold);color:#0A1628;border-color:var(--gold)}
+.note-md-b.dng{color:var(--red);border-color:rgba(241,102,90,.4)}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -323,6 +381,18 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
     </div>
     <!-- DERECHA: chart histórico + tabla -->
     <div>
+      <!-- PANEL MOMENTO DE MIRAR (Ronda 2) -->
+      <div id="moment-slot"></div>
+
+      <!-- HERRAMIENTAS: exportar / backup / compartir con asesor (Ronda 1+2) -->
+      <div class="tools-row" style="margin-bottom:10px">
+        <button class="tool-btn share-wa" onclick="shareWithAdvisor()" title="Enviar el estado de tu cartera a tu asesor por WhatsApp">💬 Compartir con mi asesor</button>
+        <button class="tool-btn" onclick="exportCSV()" title="Descargar cartera actual como CSV">📄 CSV</button>
+        <button class="tool-btn" onclick="exportBackup()" title="Descargar backup completo de tus datos (JSON)">💾 Backup</button>
+        <button class="tool-btn" onclick="document.getElementById('imp-backup').click()" title="Restaurar backup desde un archivo JSON">📥 Restaurar</button>
+        <input type="file" id="imp-backup" accept=".json" style="display:none" onchange="importBackup(event)">
+      </div>
+
       <!-- CHART HISTÓRICO (Entrega B) -->
       <div id="hist-card" style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px">
@@ -532,6 +602,67 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
 
 <div class="snk" id="snk"></div>
 
+<!-- MODAL: Onboarding -->
+<div class="onb-ov" id="onb-modal">
+  <div class="onb-md">
+    <div class="onb-hdr">
+      <div class="onb-brand">E S T R A T E G I A S <span class="u">UNE</span></div>
+      <div class="onb-title">Bienvenido a tu cartera unificada</div>
+      <div class="onb-sub">Antes de arrancar, te muestro cómo aprovecharla al máximo. Son 4 pasos, tardás 2 minutos.</div>
+    </div>
+    <div class="onb-body">
+      <div class="onb-step">
+        <div class="onb-step-n">1</div>
+        <div class="onb-step-c">
+          <div class="onb-step-t">Importá tu cartera</div>
+          <div class="onb-step-d">Subí el PDF o Excel de Balanz, IOL, Cocos o Bull Market. El sistema detecta automáticamente el broker y consolida todo en una sola vista.</div>
+        </div>
+      </div>
+      <div class="onb-step">
+        <div class="onb-step-n">2</div>
+        <div class="onb-step-c">
+          <div class="onb-step-t">Completá tu perfil de inversor</div>
+          <div class="onb-step-d">7 preguntas rápidas. Con esto, cada orientación se adapta a tu tolerancia al riesgo — no son señales genéricas.</div>
+        </div>
+      </div>
+      <div class="onb-step">
+        <div class="onb-step-n">3</div>
+        <div class="onb-step-c">
+          <div class="onb-step-t">Explorá el análisis</div>
+          <div class="onb-step-d">Vas a ver tu evolución histórica, tu cartera vs SPY, alertas de concentración y las orientaciones QQcross para tus papeles.</div>
+        </div>
+      </div>
+      <div class="onb-step">
+        <div class="onb-step-n">4</div>
+        <div class="onb-step-c">
+          <div class="onb-step-t">Consultá con tu asesor</div>
+          <div class="onb-step-d">Cuando veas una orientación de compra o venta que te interese, hablálo con tu asesor. UNE te muestra el mapa; las decisiones se toman en conjunto.</div>
+        </div>
+      </div>
+    </div>
+    <div class="onb-nav">
+      <label class="onb-check"><input type="checkbox" id="onb-noshow" checked><span>No mostrar de nuevo</span></label>
+      <button class="onb-cta" onclick="closeOnboarding()">Empezar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nota por posición -->
+<div class="pt-ov" id="note-modal">
+  <div class="note-md">
+    <div class="note-md-t" id="note-tk-title">Nota</div>
+    <div class="note-md-s">Anotá lo que quieras recordar sobre este papel. Se guarda solo en tu navegador.</div>
+    <textarea class="note-md-txt" id="note-textarea" placeholder="Ej: compré tras conversación con Luis 15/3/25, objetivo 12 meses"></textarea>
+    <div class="note-md-nav">
+      <button class="note-md-b dng" onclick="deleteNote()">Eliminar</button>
+      <div style="display:flex;gap:8px">
+        <button class="note-md-b" onclick="closeNoteModal()">Cancelar</button>
+        <button class="note-md-b prim" onclick="saveNote()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Test de Perfil de Inversor -->
 <div class="pt-ov" id="pt-modal">
   <div class="pt-md" id="pt-container">
@@ -542,7 +673,7 @@ tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!im
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ONB:"elb_onb_v1",PREFS:"elb_prefs_v1",NOTES:"elb_notes_v1",SIGHIST:"elb_sighist_v1",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -599,17 +730,50 @@ const DIVS=[
 const TC={accion:"#4ade80",cedear:"#7dcfff",bono:"#D4AF37",fci:"#f7a83e",cripto:"#f7a83e",letra:"#D4AF37",on:"#a855f7"};
 const BC={balanz:"#3b82f6",iol:"#f97316",cocos:"#a855f7",bull:"#22c55e",manual:"#D4AF37"};
 const TPC={accion:"pa",cedear:"pc",bono:"pb",fci:"pf",letra:"pl",cripto:"pk",on:"pon"};
-let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{},profile:null,caucionDismissed:null,snapshots:{},bmkCache:{},histPeriod:"3M"};
-function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}try{S.snapshots=JSON.parse(localStorage.getItem(CFG.SNP))||{};}catch{}try{S.bmkCache=JSON.parse(localStorage.getItem(CFG.BMK))||{};}catch{}}
+let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v-d",bTab:"todos",lu:null,prev:null,dc:null,ppc:{},fund:{},learned:{},profile:null,caucionDismissed:null,snapshots:{},bmkCache:{},histPeriod:"3M",onboarded:false,prefs:{},notes:{},sigHistory:[]};
+function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}try{S.snapshots=JSON.parse(localStorage.getItem(CFG.SNP))||{};}catch{}try{S.bmkCache=JSON.parse(localStorage.getItem(CFG.BMK))||{};}catch{}try{S.onboarded=localStorage.getItem(CFG.ONB)==="1";}catch{}try{S.prefs=JSON.parse(localStorage.getItem(CFG.PREFS))||{};}catch{}try{S.notes=JSON.parse(localStorage.getItem(CFG.NOTES))||{};}catch{}try{S.sigHistory=JSON.parse(localStorage.getItem(CFG.SIGHIST))||[];}catch{}
+// aplicar prefs guardadas
+if(S.prefs.histPeriod)S.histPeriod=S.prefs.histPeriod;
+if(S.prefs.bTab)S.bTab=S.prefs.bTab;
+if(S.prefs.ccy)S.ccy=S.prefs.ccy;}
 function saveProfile(){if(S.profile)localStorage.setItem(CFG.PROF,JSON.stringify(S.profile));else localStorage.removeItem(CFG.PROF);}
 function saveCaucion(){if(S.caucionDismissed)localStorage.setItem(CFG.CAUC,S.caucionDismissed);}
 function saveSnapshots(){try{localStorage.setItem(CFG.SNP,JSON.stringify(S.snapshots));}catch(e){console.warn("Snapshot storage full",e);}}
 function saveBmkCache(){try{localStorage.setItem(CFG.BMK,JSON.stringify(S.bmkCache));}catch(e){console.warn("Benchmark cache storage full",e);}}
+function savePrefs(){try{localStorage.setItem(CFG.PREFS,JSON.stringify(S.prefs));}catch{}}
+function saveNotes(){try{localStorage.setItem(CFG.NOTES,JSON.stringify(S.notes));}catch{}}
+function saveSigHistory(){try{localStorage.setItem(CFG.SIGHIST,JSON.stringify(S.sigHistory.slice(-200)));}catch{}}
+function setPref(k,v){S.prefs[k]=v;savePrefs();}
 function save(){localStorage.setItem(CFG.ST,JSON.stringify({portfolios:S.portfolios,manual:S.manual}));}
 function savePx(){localStorage.setItem(CFG.PST,JSON.stringify(S.px));}
 function savePPC(){localStorage.setItem(CFG.PPT,JSON.stringify(S.ppc));}
 function saveFund(){localStorage.setItem(CFG.FT,JSON.stringify(S.fund));}
-async function fetchDolar(){try{const r=await fetch(CFG.DOLAR),d=await r.json();S.dolar.mep=d.find(x=>x.casa==="bolsa")?.venta||null;S.dolar.ccl=d.find(x=>x.casa==="contadoconliqui")?.venta||null;return true;}catch{return false;}}
+// ═══ FETCH ROBUSTO CON RETRY + TIMEOUT + FALLBACK ═══
+// Usa AbortSignal.timeout si está disponible (Chrome 103+), sino fallback manual.
+async function fetchRobust(url,opts={}){
+  const {timeout=10000,retries=2,retryDelay=800}=opts;
+  let lastErr;
+  for(let i=0;i<=retries;i++){
+    try{
+      let signal;
+      if(typeof AbortSignal!=="undefined"&&AbortSignal.timeout){
+        signal=AbortSignal.timeout(timeout);
+      }else{
+        const ctrl=new AbortController();
+        setTimeout(()=>ctrl.abort(),timeout);
+        signal=ctrl.signal;
+      }
+      const r=await fetch(url,{signal,...opts.fetchOpts});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      return r;
+    }catch(e){
+      lastErr=e;
+      if(i<retries)await new Promise(res=>setTimeout(res,retryDelay*(i+1)));
+    }
+  }
+  throw lastErr;
+}
+async function fetchDolar(){try{const r=await fetchRobust(CFG.DOLAR,{timeout:8000,retries:2});const d=await r.json();S.dolar.mep=d.find(x=>x.casa==="bolsa")?.venta||null;S.dolar.ccl=d.find(x=>x.casa==="contadoconliqui")?.venta||null;return true;}catch(e){console.warn("fetchDolar",e);return false;}}
 async function fetchPx(){
   const sig=()=>AbortSignal.timeout?AbortSignal.timeout(12000):undefined;
   const parse=(d)=>{
@@ -781,7 +945,7 @@ function renderBrokerTabs(bks){
   const tabs=[{id:"todos",lbl:"Todos",clr:"#e6edf5"},...bks.map(b=>({id:b,lbl:cap(b),clr:BC[b]||"#D4AF37"}))];
   cont.innerHTML=tabs.map(t=>`<button class="btab ${S.bTab===t.id?"on":""}" onclick="setBTab('${t.id}')"><span class="btab-dot" style="background:${t.clr}"></span>${t.lbl}</button>`).join("");
 }
-function setBTab(b){S.bTab=b;renderD();}
+function setBTab(b){S.bTab=b;setPref("bTab",b);renderD();}
 function renderDonut(hs){
   const bt={};for(const h of hs){if(h.valorARS)bt[h.tipo]=(bt[h.tipo]||0)+h.valorARS;}
   const lbs=Object.keys(bt),vs=Object.values(bt),cs=lbs.map(t=>TC[t]||"#536475");
@@ -802,10 +966,11 @@ function renderBars(hs){
   document.getElementById("tip-b").innerHTML=Object.entries(bt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>mkRow(k,v,TC[k]||"#536475")).join("")||"<span style='color:var(--muted2);font-size:13px'>Sin datos</span>";
 }
 // Estado de ordenamiento de la tabla principal
-let sortCol="valor",sortDir="desc";
+let sortCol=S.prefs?.sortCol||"valor",sortDir=S.prefs?.sortDir||"desc";
 function setSort(col){
   if(sortCol===col){sortDir=sortDir==="asc"?"desc":"asc";}
   else{sortCol=col;sortDir="desc";}
+  setPref("sortCol",sortCol);setPref("sortDir",sortDir);
   renderD();
 }
 function sortHoldings(hs){
@@ -883,7 +1048,11 @@ function renderTable(hs){
     const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">—</span>`;
     const bkCell=isTodos?`<td class="col-hide-md"><div class="bkdots">${bkDots}</div></td>`:"";
     const pesoEl=`<div class="peso-wrap"><span class="peso-n mono">${h.peso.toFixed(1)}%</span><span class="peso-bar"><span class="peso-fill" style="width:${Math.min(h.peso,100).toFixed(1)}%"></span></span></div>`;
-    return`<tr data-idx="${idx}"><td><strong>${h.ticker}</strong></td><td class="col-hide-md" style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
+    const hasNote=!!S.notes[h.ticker];
+    const noteTitle=hasNote?"Editar nota":"Agregar nota";
+    const notePreview=hasNote?" "+S.notes[h.ticker].slice(0,80).replace(/"/g,"&quot;")+(S.notes[h.ticker].length>80?"...":""):"";
+    const tkCell=`<td><div style="display:flex;align-items:center;gap:6px"><strong>${h.ticker}</strong><button class="note-btn ${hasNote?"has-note":""}" onclick="openNoteModal('${h.ticker}')" title="${noteTitle}${notePreview}">📝</button></div></td>`;
+    return`<tr data-idx="${idx}">${tkCell}<td class="col-hide-md" style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
   }).join("");
 }
 function editPPC(ticker){
@@ -1400,6 +1569,8 @@ async function renderSignals(){
     return `<div class="${rowCls}"><div style="flex:1;min-width:0"><div class="sig-tk">${h.ticker}</div><div class="sig-sub">${reco.why}</div>${m200}</div><span class="reco-badge ${reco.cls}">${icon}${reco.txt}</span></div>`;
   }).join("");
   el.innerHTML=head+rows;
+  // Pasar orientaciones al panel Momento de Mirar
+  try{renderMomentPanel(results);}catch(e){console.warn("moment",e);}
 }
 
 // ── PERFIL DE INVERSOR ──
@@ -1692,7 +1863,7 @@ function normalizeBase100(serie,valueKey){
 
 let histChart=null;
 function setHistPeriod(p){
-  S.histPeriod=p;
+  S.histPeriod=p;setPref("histPeriod",p);
   document.querySelectorAll(".hist-btn").forEach(b=>{b.classList.toggle("on",b.getAttribute("data-p")===p);});
   renderHistoricalChart();
 }
@@ -1830,6 +2001,12 @@ function renderConcentrationAlerts(){
       alerts.push({level:"warn",title:"Concentración alta en "+h.ticker,desc:`<strong>${h.ticker}</strong> representa el <strong>${pct.toFixed(1)}%</strong> de tu cartera. Está por encima del umbral recomendado para tu perfil (${thr.tickerWarn}%).`});
     }
   });
+  // Alertas anti-pánico: papel con -20% desde el PPC (Ronda 3)
+  hs.forEach(h=>{
+    if(h.ganSource==="ppc"&&h.ganPct!=null&&h.ganPct<=-20){
+      alerts.push({level:"warn",title:"Bajada fuerte en "+h.ticker,desc:`<strong>${h.ticker}</strong> está <strong>${h.ganPct.toFixed(1)}%</strong> por debajo de tu precio de compra. Antes de decidir vender por impulso, hablá con Luis. Muchas veces la baja es transitoria y el criterio profesional evita cristalizar la pérdida.`});
+    }
+  });
   // Alertas por sector
   const sectorTotals={};
   hs.forEach(h=>{const s=getSector(h.ticker);sectorTotals[s]=(sectorTotals[s]||0)+(h.valorARS||0);});
@@ -1906,12 +2083,207 @@ function renderBBPP(){
 }
 function toggleBBPP(){document.getElementById("bbpp-card").classList.toggle("open");}
 
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 1: ONBOARDING GUIADO ──
+// ═══════════════════════════════════════════════════════════
+function showOnboarding(){document.getElementById("onb-modal").classList.add("on");}
+function closeOnboarding(){
+  const dontShow=document.getElementById("onb-noshow")?.checked;
+  if(dontShow){S.onboarded=true;try{localStorage.setItem(CFG.ONB,"1");}catch{}}
+  document.getElementById("onb-modal").classList.remove("on");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 1: NOTAS POR POSICIÓN ──
+// ═══════════════════════════════════════════════════════════
+let noteEditingTicker=null;
+function openNoteModal(ticker){
+  noteEditingTicker=ticker;
+  document.getElementById("note-tk-title").textContent="Nota — "+ticker;
+  document.getElementById("note-textarea").value=S.notes[ticker]||"";
+  document.getElementById("note-modal").classList.add("on");
+  setTimeout(()=>document.getElementById("note-textarea").focus(),100);
+}
+function closeNoteModal(){document.getElementById("note-modal").classList.remove("on");noteEditingTicker=null;}
+function saveNote(){
+  if(!noteEditingTicker)return;
+  const txt=document.getElementById("note-textarea").value.trim();
+  if(txt)S.notes[noteEditingTicker]=txt;
+  else delete S.notes[noteEditingTicker];
+  saveNotes();
+  closeNoteModal();
+  renderD();
+  snk(txt?"✓ Nota guardada":"Nota eliminada");
+}
+function deleteNote(){
+  if(!noteEditingTicker)return;
+  delete S.notes[noteEditingTicker];
+  saveNotes();
+  closeNoteModal();
+  renderD();
+  snk("Nota eliminada");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 1: EXPORTAR / IMPORTAR DATOS ──
+// ═══════════════════════════════════════════════════════════
+function downloadFile(name,content,type){
+  const blob=new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=name;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},100);
+}
+function exportBackup(){
+  const backup={
+    version:"UNE_v4",
+    exportedAt:new Date().toISOString(),
+    portfolios:S.portfolios,
+    manual:S.manual,
+    ppc:S.ppc,
+    fund:S.fund,
+    learned:S.learned,
+    profile:S.profile,
+    snapshots:S.snapshots,
+    notes:S.notes,
+    sigHistory:S.sigHistory
+  };
+  const stamp=new Date().toISOString().slice(0,10);
+  downloadFile("EstrategiasUNE-backup-"+stamp+".json",JSON.stringify(backup,null,2),"application/json");
+  snk("✓ Backup descargado — guardalo en un lugar seguro");
+}
+function importBackup(ev){
+  const file=ev.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data.version||!data.version.startsWith("UNE_")){snk("⚠️ Este archivo no parece un backup de EstrategiasUNE");return;}
+      if(!confirm("¿Restaurar backup? Se van a REEMPLAZAR tus datos actuales con los del archivo. Backup del "+((data.exportedAt||"").slice(0,10))+"."))return;
+      if(data.portfolios)S.portfolios=data.portfolios;
+      if(data.manual)S.manual=data.manual;
+      if(data.ppc)S.ppc=data.ppc;
+      if(data.fund)S.fund=data.fund;
+      if(data.learned)S.learned=data.learned;
+      if(data.profile)S.profile=data.profile;
+      if(data.snapshots)S.snapshots=data.snapshots;
+      if(data.notes)S.notes=data.notes;
+      if(data.sigHistory)S.sigHistory=data.sigHistory;
+      // persistir todo
+      save();savePPC();saveFund();saveLearned();saveProfile();saveSnapshots();saveNotes();saveSigHistory();
+      renderD();renderProfileBadge();renderSignals();renderHistoricalChart();
+      snk("✓ Backup restaurado exitosamente");
+    }catch(err){snk("⚠️ Error al leer el backup: "+err.message);}
+    ev.target.value="";
+  };
+  reader.readAsText(file);
+}
+function exportCSV(){
+  const hs=getConsolidated();
+  if(!hs.length){snk("⚠️ Importá una cartera primero");return;}
+  const rows=[["Ticker","Nombre","Tipo","Cantidad","PPC","Precio actual","Valor ARS","Peso %","Resultado ARS","Resultado %","Recomendación","Brokers"]];
+  hs.forEach(h=>{
+    const tot=hs.reduce((s,x)=>s+(x.valorARS||0),0);
+    const peso=tot>0?((h.valorARS||0)/tot*100):0;
+    let resARS="",resPct="";
+    if(h.ganSource==="ppc"&&h.ganARS!=null){resARS=h.ganARS.toFixed(2);resPct=h.ganPct.toFixed(2);}
+    else if(h.ch!=null&&h.live&&h.valorARS){const va=h.valorARS/(1+h.ch/100);resARS=(h.valorARS-va).toFixed(2);resPct=h.ch.toFixed(2);}
+    rows.push([h.ticker,nameOf(h.ticker),h.tipo||"",h.cant||0,h.ppc||"",h.precio||"",h.valorARS||0,peso.toFixed(2),resARS,resPct,h.rec?.txt||"",(h.brokers||[h.broker||"manual"]).join(";")]);
+  });
+  const csv=rows.map(r=>r.map(c=>{const s=String(c);return s.includes(",")||s.includes('"')?'"'+s.replace(/"/g,'""')+'"':s;}).join(",")).join("\n");
+  const stamp=new Date().toISOString().slice(0,10);
+  downloadFile("EstrategiasUNE-cartera-"+stamp+".csv","\uFEFF"+csv,"text/csv;charset=utf-8");
+  snk("✓ CSV descargado");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 2: MOMENTO DE MIRAR — orientaciones activas ──
+// ═══════════════════════════════════════════════════════════
+let momentOrientations=[]; // guardado por renderSignals para usar en share
+function renderMomentPanel(orientations){
+  momentOrientations=orientations||[];
+  const el=document.getElementById("moment-slot");
+  if(!el)return;
+  // Filtrar orientaciones fuertes (compra, venta, reducir, tomar ganancia)
+  const strong=momentOrientations.filter(o=>{
+    const t=o.reco?.txt||"";
+    return t.includes("COMPRAR")||t.includes("VENDER")||t.includes("REDUCIR")||t.includes("TOMAR");
+  });
+  if(!strong.length){el.innerHTML="";return;}
+  const rows=strong.map(o=>{
+    const t=o.reco.txt;
+    const cls=t.includes("COMPRAR")?"buy":t.includes("VENDER")?"sell":"reduce";
+    const icon=t.includes("COMPRAR")?"▲":t.includes("VENDER")?"▼":"◐";
+    return `<div class="moment-item"><div class="moment-item-l"><div class="moment-item-tk">${o.h.ticker} <span style="color:var(--muted2);font-weight:400;font-size:11px">· ${nameOf(o.h.ticker)}</span></div><div class="moment-item-r">${o.reco.why}</div></div><span class="moment-item-b ${cls}">${icon} ${t}</span></div>`;
+  }).join("");
+  const perfLabel=S.profile?"tu perfil "+S.profile.type:"perfil moderado (default)";
+  el.innerHTML=`<div class="moment-panel">
+    <div class="moment-hdr"><span class="moment-icon">⚡</span><span class="moment-title">Momento de mirar</span><span class="moment-count">${strong.length}</span><span style="font-size:11px;color:var(--muted);font-style:italic">orientaciones activas para ${perfLabel}</span></div>
+    <div class="moment-list">${rows}</div>
+    <button class="moment-wa" onclick="shareOrientationsWithAdvisor()">💬 Hablar con Luis para evaluar estas oportunidades</button>
+  </div>`;
+}
+function shareOrientationsWithAdvisor(){
+  const strong=momentOrientations.filter(o=>{const t=o.reco?.txt||"";return t.includes("COMPRAR")||t.includes("VENDER")||t.includes("REDUCIR")||t.includes("TOMAR");});
+  const lines=strong.map(o=>{
+    const price=o.h.precio?fa(o.h.precio):"—";
+    return `• ${o.h.ticker} → ${o.reco.txt} (precio actual: ${price})`;
+  }).join("\n");
+  const perfil=S.profile?.type||"moderado";
+  const msg=`Hola Luis, vi en EstrategiasUNE que hay orientaciones activas para mi cartera (perfil ${perfil}):\n\n${lines}\n\n¿Podemos revisarlo juntos?`;
+  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── RONDA 2: COMPARTIR SNAPSHOT COMPLETO CON EL ASESOR ──
+// ═══════════════════════════════════════════════════════════
+function shareWithAdvisor(){
+  const hs=getConsolidated();
+  if(!hs.length){snk("⚠️ Importá una cartera primero");return;}
+  const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
+  const cclv=S.dolar.ccl||S.dolar.mep||1;
+  const totUSD=tot/cclv;
+  const bks=getActiveBrokers();
+  const perfil=S.profile?.type?S.profile.type[0].toUpperCase()+S.profile.type.slice(1):"Sin definir";
+  // Top 5 posiciones
+  const top5=[...hs].sort((a,b)=>(b.valorARS||0)-(a.valorARS||0)).slice(0,5).map(h=>{
+    const pct=tot>0?((h.valorARS/tot)*100).toFixed(1):"0";
+    return `  • ${h.ticker}: ${pct}% ($${fv(h.valorARS)})`;
+  }).join("\n");
+  // Orientaciones activas si las hay
+  let orientaciones="";
+  const strong=momentOrientations.filter(o=>{const t=o.reco?.txt||"";return t.includes("COMPRAR")||t.includes("VENDER")||t.includes("REDUCIR")||t.includes("TOMAR");});
+  if(strong.length){
+    orientaciones="\n\n📡 Orientaciones activas para mi perfil:\n"+strong.map(o=>`  • ${o.h.ticker} → ${o.reco.txt}`).join("\n");
+  }
+  const msg=`Hola Luis, te comparto el estado de mi cartera en EstrategiasUNE:\n\n💰 Patrimonio total: $${fv(tot)} ARS (≈ US$ ${totUSD.toLocaleString("es-AR",{maximumFractionDigits:0})})\n📊 Brokers activos: ${bks.map(cap).join(", ")}\n👤 Perfil: ${perfil}\n\n🏆 Top 5 posiciones:\n${top5}${orientaciones}\n\n¿Podemos revisarlo?`;
+  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+}
+
 // Hook post-render para mantener chart, alertas y BB.PP. sincronizados
 const _origRenderD=typeof renderD==="function"?renderD:null;
 
-async function init(){load();renderD();renderProfileBadge();renderCaucionBanner();setStatus("Actualizando datos de mercado...","info");const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';renderD();setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");renderIndices();renderSignals();saveSnapshot();renderHistoricalChart();renderConcentrationAlerts();renderBBPP();}
+async function init(){
+  load();
+  // Aplicar preferencias visuales al UI
+  document.querySelectorAll(".hist-btn").forEach(b=>{b.classList.toggle("on",b.getAttribute("data-p")===S.histPeriod);});
+  renderD();renderProfileBadge();renderCaucionBanner();
+  setStatus("Actualizando datos de mercado...","info");
+  const[d,p]=await Promise.all([fetchDolar(),fetchPx()]);
+  if(S.lu)document.getElementById("upd-t").innerHTML="datos: "+new Date(S.lu).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"})+' <span style="color:var(--muted2);font-size:10px" title="Las cotizaciones tienen demora de aproximadamente 15 minutos según el reglamento de BYMA. Fuente principal: data912.com">· diferido ~15 min · data912</span>';
+  renderD();
+  setStatus(d&&p?"":"Precios con demora · TCambio "+(d?"OK":"sin conexión"),d&&p?"":"warn");
+  renderIndices();renderSignals();saveSnapshot();renderHistoricalChart();renderConcentrationAlerts();renderBBPP();
+  // Mostrar onboarding si es la primera visita
+  if(!S.onboarded){setTimeout(showOnboarding,600);}
+}
 // Cerrar modal del test al click en el overlay
-document.addEventListener("click",e=>{const m=document.getElementById("pt-modal");if(e.target===m)closeProfileTest();});
+document.addEventListener("click",e=>{
+  const m=document.getElementById("pt-modal");if(e.target===m)closeProfileTest();
+  const n=document.getElementById("note-modal");if(e.target===n)closeNoteModal();
+});
 init();
 
 </script>

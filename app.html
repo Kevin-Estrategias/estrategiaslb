@@ -391,6 +391,24 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 .kbd-row:last-child{border-bottom:none}
 .kbd-lbl{color:var(--muted)}
 .kbd-key{background:var(--bg2);border:1px solid var(--line2);border-radius:5px;padding:2px 8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--txt);font-weight:600}
+/* MODAL CONTACTOS DEL EQUIPO */
+.ct-md{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:500px;width:100%;overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.ct-hdr{padding:22px 26px 16px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,rgba(37,211,102,.06),transparent)}
+.ct-hdr-t{font-size:17px;font-weight:700;color:var(--txt);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.ct-hdr-s{font-size:12.5px;color:var(--muted);line-height:1.5}
+.ct-body{overflow-y:auto;padding:8px 0}
+.ct-item{padding:16px 26px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.ct-item:last-child{border-bottom:none}
+.ct-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--gd),transparent);border:1.5px solid rgba(212,175,55,.35);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--gold);font-family:'Montserrat',sans-serif;flex-shrink:0}
+.ct-info{flex:1;min-width:0}
+.ct-name{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:2px}
+.ct-role{font-size:11px;color:var(--gold);letter-spacing:.03em;font-weight:600;margin-bottom:3px}
+.ct-desc{font-size:11px;color:var(--muted);line-height:1.4}
+.ct-wa{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;font-size:12px;font-weight:700;padding:8px 14px;border-radius:20px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:.15s;flex-shrink:0}
+.ct-wa:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.ct-foot{padding:14px 26px;border-top:1px solid var(--line);background:var(--bg2);font-size:11px;color:var(--muted);line-height:1.5;text-align:center}
+.ct-close{background:none;border:none;color:var(--muted2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;position:absolute;top:12px;right:14px}
+.ct-close:hover{color:var(--txt);background:rgba(255,255,255,.06)}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -493,7 +511,8 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 
       <!-- HERRAMIENTAS: exportar / backup / compartir con asesor (Ronda 1+2) -->
       <div class="tools-row" style="margin-bottom:10px">
-        <button class="tool-btn share-wa" onclick="shareWithAdvisor()" title="Enviar el estado de tu cartera a tu asesor por WhatsApp">💬 Compartir con mi asesor</button>
+        <button class="tool-btn share-wa" onclick="shareWithAdvisor()" title="Enviar el estado de tu cartera al equipo de EstrategiasLB">💬 Compartir cartera</button>
+        <button class="tool-btn share-wa" onclick="openContacts('Hola equipo, tengo una consulta desde EstrategiasUNE.','Elegí con quién querés hablar según el tema de tu consulta.')" title="Contactar al equipo de EstrategiasLB">👥 Contactar equipo</button>
         <button class="tool-btn" onclick="exportCSV()" title="Descargar cartera actual como CSV">📄 CSV</button>
         <button class="tool-btn" onclick="exportBackup()" title="Descargar backup completo de tus datos (JSON)">💾 Backup</button>
         <button class="tool-btn" onclick="document.getElementById('imp-backup').click()" title="Restaurar backup desde un archivo JSON">📥 Restaurar</button>
@@ -560,8 +579,8 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div>
       <div class="f"><label>Ticker</label><div class="tr"><input id="f-t" type="text" placeholder="ej. BTC, ETH, AAPL" autocomplete="off" oninput="onTI(this.value)" onblur="hideSug()" onkeydown="onTK(event)"><div class="sbx" id="sg-l" style="display:none"></div></div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="f"><label>Cantidad</label><input id="f-q" type="number" placeholder="100" min="0" step="any"></div>
-        <div class="f"><label>Precio actual (ARS)</label><input id="f-p" type="number" placeholder="7715" min="0" step="any"></div>
+        <div class="f"><label>Cantidad</label><input id="f-q" type="number" placeholder="ej. 100" min="0" step="any"></div>
+        <div class="f"><label>Precio actual (ARS)</label><input id="f-p" type="number" placeholder="ej. 7715" min="0" step="any"></div>
       </div>
       <div class="f"><label>Broker / Cuenta</label><select id="f-b"><option value="manual">Manual</option><option value="balanz">Balanz</option><option value="iol">IOL</option><option value="cocos">Cocos Capital</option><option value="bull">Bull Market</option></select></div>
       <button class="bprim" onclick="saveMan()">Agregar posición</button>
@@ -579,9 +598,9 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
   <div style="max-width:520px">
     <div class="f"><label>CEDEAR</label><select id="cc-s" onchange="onCS()"><option value="">Seleccioná un CEDEAR</option></select></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-      <div class="f"><label>Precio CEDEAR (ARS)</label><input id="cc-a" type="number" placeholder="24000" oninput="calcCCL()"></div>
-      <div class="f"><label>Subyacente (USD)</label><input id="cc-u" type="number" placeholder="200" oninput="calcCCL()"></div>
-      <div class="f"><label>Ratio</label><input id="cc-r" type="number" placeholder="10" oninput="calcCCL()"></div>
+      <div class="f"><label>Precio CEDEAR (ARS)</label><input id="cc-a" type="number" placeholder="ej. 24000" oninput="calcCCL()"></div>
+      <div class="f"><label>Subyacente (USD)</label><input id="cc-u" type="number" placeholder="ej. 200" oninput="calcCCL()"></div>
+      <div class="f"><label>Ratio</label><input id="cc-r" type="number" placeholder="ej. 10" oninput="calcCCL()"></div>
     </div>
     <div class="crb" id="cc-res" style="display:none">
       <div class="crow"><span class="cl">CCL implícito</span><span class="cv mono" id="cc-i">—</span></div>
@@ -770,6 +789,19 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
   </div>
 </div>
 
+<!-- MODAL: Contactos del equipo EstrategiasLB -->
+<div class="pt-ov" id="contacts-modal">
+  <div class="ct-md" style="position:relative">
+    <button class="ct-close" onclick="closeContacts()" title="Cerrar">×</button>
+    <div class="ct-hdr">
+      <div class="ct-hdr-t">💬 Comunicate con el equipo de EstrategiasLB</div>
+      <div class="ct-hdr-s" id="ct-hdr-s">Elegí a quién querés escribir según el tema de tu consulta. El mensaje ya viene pre-armado con el contexto de tu cartera.</div>
+    </div>
+    <div class="ct-body" id="ct-body"></div>
+    <div class="ct-foot">EstrategiasLB · Asesor Idóneo CNV M.N. 2220</div>
+  </div>
+</div>
+
 <!-- MODAL: Historial de señales pasadas (R4) -->
 <div class="pt-ov" id="sighist-modal">
   <div class="sig-hist-md">
@@ -790,6 +822,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div class="kbd-row"><span class="kbd-lbl">Cerrar modales</span><span class="kbd-key">Esc</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Ver historial de orientaciones</span><span class="kbd-key">H</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Compartir con asesor</span><span class="kbd-key">W</span></div>
+    <div class="kbd-row"><span class="kbd-lbl">Contactar al equipo</span><span class="kbd-key">C</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Cambiar tema</span><span class="kbd-key">T</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Ver este menú</span><span class="kbd-key">?</span></div>
     <button class="pt-nav-b prim" style="margin-top:14px;width:100%" onclick="document.getElementById('kbd-modal').classList.remove('on')">Cerrar</button>
@@ -1088,7 +1121,7 @@ function renderDonut(hs){
   if(!vs.length)return;
   S.dc=new Chart(ctx,{type:"doughnut",data:{labels:lbs,datasets:[{data:vs,backgroundColor:cs,borderColor:"#0d1b2c",borderWidth:3}]},options:{cutout:"70%",animation:{duration:400},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+c.label+": "+fa(c.raw)}}}}});
   const tot=vs.reduce((a,b)=>a+b,0);
-  document.getElementById("leg-d").innerHTML=lbs.map((l,i)=>`<div class="mli"><span class="mld" style="background:${cs[i]}"></span>${l}<strong style="color:var(--txt);margin-left:auto">${((vs[i]/tot)*100).toFixed(0)}%</strong></div>`).join("");
+  document.getElementById("leg-d").innerHTML=lbs.map((l,i)=>{const p=(vs[i]/tot)*100;const pStr=p<10?p.toFixed(1):p.toFixed(0);return `<div class="mli"><span class="mld" style="background:${cs[i]}"></span>${l}<strong style="color:var(--txt);margin-left:auto">${pStr}%</strong></div>`;}).join("");
 }
 function renderBars(hs){
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0)||1;
@@ -1185,7 +1218,9 @@ function renderTable(hs){
     const noteTitle=hasNote?"Editar nota":"Agregar nota";
     const notePreview=hasNote?" "+S.notes[h.ticker].slice(0,80).replace(/"/g,"&quot;")+(S.notes[h.ticker].length>80?"...":""):"";
     const tkCell=`<td><div style="display:flex;align-items:center;gap:6px"><strong>${h.ticker}</strong><button class="note-btn ${hasNote?"has-note":""}" onclick="openNoteModal('${h.ticker}')" title="${noteTitle}${notePreview}">📝</button></div></td>`;
-    return`<tr data-idx="${idx}">${tkCell}<td class="col-hide-md" style="color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis">${nameOf(h.ticker)}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
+    const nombreCompleto=nameOf(h.ticker)||"";
+    const nombreEsc=nombreCompleto.replace(/"/g,"&quot;");
+    return`<tr data-idx="${idx}">${tkCell}<td class="col-hide-md" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${nombreEsc}">${nombreCompleto}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
   }).join("");
 }
 function editPPC(ticker){
@@ -1213,7 +1248,7 @@ function closeCalc(){document.getElementById("calc-m").classList.remove("show");
 function addCalcRow(){
   const div=document.createElement("div");
   div.className="calc-row";
-  div.innerHTML='<input type="number" placeholder="100" min="0" step="any" oninput="calcPPC()"><input type="number" placeholder="21500" min="0" step="any" oninput="calcPPC()"><span class="calc-del" onclick="this.parentElement.remove();calcPPC()">×</span>';
+  div.innerHTML='<input type="number" placeholder="ej. 100 (cantidad)" min="0" step="any" oninput="calcPPC()"><input type="number" placeholder="ej. 21500 (precio)" min="0" step="any" oninput="calcPPC()"><span class="calc-del" onclick="this.parentElement.remove();calcPPC()">×</span>';
   document.getElementById("calc-rows").appendChild(div);
 }
 function calcPPC(){
@@ -2139,7 +2174,7 @@ function renderConcentrationAlerts(){
   // Alertas anti-pánico: papel con -20% desde el PPC (Ronda 3)
   hs.forEach(h=>{
     if(h.ganSource==="ppc"&&h.ganPct!=null&&h.ganPct<=-20){
-      alerts.push({level:"warn",title:"Bajada fuerte en "+h.ticker,desc:`<strong>${h.ticker}</strong> está <strong>${h.ganPct.toFixed(1)}%</strong> por debajo de tu precio de compra. Antes de decidir vender por impulso, hablá con Luis. Muchas veces la baja es transitoria y el criterio profesional evita cristalizar la pérdida.`});
+      alerts.push({level:"warn",title:"Bajada fuerte en "+h.ticker,desc:`<strong>${h.ticker}</strong> está <strong>${h.ganPct.toFixed(1)}%</strong> por debajo de tu precio de compra. Antes de decidir vender por impulso, comunicate con el equipo de EstrategiasLB. Muchas veces la baja es transitoria y el criterio profesional evita cristalizar la pérdida.`});
     }
   });
   // Alertas por sector
@@ -2214,7 +2249,7 @@ function renderBBPP(){
         <div class="bbpp-v">${fa(bbppExterior)}</div>
       </div>
     </div>
-    <a href="https://wa.me/5491136172201?text=Hola,%20quiero%20consultar%20por%20mi%20situación%20impositiva%20con%20la%20cartera%20de%20EstrategiasUNE" target="_blank" rel="noopener" class="bbpp-cta">💬 Consultá con tu contador — WhatsApp EstrategiasLB</a>`;
+    <button class="bbpp-cta" onclick="openContacts('Hola, quiero consultar por mi situación impositiva y la cartera de EstrategiasUNE.','Para consultas impositivas te sugerimos empezar por Nicolás (comercial) o Luis (estratégico) para coordinar con tu contador.')" style="border:1px solid rgba(212,175,55,.4)">💬 Consultar con el equipo — EstrategiasLB</button>`;
 }
 function toggleBBPP(){document.getElementById("bbpp-card").classList.toggle("open");}
 
@@ -2357,7 +2392,7 @@ function renderMomentPanel(orientations){
   el.innerHTML=`<div class="moment-panel">
     <div class="moment-hdr"><span class="moment-icon">⚡</span><span class="moment-title">Momento de mirar</span><span class="moment-count">${strong.length}</span><span style="font-size:11px;color:var(--muted);font-style:italic">orientaciones activas para ${perfLabel}</span></div>
     <div class="moment-list">${rows}</div>
-    <button class="moment-wa" onclick="shareOrientationsWithAdvisor()">💬 Hablar con Luis para evaluar estas oportunidades</button>
+    <button class="moment-wa" onclick="shareOrientationsWithAdvisor()">💬 Comunicate con el equipo de EstrategiasLB para evaluar estas oportunidades</button>
   </div>`;
 }
 function shareOrientationsWithAdvisor(){
@@ -2367,8 +2402,8 @@ function shareOrientationsWithAdvisor(){
     return `• ${o.h.ticker} → ${o.reco.txt} (precio actual: ${price})`;
   }).join("\n");
   const perfil=S.profile?.type||"moderado";
-  const msg=`Hola Luis, vi en EstrategiasUNE que hay orientaciones activas para mi cartera (perfil ${perfil}):\n\n${lines}\n\n¿Podemos revisarlo juntos?`;
-  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+  const msg=`Hola, vi en EstrategiasUNE que hay orientaciones activas para mi cartera (perfil ${perfil}):\n\n${lines}\n\n¿Podemos revisarlo juntos?`;
+  openContacts(msg,"Estas orientaciones son técnicas — te sugerimos escribir a Luis (estrategia) o Kevin (seguimiento operativo).");
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2393,8 +2428,8 @@ function shareWithAdvisor(){
   if(strong.length){
     orientaciones="\n\n📡 Orientaciones activas para mi perfil:\n"+strong.map(o=>`  • ${o.h.ticker} → ${o.reco.txt}`).join("\n");
   }
-  const msg=`Hola Luis, te comparto el estado de mi cartera en EstrategiasUNE:\n\n💰 Patrimonio total: $${fv(tot)} ARS (≈ US$ ${totUSD.toLocaleString("es-AR",{maximumFractionDigits:0})})\n📊 Brokers activos: ${bks.map(cap).join(", ")}\n👤 Perfil: ${perfil}\n\n🏆 Top 5 posiciones:\n${top5}${orientaciones}\n\n¿Podemos revisarlo?`;
-  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+  const msg=`Hola, te comparto el estado de mi cartera en EstrategiasUNE:\n\n💰 Patrimonio total: $${fv(tot)} ARS (≈ US$ ${totUSD.toLocaleString("es-AR",{maximumFractionDigits:0})})\n📊 Brokers activos: ${bks.map(cap).join(", ")}\n👤 Perfil: ${perfil}\n\n🏆 Top 5 posiciones:\n${top5}${orientaciones}\n\n¿Podemos revisarlo?`;
+  openContacts(msg,"Elegí a quién querés compartir el estado de tu cartera.");
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2619,7 +2654,7 @@ async function renderMarketContext(){
   }
   if(mood==="calmo")moodDesc="El VIX está bajo — el mercado internacional está tranquilo. Buenos momentos para revisar posiciones sin presión emocional.";
   else if(mood==="moderado")moodDesc="Volatilidad dentro de rangos normales. Sirve estar atento pero no es momento de reaccionar por impulso.";
-  else if(mood==="turb")moodDesc="El VIX está alto — hay nerviosismo internacional. Buen momento para consultar con Luis antes de cualquier decisión importante.";
+  else if(mood==="turb")moodDesc="El VIX está alto — hay nerviosismo internacional. Buen momento para comunicarse con el equipo de EstrategiasLB antes de cualquier decisión importante.";
   else moodDesc="Contexto general del mercado. Considerá el momento antes de tomar decisiones.";
   const items=[];
   if(vix){
@@ -2657,8 +2692,8 @@ function renderRebalanceBanner(){
     <div class="rebal-b-i">🔄</div>
     <div class="rebal-b-c">
       <div class="rebal-b-t">Empezó ${mesName}: momento de revisar tu cartera</div>
-      <div class="rebal-b-d">Cada inicio de mes es una buena oportunidad para chequear si tu asignación sigue alineada con tus objetivos. Hablalo con Luis para evaluar si conviene rebalancear.</div>
-      <button class="rebal-b-wa" onclick="shareRebalanceWithAdvisor()">💬 Consultar con Luis</button>
+      <div class="rebal-b-d">Cada inicio de mes es una buena oportunidad para chequear si tu asignación sigue alineada con tus objetivos. Comunicate con el equipo de EstrategiasLB para evaluar si conviene rebalancear.</div>
+      <button class="rebal-b-wa" onclick="shareRebalanceWithAdvisor()">💬 Consultar con el equipo</button>
     </div>
     <button class="rebal-b-x" onclick="dismissRebalance()" title="Cerrar por este mes">×</button>
   </div>`;
@@ -2674,8 +2709,8 @@ function shareRebalanceWithAdvisor(){
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
   const perfil=S.profile?.type||"moderado";
   const mesName=new Date().toLocaleDateString("es-AR",{month:"long"});
-  const msg=`Hola Luis, empezó ${mesName} y quería revisar mi cartera con vos. Perfil: ${perfil}. Patrimonio actual: $${fv(tot)} ARS. ¿Cuándo podemos hablar?`;
-  window.open("https://wa.me/5491136172201?text="+encodeURIComponent(msg),"_blank");
+  const msg=`Hola, empezó ${mesName} y quería revisar mi cartera con ustedes. Perfil: ${perfil}. Patrimonio actual: $${fv(tot)} ARS. ¿Cuándo podemos hablar?`;
+  openContacts(msg,"Para revisión mensual de cartera te sugerimos escribir a Luis (estrategia) o Kevin (seguimiento).");
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2820,11 +2855,71 @@ function handleKeyboard(e){
   if(e.key==="h"||e.key==="H"){e.preventDefault();openSigHistory();return;}
   // W → compartir con asesor
   if(e.key==="w"||e.key==="W"){e.preventDefault();shareWithAdvisor();return;}
+  // C → contactar equipo
+  if(e.key==="c"||e.key==="C"){e.preventDefault();openContacts("Hola equipo, tengo una consulta desde EstrategiasUNE.","Elegí con quién querés hablar según el tema de tu consulta.");return;}
   // T → toggle tema
   if(e.key==="t"||e.key==="T"){e.preventDefault();toggleTheme();return;}
 }
 function closeAllModals(){
   document.querySelectorAll(".pt-ov,.onb-ov").forEach(m=>m.classList.remove("on"));
+  // Restaurar subtitle default del modal de contactos
+  const s=document.getElementById("ct-hdr-s");
+  if(s)s.textContent="Elegí a quién querés escribir según el tema de tu consulta. El mensaje ya viene pre-armado con el contexto de tu cartera.";
+}
+
+// ═══════════════════════════════════════════════════════════
+// ── SISTEMA DE CONTACTOS DEL EQUIPO ESTRATEGIASLB ──
+// ═══════════════════════════════════════════════════════════
+const CONTACTS=[
+  {
+    initial:"L",
+    name:"Luis Barberán",
+    role:"CEO · Idóneo CNV M.N. 2220",
+    desc:"Consultas estratégicas de cartera, análisis técnico y decisiones importantes.",
+    wa:"5493795006554"
+  },
+  {
+    initial:"K",
+    name:"Kevin Leonel",
+    role:"Asesor Ejecutivo",
+    desc:"Seguimiento de cartera, orientaciones operativas y uso de EstrategiasUNE.",
+    wa:"5491136172201"
+  },
+  {
+    initial:"N",
+    name:"Nicolás",
+    role:"Asesor Comercial",
+    desc:"Consultas comerciales, alta de servicios y coordinación general.",
+    wa:"5491136994667"
+  }
+];
+let pendingContactMessage=""; // mensaje pre-armado a enviar
+
+function openContacts(message,subtitle){
+  pendingContactMessage=message||"Hola equipo, tengo una consulta desde EstrategiasUNE.";
+  if(subtitle)document.getElementById("ct-hdr-s").textContent=subtitle;
+  const body=document.getElementById("ct-body");
+  body.innerHTML=CONTACTS.map((c,i)=>`
+    <div class="ct-item">
+      <div class="ct-avatar">${c.initial}</div>
+      <div class="ct-info">
+        <div class="ct-name">${c.name}</div>
+        <div class="ct-role">${c.role}</div>
+        <div class="ct-desc">${c.desc}</div>
+      </div>
+      <button class="ct-wa" onclick="contactVia(${i})" title="Abrir WhatsApp con ${c.name}">💬 WhatsApp</button>
+    </div>`).join("");
+  document.getElementById("contacts-modal").classList.add("on");
+}
+function contactVia(idx){
+  const c=CONTACTS[idx];
+  if(!c)return;
+  window.open("https://wa.me/"+c.wa+"?text="+encodeURIComponent(pendingContactMessage),"_blank");
+  closeContacts();
+}
+function closeContacts(){
+  document.getElementById("contacts-modal").classList.remove("on");
+  document.getElementById("ct-hdr-s").textContent="Elegí a quién querés escribir según el tema de tu consulta. El mensaje ya viene pre-armado con el contexto de tu cartera.";
 }
 
 // Hook post-render para mantener chart, alertas y BB.PP. sincronizados
@@ -2854,7 +2949,7 @@ async function init(){
 }
 // Cerrar modales al click en overlay + atajos de teclado (R4)
 document.addEventListener("click",e=>{
-  const overlays=["pt-modal","note-modal","onb-modal","sighist-modal","kbd-modal"];
+  const overlays=["pt-modal","note-modal","onb-modal","sighist-modal","kbd-modal","contacts-modal"];
   overlays.forEach(id=>{const m=document.getElementById(id);if(m&&e.target===m)m.classList.remove("on");});
 });
 document.addEventListener("keydown",handleKeyboard);

@@ -2477,19 +2477,22 @@ async function getInflacionMensual(){
   try{
     const r=await fetchRobust(CFG.INFL_URL,{timeout:10000,retries:1});
     const j=await r.json();
-    if(!Array.isArray(j)||!j.length)return null;
-    // Devuelve array de {fecha, valor} — valor es la variación mensual
-    const sorted=j.map(x=>({fecha:(x.fecha||"").slice(0,7),valor:parseFloat(x.valor)||0})).filter(x=>x.fecha&&!isNaN(x.valor)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    if(!Array.isArray(j)||!j.length){console.warn("Inflación: respuesta vacía");return null;}
+    // La API devuelve fecha en formato YYYY-MM-DD. Truncamos a YYYY-MM.
+    const sorted=j.map(x=>({fecha:(x.fecha||"").slice(0,7),valor:parseFloat(x.valor)||0})).filter(x=>x.fecha&&x.fecha.length===7&&!isNaN(x.valor)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    if(!sorted.length){console.warn("Inflación: no se pudo parsear ningún dato");return null;}
     try{localStorage.setItem(CFG.INFL,JSON.stringify({[cacheKey]:sorted}));}catch{}
     return sorted;
-  }catch(e){console.warn("Inflación",e);return null;}
+  }catch(e){console.warn("Inflación API error:",e.message||e);return null;}
 }
 function monthlyReturnFromSnapshots(month){
   // month: "YYYY-MM"
   const snaps=Object.values(S.snapshots).filter(s=>s.fecha&&s.fecha.startsWith(month)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
   if(snaps.length<2)return null;
   const start=snaps[0].valorARS,end=snaps[snaps.length-1].valorARS;
-  if(!start||!end)return null;
+  if(!start||!end||start<=0)return null;
+  // Si la fecha del primero y el último son la misma, no hay variación real
+  if(snaps[0].fecha===snaps[snaps.length-1].fecha)return null;
   return((end-start)/start)*100;
 }
 async function renderMonthlyComparison(){
@@ -2501,25 +2504,43 @@ async function renderMonthlyComparison(){
   const prevMonth=prevDate.toISOString().slice(0,7);
   const curReturn=monthlyReturnFromSnapshots(currMonth);
   const prevReturn=monthlyReturnFromSnapshots(prevMonth);
-  // Requiere al menos datos del mes actual para tener sentido
+  // Requiere al menos datos del mes actual O anterior para tener sentido
   if(curReturn==null&&prevReturn==null){slot.innerHTML="";return;}
+  // Detectar snapshots insuficientes: si el retorno es exactamente 0.0000 puede ser porque hay solo 1 snapshot
+  const hasSnapshotsCurr=Object.keys(S.snapshots||{}).filter(k=>k.startsWith(currMonth)).length>=2;
+  const hasSnapshotsPrev=Object.keys(S.snapshots||{}).filter(k=>k.startsWith(prevMonth)).length>=2;
   const inflSerie=await getInflacionMensual();
-  const inflMap={};if(inflSerie)inflSerie.forEach(x=>{inflMap[x.fecha]=x.valor;});
-  const showRow=(month,label,ret)=>{
-    if(ret==null)return "";
+  const inflMap={};
+  const inflAvailable=[];
+  if(inflSerie){
+    inflSerie.forEach(x=>{inflMap[x.fecha]=x.valor;inflAvailable.push(x.fecha);});
+    inflAvailable.sort();
+  }
+  const inflHasCurr=inflMap[currMonth]!=null;
+  const inflHasPrev=inflMap[prevMonth]!=null;
+  const inflLastMonth=inflAvailable.length?inflAvailable[inflAvailable.length-1]:null;
+  const monthName=(m)=>{const d=new Date(m+"-01");return d.toLocaleDateString("es-AR",{month:"long",year:"numeric"});};
+  const showRow=(month,label,ret,hasSnaps)=>{
+    // Si no hay datos suficientes de la cartera para este mes, no mostrar la fila
+    if(ret==null||!hasSnaps)return "";
     const infl=inflMap[month];
     const retCls=ret>=0?"up":"dn";
     const cards=[
       `<div class="month-comp-c cart"><div class="month-comp-cl">Cartera</div><div class="month-comp-cv ${retCls}">${ret>=0?"+":""}${ret.toFixed(1)}%</div><div class="month-comp-cs">nominal ARS</div></div>`
     ];
     if(infl!=null){
-      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn">${infl.toFixed(1)}%</div><div class="month-comp-cs">INDEC</div></div>`);
+      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn">${infl.toFixed(1)}%</div><div class="month-comp-cs">INDEC · ${monthName(month)}</div></div>`);
       const diff=ret-infl;
       const diffCls=diff>=0?"up":"dn";
       const diffTxt=diff>=0?"a favor de tu cartera":"a favor de la inflación";
       cards.push(`<div class="month-comp-c diff"><div class="month-comp-cl">Real</div><div class="month-comp-cv ${diffCls}">${diff>=0?"+":""}${diff.toFixed(1)} pp</div><div class="month-comp-cs">${diffTxt}</div></div>`);
+    }else if(inflLastMonth&&inflLastMonth<month){
+      // Fallback: uso el último mes disponible como referencia
+      const inflRef=inflMap[inflLastMonth];
+      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación (ref.)</div><div class="month-comp-cv nn">${inflRef.toFixed(1)}%</div><div class="month-comp-cs">último dato INDEC · ${monthName(inflLastMonth)}</div></div>`);
+      cards.push(`<div class="month-comp-c diff"><div class="month-comp-cl">INDEC pendiente</div><div class="month-comp-cv nn" style="font-size:12px;color:var(--muted2)">📅</div><div class="month-comp-cs">${monthName(month)} aún no publicado</div></div>`);
     }else{
-      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn" style="font-size:12px">—</div><div class="month-comp-cs">sin dato</div></div>`);
+      cards.push(`<div class="month-comp-c infl"><div class="month-comp-cl">Inflación</div><div class="month-comp-cv nn" style="font-size:12px">—</div><div class="month-comp-cs">sin conexión INDEC</div></div>`);
       cards.push(`<div class="month-comp-c diff"><div class="month-comp-cl">Real</div><div class="month-comp-cv nn" style="font-size:12px">—</div><div class="month-comp-cs">requiere INDEC</div></div>`);
     }
     let interp="";
@@ -2528,14 +2549,30 @@ async function renderMonthlyComparison(){
       if(diff>=1)interp=`Tu cartera <strong>le ganó a la inflación por ${diff.toFixed(1)} puntos</strong> ${label}. Estás ganando poder de compra.`;
       else if(diff>=-1)interp=`Tu cartera <strong>empató a la inflación</strong> ${label}. Preservación del poder de compra.`;
       else interp=`Tu cartera <strong>perdió ${Math.abs(diff).toFixed(1)} puntos contra inflación</strong> ${label}. Vale la pena revisar la estrategia con tu asesor.`;
+    }else if(inflLastMonth&&inflLastMonth<month){
+      interp=`El dato oficial de inflación de ${monthName(month)} <strong>aún no fue publicado por INDEC</strong>. Se publica alrededor del día 15 del mes siguiente. La comparación real se completará cuando esté disponible.`;
     }
     return `<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--muted2);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase;font-weight:600">${label}</div><div class="month-comp-g">${cards.join("")}</div>${interp?`<div class="month-comp-i">${interp}</div>`:""}</div>`;
   };
-  const monthName=(m)=>{const d=new Date(m+"-01");return d.toLocaleDateString("es-AR",{month:"long",year:"numeric"});};
+  const currRow=showRow(currMonth,"en "+monthName(currMonth),curReturn,hasSnapshotsCurr);
+  const prevRow=showRow(prevMonth,"en "+monthName(prevMonth),prevReturn,hasSnapshotsPrev);
+  // Si ninguna fila renderiza contenido, no mostrar el card
+  if(!currRow&&!prevRow){
+    // Mensaje informativo cuando no hay snapshots suficientes
+    if((curReturn!=null||prevReturn!=null)&&!hasSnapshotsCurr&&!hasSnapshotsPrev){
+      slot.innerHTML=`<div class="month-comp">
+        <div class="month-comp-t">📊 Rendimiento vs Inflación</div>
+        <div class="month-comp-i">Todavía no hay suficientes datos de tu cartera en el mes para comparar. La comparación aparecerá automáticamente cuando UNE tenga al menos 2 snapshots del mes (empezá a usarla unos días más).</div>
+      </div>`;
+    }else{
+      slot.innerHTML="";
+    }
+    return;
+  }
   slot.innerHTML=`<div class="month-comp">
     <div class="month-comp-t">📊 Rendimiento vs Inflación</div>
-    ${showRow(currMonth,"en "+monthName(currMonth),curReturn)}
-    ${showRow(prevMonth,"en "+monthName(prevMonth),prevReturn)}
+    ${currRow}
+    ${prevRow}
   </div>`;
 }
 

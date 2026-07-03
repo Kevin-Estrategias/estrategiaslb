@@ -60,6 +60,16 @@
 .brk-chip{padding:7px 15px;border-radius:20px;font-size:13px;font-weight:700;color:var(--muted);background:var(--bg2);border:1.5px solid var(--line2);cursor:pointer;transition:.15s;font-family:inherit}
 .brk-chip:hover{border-color:var(--bchip);color:var(--txt)}
 .brk-chip.on{color:var(--bchip);background:color-mix(in srgb,var(--bchip) 14%,transparent);border-color:var(--bchip)}
+/* GRID DE SELECCIÓN DE BROKER (paso 1) */
+.brk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.brk-card{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:16px 18px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--line2);cursor:pointer;transition:.15s;text-align:left;position:relative}
+.brk-card:hover{border-color:var(--bc);background:color-mix(in srgb,var(--bc) 8%,var(--bg2));transform:translateY(-2px)}
+.brk-card-dot{position:absolute;top:16px;right:16px;width:10px;height:10px;border-radius:50%;background:var(--bc)}
+.brk-card-n{font-size:16px;font-weight:800;color:var(--txt)}
+.brk-card-d{font-size:11.5px;color:var(--muted2);font-weight:500}
+.imp-back{background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:14px;transition:.15s}
+.imp-back:hover{color:var(--gold)}
+.imp-brk-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:20px;font-size:14px;font-weight:800;margin-bottom:12px}
 .xls-opt-n{font-size:13.5px;font-weight:600;color:var(--gold2);margin-bottom:5px}
 .xls-opt-d{font-size:12.5px;color:var(--muted);line-height:1.5}
 .btmpl{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:13px;font-weight:600;color:#062420;background:linear-gradient(135deg,var(--teal),var(--teal2));border-radius:8px;padding:9px 15px;cursor:pointer;transition:.15s}
@@ -538,7 +548,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
   <div class="btabs-row">
     <div class="btabs" id="broker-tabs"></div>
     <div class="imp-btns">
-      <button class="bimp" onclick="openImp()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Importar PDF / Excel</button>
+      <button class="bimp" onclick="openImp()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Importar Excel</button>
       <button class="bdel" onclick="openClear()" title="Borrar cartera"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10"/></svg></button>
     </div>
   </div>
@@ -728,41 +738,45 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <button class="mc" onclick="closeImp()">&times;</button>
     <h3>Importar cartera</h3>
     <p class="sub">El archivo se procesa en tu navegador — nunca se sube a ningún servidor.</p>
-    <div class="imp-tabs">
-      <button class="imp-tab on" id="it-pdf" onclick="impTab('pdf')">📄 Rápido (PDF)</button>
-      <button class="imp-tab" id="it-xls" onclick="impTab('xls')">📊 Preciso (Excel) <span class="imp-tab-badge">con tu ganancia real</span></button>
+
+    <!-- PASO 1: ELEGIR BROKER -->
+    <div id="imp-step1">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">¿De qué broker es tu cartera? Elegí para ver cómo importarla.</div>
+      <div class="brk-grid">
+        <button class="brk-card" onclick="pickBroker('balanz')" style="--bc:#3b82f6">
+          <span class="brk-card-dot"></span>
+          <span class="brk-card-n">Balanz</span>
+          <span class="brk-card-d">Excel nativo</span>
+        </button>
+        <button class="brk-card" onclick="pickBroker('iol')" style="--bc:#f97316">
+          <span class="brk-card-dot"></span>
+          <span class="brk-card-n">Invertir Online</span>
+          <span class="brk-card-d">Excel nativo</span>
+        </button>
+        <button class="brk-card" onclick="pickBroker('cocos')" style="--bc:#a855f7">
+          <span class="brk-card-dot"></span>
+          <span class="brk-card-n">Cocos Capital</span>
+          <span class="brk-card-d">Con plantilla</span>
+        </button>
+        <button class="brk-card" onclick="pickBroker('bull')" style="--bc:#22c55e">
+          <span class="brk-card-dot"></span>
+          <span class="brk-card-n">Bull Market</span>
+          <span class="brk-card-d">Con plantilla</span>
+        </button>
+      </div>
     </div>
 
-    <!-- TAB PDF -->
-    <div id="tab-pdf">
-      <div class="ib"><strong>¿Cómo exportar?</strong><br><strong>Balanz:</strong> Mi Cuenta → Resumen de Cuenta → Descargar PDF<br><strong>IOL:</strong> Mi Cuenta → Estado de Cuenta → Descargar PDF</div>
-      <div id="is1"><div class="dz" id="dzone" onclick="document.getElementById('pfi').click()"><div class="dzi">📄</div><div class="dzt">Arrastrá el PDF acá o hacé clic para seleccionar</div><div class="dzs">Balanz · IOL</div></div><input type="file" id="pfi" accept=".pdf" style="display:none" onchange="onPDF(this.files[0])"></div>
-      <div id="is2" style="display:none">
-        <div id="i-broker" style="margin-bottom:12px"></div>
-        <div class="ib"><strong>ℹ️ Sobre el PPC:</strong> El PDF no incluye tu precio de compra original. Para ver tu ganancia real, usá la pestaña <strong>"Preciso (Excel)"</strong> o ingresá el costo manualmente en cada fila.</div>
-        <div id="i-prev"></div>
-        <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmImp()">Importar posiciones</button><button onclick="resetImp()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
-      </div>
-    </div>
-
-    <!-- TAB EXCEL -->
-    <div id="tab-xls" style="display:none">
-      <div class="ib"><strong>📊 Para tener tu ganancia 100% exacta</strong><br>Necesitamos tu <strong>precio de compra</strong> (PPC), que el PDF no trae. Tenés dos formas:</div>
-      <div class="xls-opt">
-        <div class="xls-opt-n">Opción 1 · Balanz o IOL lo exportan directo</div>
-        <div class="xls-opt-d"><strong>Balanz:</strong> Cartera → Mis Instrumentos → Exportar a Excel (exportá con la vista en <strong>Pesos/ARS</strong>).<br><strong>IOL:</strong> Portafolio → exportar a Excel con Ticker, Cantidad, PPC, Último Precio y Valorizado. Importá el archivo tal cual.</div>
-      </div>
-      <div class="xls-opt">
-        <div class="xls-opt-n">Opción 2 · Usá nuestra plantilla</div>
-        <div class="xls-opt-d">Para Cocos, Bull Market u otros brokers: descargá la plantilla, completá Ticker, Cantidad y Precio de compra de cada papel, y subila.</div>
-        <button class="btmpl" onclick="downloadTemplate()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Descargar plantilla Excel</button>
-      </div>
+    <!-- PASO 2: CARGAR EXCEL (según broker elegido) -->
+    <div id="imp-step2" style="display:none">
+      <button class="imp-back" onclick="backToBrokers()">← Cambiar broker</button>
+      <div id="imp-broker-hdr"></div>
+      <div id="imp-instr"></div>
       <div style="margin:14px 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Subí tu archivo</div>
-      <div id="xs1"><div class="dz" id="dzonex" onclick="document.getElementById('xfi').click()"><div class="dzi">📊</div><div class="dzt">Arrastrá el Excel/CSV acá o hacé clic</div><div class="dzs">.xlsx · .csv — Balanz · IOL · plantilla EstrategiasLB</div></div><input type="file" id="xfi" accept=".xlsx,.xls,.csv" style="display:none" onchange="onXLS(this.files[0])"></div>
+      <div id="xs1"><div class="dz" id="dzonex" onclick="document.getElementById('xfi').click()"><div class="dzi">📊</div><div class="dzt">Arrastrá el Excel/CSV acá o hacé clic</div><div class="dzs" id="dz-hint">.xlsx · .csv</div></div><input type="file" id="xfi" accept=".xlsx,.xls,.csv" style="display:none" onchange="onXLS(this.files[0])"></div>
       <div id="xs2" style="display:none">
         <div id="x-broker" style="margin-bottom:12px"></div>
         <div id="x-prev"></div>
-        <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmXLS()">Importar con PPC</button><button onclick="resetXLS()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
+        <div style="display:flex;gap:10px;margin-top:16px"><button class="bprim" onclick="confirmXLS()">Importar cartera</button><button onclick="resetXLS()" style="padding:11px 20px;border-radius:9px;border:1px solid var(--line2);color:var(--muted);font-size:15px">Cancelar</button></div>
       </div>
     </div>
 
@@ -841,7 +855,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
         <div class="onb-step-n">1</div>
         <div class="onb-step-c">
           <div class="onb-step-t">Importá tu cartera</div>
-          <div class="onb-step-d">Subí el PDF o Excel de Balanz, IOL, Cocos o Bull Market. El sistema detecta automáticamente el broker y consolida todo en una sola vista.</div>
+          <div class="onb-step-d">Subí el Excel de Balanz, IOL, Cocos o Bull Market. El sistema detecta automáticamente el broker y consolida todo en una sola vista con tu ganancia real.</div>
         </div>
       </div>
       <div class="onb-step">
@@ -1362,7 +1376,7 @@ function renderTable(hs){
   head.innerHTML=`<tr>${thSort("ticker","Ticker")}<th class="col-hide-md">Nombre</th>${thSort("tipo","Tipo","col-hide-sm")}${bkColH}${thSort("cant","Cantidad","nr col-hide-sm")}${thSort("peso","Peso","nr")}<th class="col-hide">PPC ✎</th>${thSort("precio","Precio actual","nr col-hide")}${thSort("valor","Valor","nr")}${thSort("resultado","Resultado","nr")}${thSort("pct","%","nr col-hide-sm")}<th class="col-hide">Recomendación</th><th style="width:32px"></th></tr>`;
   if(!hs.length){
     if(totalPre>0){body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">🔍</div><div class="be-txt">Sin resultados</div><div class="be-sub">Ningún ticker coincide con "${(document.getElementById("ttbl-search")?.value||"").trim()}"</div></td></tr>`;return;}
-    body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste ningún PDF":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el resumen de cuenta de tu broker</div><button class="bimp-lg" onclick="openImp()">📄 Importar PDF</button></td></tr>`;return;
+    body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste tu cartera":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el Excel de tu broker</div><button class="bimp-lg" onclick="openImp()">📊 Importar Excel</button></td></tr>`;return;
   }
   body.innerHTML=hs.map((h,idx)=>{
     const tCls=TPC[h.tipo||"accion"]||"pa";
@@ -1471,12 +1485,43 @@ function hideSug(){setTimeout(()=>{document.getElementById("sg-l").style.display
 function saveMan(){const tk=document.getElementById("f-t").value.trim().toUpperCase(),cant=parseFloat(document.getElementById("f-q").value),pr=parseFloat(document.getElementById("f-p").value)||0,broker=document.getElementById("f-b").value||"manual";const tipo=document.getElementById("f-t").dataset.tipo||DB[tk]?.t||"accion";if(!tk){snk("⚠ Ticker requerido");return;}if(!cant||cant<=0){snk("⚠ Cantidad inválida");return;}S.manual=S.manual.filter(m=>!(m.ticker===tk&&m.broker===broker));S.manual.push({ticker:tk,tipo,cant,precio:pr,broker});save();["f-t","f-q","f-p"].forEach(id=>document.getElementById(id).value="");renderMan();renderD();snk("✓ "+tk+" agregado");}
 function renderMan(){const tb=document.getElementById("man-body");if(!S.manual.length){tb.innerHTML="<tr><td colspan='5' style='text-align:center;padding:24px;color:var(--muted2)'>Sin posiciones manuales.</td></tr>";return;}tb.innerHTML=S.manual.map(m=>`<tr><td><strong>${m.ticker}</strong></td><td style="color:var(--muted)">${m.tipo}</td><td class="mono">${m.cant.toLocaleString("es-AR")}</td><td style="color:${BC[m.broker]||"var(--gold)"}">${cap(m.broker)}</td><td><button class="db" onclick="delMan('${m.ticker}','${m.broker}')">×</button></td></tr>`).join("");}
 function delMan(tk,broker){S.manual=S.manual.filter(m=>!(m.ticker===tk&&m.broker===broker));save();renderMan();renderD();snk(tk+" eliminado");}
-function openImp(){document.getElementById("imp-m").classList.add("show");impTab("pdf");resetImp();resetXLS();}
+function openImp(){document.getElementById("imp-m").classList.add("show");S.impBroker=null;backToBrokers();document.getElementById("i-err").style.display="none";}
+// Instrucciones específicas por broker
+const BROKER_INSTR={
+  balanz:{name:"Balanz",color:"#3b82f6",native:true,steps:`En Balanz: <strong>Cartera → Mis Instrumentos → Exportar a Excel</strong>.<br>Exportá con la vista en <strong>Pesos (ARS)</strong>. Importá el archivo tal cual, sin modificarlo.`},
+  iol:{name:"Invertir Online",color:"#f97316",native:true,steps:`En IOL: <strong>Portafolio → Exportar a Excel</strong>.<br>El archivo ya trae tu PPC y precios. Importalo tal cual, sin modificarlo.`},
+  cocos:{name:"Cocos Capital",color:"#a855f7",native:false,steps:`Cocos no exporta un Excel compatible, así que usá nuestra plantilla:<br>1. Descargá la plantilla.<br>2. Completá Ticker, Cantidad, PPC y (opcional) Último Precio de cada papel.<br>3. Subí la plantilla completada.`},
+  bull:{name:"Bull Market",color:"#22c55e",native:false,steps:`Bull Market no exporta un Excel compatible, así que usá nuestra plantilla:<br>1. Descargá la plantilla.<br>2. Completá Ticker, Cantidad, PPC y (opcional) Último Precio de cada papel.<br>3. Subí la plantilla completada.`}
+};
+function pickBroker(id){
+  S.impBroker=id;
+  const info=BROKER_INSTR[id];
+  if(!info)return;
+  document.getElementById("imp-step1").style.display="none";
+  document.getElementById("imp-step2").style.display="block";
+  // Badge del broker elegido
+  document.getElementById("imp-broker-hdr").innerHTML=`<div class="imp-brk-badge" style="color:${info.color};background:${info.color}1a;border:1px solid ${info.color}55"><span style="width:9px;height:9px;border-radius:50%;background:${info.color}"></span>${info.name}</div>`;
+  // Instrucción específica + botón de plantilla si aplica
+  let instrHTML=`<div class="ib">${info.steps}</div>`;
+  if(!info.native){
+    instrHTML+=`<button class="btmpl" onclick="downloadTemplate()" style="margin-top:4px"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Descargar plantilla Excel</button>`;
+  }
+  document.getElementById("imp-instr").innerHTML=instrHTML;
+  document.getElementById("dz-hint").textContent=info.native?`.xlsx exportado de ${info.name}`:`.xlsx · plantilla completada`;
+  resetXLS();
+}
+function backToBrokers(){
+  document.getElementById("imp-step1").style.display="block";
+  document.getElementById("imp-step2").style.display="none";
+  resetXLS();
+}
 function closeImp(){document.getElementById("imp-m").classList.remove("show");resetImp();resetXLS();}
 const dz=document.getElementById("dzone");
-dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("do");});
-dz.addEventListener("dragleave",()=>dz.classList.remove("do"));
-dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("do");const f=e.dataTransfer.files[0];if(f)onPDF(f);});
+if(dz){
+  dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("do");});
+  dz.addEventListener("dragleave",()=>dz.classList.remove("do"));
+  dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("do");const f=e.dataTransfer.files[0];if(f)onPDF(f);});
+}
 const dzx=document.getElementById("dzonex");
 if(dzx){
   dzx.addEventListener("dragover",e=>{e.preventDefault();dzx.classList.add("do");});
@@ -1568,15 +1613,15 @@ function pickPDFBroker(id){
   document.querySelectorAll("#i-broker .brk-chip").forEach(c=>c.classList.toggle("on",c.dataset.brk===id));
 }
 function confirmImp(){if(!S.prev)return;learnHoldings(S.prev.holdings);S.portfolios=S.portfolios.filter(p=>p.broker!==S.prev.broker);S.portfolios.push({id:Date.now().toString(36),broker:S.prev.broker,fecha:S.prev.fecha,items:S.prev.holdings});save();closeImp();S.bTab=S.prev.broker;renderD();snk("✓ "+S.prev.holdings.length+" posiciones de "+cap(S.prev.broker)+" importadas");}
-function resetImp(){S.prev=null;document.getElementById("is1").style.display="block";document.getElementById("is2").style.display="none";document.getElementById("i-err").style.display="none";document.getElementById("pfi").value="";}
+function resetImp(){S.prev=null;const is1=document.getElementById("is1");if(is1)is1.style.display="block";const is2=document.getElementById("is2");if(is2)is2.style.display="none";const err=document.getElementById("i-err");if(err)err.style.display="none";const pfi=document.getElementById("pfi");if(pfi)pfi.value="";}
 
 // ── IMPORTAR EXCEL/CSV (con PPC real) ──
 function impTab(t){
-  document.getElementById("it-pdf").classList.toggle("on",t==="pdf");
-  document.getElementById("it-xls").classList.toggle("on",t==="xls");
-  document.getElementById("tab-pdf").style.display=t==="pdf"?"block":"none";
-  document.getElementById("tab-xls").style.display=t==="xls"?"block":"none";
-  document.getElementById("i-err").style.display="none";
+  // Compatibilidad: el flujo PDF fue removido, solo queda Excel.
+  const tabXls=document.getElementById("tab-xls");
+  if(tabXls)tabXls.style.display="block";
+  const err=document.getElementById("i-err");
+  if(err)err.style.display="none";
 }
 function downloadTemplate(){
   // Plantilla con hoja de instrucciones + una hoja por broker con ejemplos
@@ -1622,15 +1667,15 @@ function onXLS(file){
     try{
       const data=new Uint8Array(e.target.result);
       const wb=XLSX.read(data,{type:"array"});
-      const res=parseXLSWorkbook(wb);
+      const res=parseXLSWorkbook(wb,S.impBroker);
       if(!res.holdings.length){showErr("No se encontraron posiciones válidas. Revisá que el archivo tenga Ticker, Cantidad y Precio de compra.");return;}
       showPrevXLS(res);
     }catch(err){showErr("No pude leer el archivo: "+err.message);}
   };
   rd.readAsArrayBuffer(file);
 }
-function parseXLSWorkbook(wb){
-  const holdings=[];let broker="manual";
+function parseXLSWorkbook(wb,forcedBroker){
+  const holdings=[];let broker="manual";let formatDetected="manual";
   for(const sheetName of wb.SheetNames){
     // Saltar la hoja de instrucciones de la plantilla EstrategiasLB
     if(sheetName.toLowerCase().includes("instruccion"))continue;
@@ -1660,15 +1705,19 @@ function parseXLSWorkbook(wb){
     const startIdx=rows.indexOf(headerRow)+1;
     // nombre del broker desde la hoja de la plantilla, o detectar por formato nativo
     const sn=sheetName.toLowerCase();
-    // IOL nativo: tiene "valorizado" + "último precio" + "rendimiento bruto"
+    // ── Detección de FORMATO (cómo leer el archivo) — independiente de la etiqueta ──
+    // IOL nativo: tiene "valorizado" + "último precio"
     const isIOLNative=idxValorizado>=0&&idxUltPrecio>=0;
-    if(sn.includes("balanz"))broker="balanz";
-    else if(sn.includes("iol")||isIOLNative)broker="iol";
-    else if(sn.includes("cocos"))broker="cocos";
-    else if(sn.includes("bull"))broker="bull";
-    else if(hdr.some(h=>h.includes("precio promedio de compra"))&&hdr.some(h=>h.includes("tipo de instrumento")))broker="balanz";
-    else if(sn.includes("mis instrumentos"))broker="balanz";
-    const isBalanzNative=broker==="balanz"&&idxValActual>=0; // el export nativo trae valores calculados
+    // Balanz nativo: tiene "valor actual" + "precio promedio de compra" + "tipo de instrumento"
+    const isBalanzFormat=idxValActual>=0&&(hdr.some(h=>h.includes("precio promedio de compra"))||sn.includes("mis instrumentos")||sn.includes("balanz"));
+    // Detectar etiqueta por formato (fallback si no hay broker forzado)
+    if(sn.includes("balanz")||isBalanzFormat)formatDetected="balanz";
+    else if(sn.includes("iol")||isIOLNative)formatDetected="iol";
+    else if(sn.includes("cocos"))formatDetected="cocos";
+    else if(sn.includes("bull"))formatDetected="bull";
+    // ETIQUETA final: la que eligió el cliente manda; si no hay, usar la detectada
+    broker=forcedBroker||formatDetected;
+    const isBalanzNative=isBalanzFormat; // el export nativo de Balanz trae valores calculados
     // Plantilla EstrategiasLB con "Ultimo Precio" cargado → puede calcular valor/rendimiento
     const isTemplateWithPrice=!isIOLNative&&!isBalanzNative&&idxUltPrecio>=0;
     // ── Detectar la moneda de la VISTA del export ──
@@ -1773,29 +1822,18 @@ function parseNum(v){
 }
 function showPrevXLS(res){
   S.prevXLS=res;
-  const brokers=[["balanz","Balanz"],["iol","IOL"],["cocos","Cocos Capital"],["bull","Bull Market"],["manual","Otro / Manual"]];
-  const detected=res.broker||"manual";
-  const chips=brokers.map(([id,label])=>{
-    const bc=BC[id]||"#D4AF37";
-    const on=id===detected;
-    return `<button class="brk-chip${on?" on":""}" data-brk="${id}" onclick="pickXLSBroker('${id}')" style="--bchip:${bc}">${label}</button>`;
-  }).join("");
+  const bnames={balanz:"Balanz",iol:"Invertir Online",cocos:"Cocos Capital",bull:"Bull Market",manual:"Otro / Manual"};
+  const bc=BC[res.broker]||"#D4AF37";
+  const bname=bnames[res.broker]||cap(res.broker);
   document.getElementById("x-broker").innerHTML=`
-    <div style="font-size:13px;color:var(--muted);margin-bottom:8px">¿De qué broker es esta cartera? <span style="color:var(--muted2)">(detectamos <strong style="color:${BC[detected]||"#D4AF37"}">${cap(detected==="manual"?"Otro":detected)}</strong>, confirmá o cambialo)</span></div>
-    <div class="brk-chips">${chips}</div>
-    <div style="font-size:13px;color:var(--green);margin-top:10px">✓ ${res.holdings.length} posiciones con PPC real</div>`;
+    <div class="imp-brk-badge" style="color:${bc};background:${bc}1a;border:1px solid ${bc}55"><span style="width:9px;height:9px;border-radius:50%;background:${bc}"></span>${bname}</div>
+    <div style="font-size:13px;color:var(--green)">✓ ${res.holdings.length} posiciones encontradas — revisá y confirmá</div>`;
   const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono" style="color:var(--gold2)">${fa(h.ppc)}</td></tr>`).join("");
   const more=res.holdings.length>8?`<tr><td colspan="4" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";
   document.getElementById("x-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>PPC (tu compra)</th></tr></thead><tbody>${rows}${more}</tbody></table>`;
   document.getElementById("xs1").style.display="none";
   document.getElementById("xs2").style.display="block";
   document.getElementById("i-err").style.display="none";
-}
-function pickXLSBroker(id){
-  if(!S.prevXLS)return;
-  S.prevXLS.broker=id;
-  // actualizar chips activos
-  document.querySelectorAll(".brk-chip").forEach(c=>c.classList.toggle("on",c.dataset.brk===id));
 }
 function confirmXLS(){
   if(!S.prevXLS)return;
@@ -3581,4 +3619,3 @@ init();
 </div>
 </body>
 </html>
-  

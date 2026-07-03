@@ -745,16 +745,16 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div id="tab-xls" style="display:none">
       <div class="ib"><strong>📊 Para tener tu ganancia 100% exacta</strong><br>Necesitamos tu <strong>precio de compra</strong> (PPC), que el PDF no trae. Tenés dos formas:</div>
       <div class="xls-opt">
-        <div class="xls-opt-n">Opción 1 · Balanz lo exporta directo</div>
-        <div class="xls-opt-d">En Balanz: <strong>Cartera → Mis Instrumentos → Exportar a Excel</strong>. Ese archivo ya trae el "Precio promedio de compra". Importalo tal cual.</div>
+        <div class="xls-opt-n">Opción 1 · Balanz o IOL lo exportan directo</div>
+        <div class="xls-opt-d"><strong>Balanz:</strong> Cartera → Mis Instrumentos → Exportar a Excel (exportá con la vista en <strong>Pesos/ARS</strong>).<br><strong>IOL:</strong> Portafolio → exportar a Excel con Ticker, Cantidad, PPC, Último Precio y Valorizado. Importá el archivo tal cual.</div>
       </div>
       <div class="xls-opt">
         <div class="xls-opt-n">Opción 2 · Usá nuestra plantilla</div>
-        <div class="xls-opt-d">Para IOL u otros brokers: descargá la plantilla, completá Ticker, Cantidad y Precio de compra de cada papel, y subila.</div>
+        <div class="xls-opt-d">Para Cocos, Bull Market u otros brokers: descargá la plantilla, completá Ticker, Cantidad y Precio de compra de cada papel, y subila.</div>
         <button class="btmpl" onclick="downloadTemplate()"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v9M4 6l4 4 4-4M2 13h12"/></svg> Descargar plantilla Excel</button>
       </div>
       <div style="margin:14px 0 10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Subí tu archivo</div>
-      <div id="xs1"><div class="dz" id="dzonex" onclick="document.getElementById('xfi').click()"><div class="dzi">📊</div><div class="dzt">Arrastrá el Excel/CSV acá o hacé clic</div><div class="dzs">.xlsx · .csv — Balanz o plantilla EstrategiasLB</div></div><input type="file" id="xfi" accept=".xlsx,.xls,.csv" style="display:none" onchange="onXLS(this.files[0])"></div>
+      <div id="xs1"><div class="dz" id="dzonex" onclick="document.getElementById('xfi').click()"><div class="dzi">📊</div><div class="dzt">Arrastrá el Excel/CSV acá o hacé clic</div><div class="dzs">.xlsx · .csv — Balanz · IOL · plantilla EstrategiasLB</div></div><input type="file" id="xfi" accept=".xlsx,.xls,.csv" style="display:none" onchange="onXLS(this.files[0])"></div>
       <div id="xs2" style="display:none">
         <div id="x-broker" style="margin-bottom:12px"></div>
         <div id="x-prev"></div>
@@ -1090,6 +1090,22 @@ function pxOf(tk){return S.px[tk]?.p||null;}
 function chOf(tk){const c=S.px[tk]?.ch;return(c===0||c)?c:null;}
 function nameOf(tk){return (typeof TICKER_NAMES_ES!=="undefined"&&TICKER_NAMES_ES[tk])||DB[tk]?.n||S.learned[tk]?.n||"";}
 function typeOf(tk){return DB[tk]?.t||S.learned[tk]?.t||"accion";}
+// Infiere el tipo de instrumento por el patrón del ticker argentino (para brokers que no traen columna Tipo, ej. IOL)
+function inferTipoTicker(tk){
+  // Primero: si ya lo conocemos en la base o lo aprendimos, usar eso
+  const known=DB[tk]?.t||S.learned[tk]?.t;
+  if(known)return known;
+  const t=tk.toUpperCase();
+  // Bonos soberanos comunes: AL##, GD##, AE##, BA##, GK##, BPO###, BPY##, AO##, TV##, TZX##, DICP, PARP, CUAP
+  if(/^(AL|GD|AE|BA|GK|AO|TV|TZX?|TX|TC|TDG|TD)\d/.test(t))return "bono";
+  if(/^BP[OYAD]/.test(t))return "bono"; // BOPREAL: BPOA7, BPOC7, BPY26…
+  if(/^(DICP|PARP|CUAP|PARY|DICY|DICA|PAR[AY]?)$/.test(t))return "bono";
+  // Letras del Tesoro: S##X#, X##X#, T##X# (S31M5, X16Y5, etc.) o LECAP
+  if(/^[SXTL]\d{1,2}[A-Z]\d/.test(t))return "letra";
+  // Obligaciones negociables: suelen terminar en O o D con formato corto (raro sin descripción)
+  // Por defecto: acción/CEDEAR según base conocida
+  return typeOf(tk);
+}
 // Bonos, ON y letras cotizan "por cada 100 nominales": el valor es cant × precio / 100
 function priceFactor(tipo){return(tipo==="bono"||tipo==="on"||tipo==="letra")?0.01:1;}
 function saveLearned(){localStorage.setItem(CFG.LRN,JSON.stringify(S.learned));}
@@ -1130,41 +1146,63 @@ function getRec(ganPct,ticker,source){
 }
 function getConsolidated(){
   const map={};
-  const add=(ticker,tipo,cant,broker,pdfPx,pdfVal)=>{
-    if(!map[ticker])map[ticker]={ticker,tipo:tipo||typeOf(ticker),cant:0,pdfVal:0,pdfPx:0,brokers:[]};
+  const add=(ticker,tipo,cant,broker,pdfPx,pdfVal,it)=>{
+    if(!map[ticker])map[ticker]={ticker,tipo:tipo||typeOf(ticker),cant:0,pdfVal:0,pdfPx:0,brokers:[],_bz:null};
     map[ticker].cant+=cant;map[ticker].pdfVal+=(pdfVal||0);
     if(pdfPx>0)map[ticker].pdfPx=pdfPx; // precio unitario del PDF (último que aparezca)
     if(!map[ticker].brokers.includes(broker))map[ticker].brokers.push(broker);
+    // Acumular datos de Balanz si la posición los trae
+    if(it&&it.fromBalanz){
+      if(!map[ticker]._bz)map[ticker]._bz={moneda:it.moneda,valActual:0,valInicial:0,rend:0,precioActual:it.precioActual,pctRend:it.pctRend};
+      map[ticker]._bz.valActual+=(it.valActual||0);
+      map[ticker]._bz.valInicial+=(it.valInicial||0);
+      map[ticker]._bz.rend+=(it.rend||0);
+    }
   };
-  for(const pf of S.portfolios)for(const it of pf.items)add(it.ticker,it.tipo,it.cant,pf.broker,it.precio,it.valorARS);
-  for(const m of S.manual)add(m.ticker,m.tipo,m.cant,m.broker,m.precio,m.cant*(m.precio||0));
-  return Object.values(map).filter(h=>h.cant>0).map(h=>{
+  for(const pf of S.portfolios)for(const it of pf.items)add(it.ticker,it.tipo,it.cant,pf.broker,it.precio,it.valorARS,it);
+  for(const m of S.manual)add(m.ticker,m.tipo,m.cant,m.broker,m.precio,m.cant*(m.precio||0),m);
+  return Object.values(map).filter(h=>h.cant>0).map(h=>resolveHolding(h,h._bz)).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
+}
+// Convierte un monto en la moneda del instrumento a ARS (usa MEP para dólares)
+function toARS(amount,moneda){
+  if(moneda==="usd"){const mep=S.dolar.mep||S.dolar.ccl||0;return mep?amount*mep:null;}
+  return amount;
+}
+// Resuelve precio/valor/rendimiento de una posición. Si viene de Balanz, usa sus datos calculados.
+function resolveHolding(h,bz){
+  const ppcReal=S.ppc[h.ticker]||null;
+  // ── Caso 1: posición de Balanz con datos calculados confiables ──
+  if(bz&&bz.valActual>0){
+    let valorARS=toARS(bz.valActual,bz.moneda);
+    let invertidoARS=toARS(bz.valInicial,bz.moneda);
+    let mepMissing=false;
+    // Si es USD y el MEP aún no cargó, toARS devuelve null: usamos el valor USD crudo
+    // temporalmente para no romper el total (se recalcula al llegar el MEP).
+    if(bz.moneda==="usd"&&valorARS==null){valorARS=bz.valActual;invertidoARS=bz.valInicial;mepMissing=true;}
+    const ganARS=(valorARS!=null&&invertidoARS!=null)?(valorARS-invertidoARS):null;
+    // % de rendimiento: usar el que Balanz ya calculó (no depende de la moneda)
+    const ganPct=(bz.pctRend!=null&&!isNaN(bz.pctRend))?bz.pctRend:((invertidoARS>0)?(ganARS/invertidoARS*100):null);
     const lp=pxOf(h.ticker);
-    const precio=lp||h.pdfPx||null;        // FALLBACK al precio del PDF (igual que getBrokerH)
-    const ff=priceFactor(h.tipo);
-    const val=precio?h.cant*precio*ff:h.pdfVal;
-    const ppcReal=S.ppc[h.ticker]||null;
-    // base de costo: PPC real si existe, sino precio del PDF (costo base automático)
-    const base=ppcReal||h.pdfPx||null;
-    const ganSource=ppcReal?"ppc":(h.pdfPx?"pdf":null);
-    const ganARS=(precio&&base)?((precio-base)*h.cant*ff):null;
-    const ganPct=(precio&&base)?((precio-base)/base*100):null;
-    return{...h,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker,ganSource)};
-  }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
+    return{...h,precio:bz.precioActual||null,valorARS,ppc:ppcReal,base:ppcReal,
+      ganSource:"balanz",ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,
+      moneda:bz.moneda,mepMissing,rec:getRec(ganPct,h.ticker,"balanz")};
+  }
+  // ── Caso 2: cálculo clásico con base de precios interna ──
+  const lp=pxOf(h.ticker);
+  const precio=lp||h.pdfPx||null;
+  const ff=priceFactor(h.tipo);
+  const val=precio?h.cant*precio*ff:h.pdfVal;
+  const base=ppcReal||h.pdfPx||null;
+  const ganSource=ppcReal?"ppc":(h.pdfPx?"pdf":null);
+  const ganARS=(precio&&base)?((precio-base)*h.cant*ff):null;
+  const ganPct=(precio&&base)?((precio-base)/base*100):null;
+  return{...h,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(h.ticker),live:!!lp,rec:getRec(ganPct,h.ticker,ganSource)};
 }
 function getBrokerH(broker){
   const src=broker==="manual"?S.manual:(S.portfolios.find(p=>p.broker===broker)?.items||[]);
   return src.map(it=>{
-    const lp=pxOf(it.ticker);
-    const precio=lp||it.precio||null;
-    const ff=priceFactor(it.tipo);
-    const val=precio?it.cant*precio*ff:(it.valorARS||0);
-    const ppcReal=S.ppc[it.ticker]||null;
-    const base=ppcReal||it.precio||null;
-    const ganSource=ppcReal?"ppc":(it.precio?"pdf":null);
-    const ganARS=(precio&&base)?((precio-base)*it.cant*ff):null;
-    const ganPct=(precio&&base)?((precio-base)/base*100):null;
-    return{...it,precio,valorARS:val,ppc:ppcReal,base,ganSource,ganARS,ganPct,ch:chOf(it.ticker),live:!!lp,rec:getRec(ganPct,it.ticker,ganSource)};
+    const bz=it.fromBalanz?{moneda:it.moneda,valActual:it.valActual||0,valInicial:it.valInicial||0,rend:it.rend||0,precioActual:it.precioActual,pctRend:it.pctRend}:null;
+    return resolveHolding({...it,pdfPx:it.precio,pdfVal:it.valorARS||0,brokers:[broker]},bz);
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
@@ -1326,18 +1364,26 @@ function renderTable(hs){
     const tCls=TPC[h.tipo||"accion"]||"pa";
     const bkDots=(h.brokers||[h.broker||"manual"]).map(b=>`<span class="bkdot" style="background:${BC[b]||"#D4AF37"}" title="${cap(b)}"></span>`).join("");
     const chTxt=(h.ch!=null&&h.live)?`<span class="px-ch ${h.ch>=0?"up":"dn"}">${h.ch>=0?"▲":"▼"} ${Math.abs(h.ch).toFixed(2)}%</span>`:"";
+    const isUSD=h.moneda==="usd";
+    const fmtPx=(v)=>isUSD?("U$S "+v.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2})):fa(v);
     const prEl=h.precio
-      ? `<div class="px-cell"><span class="mono px-main${h.live?"":" px-stale"}">${fa(h.precio)}</span>${chTxt}${h.live?"":'<span class="px-pdf" title="Precio del último resumen. Actualizá para traer el precio en vivo.">s/PDF</span>'}</div>`
+      ? `<div class="px-cell"><span class="mono px-main${h.live?"":" px-stale"}">${fmtPx(h.precio)}</span>${chTxt}${h.live?"":(isUSD?'<span class="px-pdf" title="Precio del export de Balanz.">Balanz</span>':'<span class="px-pdf" title="Precio del último resumen. Actualizá para traer el precio en vivo.">s/PDF</span>')}</div>`
       : `<span style="color:var(--muted2)">—</span>`;
     const ppcEl=h.ppc
-      ? `<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fa(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`
+      ? `<span class="ppc-set mono" onclick="editPPC('${h.ticker}')">${fmtPx(h.ppc)} <span style="opacity:.4;font-size:11px">✎</span></span>`
       : `<span class="ppc-add" onclick="editPPC('${h.ticker}')">+ Ingresar costo</span>`;
     // RESULTADO Y %: si hay PPC → total desde compra + linea chica con el día
     let resEl,pctEl;
     const hasDay=h.ch!=null&&h.live&&h.valorARS;
     const valAyer=hasDay?h.valorARS/(1+h.ch/100):null;
     const diaARS=hasDay?h.valorARS-valAyer:null;
-    if(h.ganSource==="ppc"&&h.ganARS!=null){
+    if(h.ganSource==="balanz"&&h.ganARS!=null){
+      // Rendimiento calculado por Balanz (confiable, ya en ARS)
+      const gc=h.ganARS>=0?"up":"dn";
+      const dayLine=hasDay?`<span class="pnl-day ${diaARS>=0?"up":"dn"}">Hoy: ${sgn(diaARS)}${fv(diaARS)}</span>`:"";
+      resEl=`<div class="pnl-cell"><span class="pnl-tot ${gc}">${sgn(h.ganARS)}${fv(h.ganARS)}</span><span class="gan-tag">total</span>${dayLine}</div>`;
+      pctEl=h.ganPct!=null?`<span class="${gc}">${sgn(h.ganPct)}${h.ganPct.toFixed(2)}%</span>`:`<span style="color:var(--muted2)">—</span>`;
+    }else if(h.ganSource==="ppc"&&h.ganARS!=null){
       const gc=h.ganARS>=0?"up":"dn";
       const dayLine=hasDay?`<span class="pnl-day ${diaARS>=0?"up":"dn"}">Hoy: ${sgn(diaARS)}${fv(diaARS)}</span>`:"";
       resEl=`<div class="pnl-cell"><span class="pnl-tot ${gc}">${sgn(h.ganARS)}${fv(h.ganARS)}</span><span class="gan-tag">total</span>${dayLine}</div>`;
@@ -1508,12 +1554,12 @@ function impTab(t){
 function downloadTemplate(){
   // Plantilla con hojas separadas por broker
   const wb=XLSX.utils.book_new();
-  const cols=[["Ticker","Cantidad","Precio de compra (PPC)","Tipo (accion/cedear/bono/on/letra/fci)"]];
-  const ej=[["GGAL",1000,3500,"accion"],["MELI",200,18000,"cedear"],["AL30",5000,950,"bono"]];
-  for(const bk of ["Balanz","IOL","Otro"]){
-    const rows=bk==="Balanz"?[...cols,...ej]:[...cols];
+  const cols=[["Ticker","Cantidad","Precio de compra (PPC)","Ultimo Precio (opcional)","Tipo (accion/cedear/bono/on/letra/fci)"]];
+  const ej=[["GGAL",1000,3500,4100,"accion"],["MELI",200,18000,23130,"cedear"],["AL30",5000,950,1050,"bono"]];
+  for(const bk of ["Cocos","Bull Market","Otro"]){
+    const rows=bk==="Cocos"?[...cols,...ej]:[...cols];
     const ws=XLSX.utils.aoa_to_sheet(rows);
-    ws["!cols"]=[{wch:12},{wch:12},{wch:22},{wch:38}];
+    ws["!cols"]=[{wch:12},{wch:12},{wch:22},{wch:22},{wch:38}];
     XLSX.utils.book_append_sheet(wb,ws,bk);
   }
   XLSX.writeFile(wb,"plantilla_cartera_EstrategiasLB.xlsx");
@@ -1548,37 +1594,119 @@ function parseXLSWorkbook(wb){
     const idxCant=hdr.findIndex(h=>h.includes("nominales")||h.includes("cantidad")||h.includes("nominal"));
     const idxTipo=hdr.findIndex(h=>h.includes("tipo"));
     const idxDesc=hdr.findIndex(h=>h.includes("descrip"));
+    // ── Columnas ricas que Balanz ya trae calculadas (las usamos en vez de recalcular) ──
+    const idxPrecio=hdr.findIndex(h=>h==="precio"||h==="precio actual"||h==="p. actual"); // precio de mercado actual (unitario)
+    const idxValActual=hdr.findIndex(h=>h.includes("valor actual")||h.includes("v. actual")); // total posición hoy
+    const idxValInicial=hdr.findIndex(h=>(h.includes("valor inicial")||h.includes("v. inicial"))&&!h.includes("precio")); // total invertido
+    const idxRend=hdr.findIndex(h=>h==="rendimiento"); // ganancia/pérdida absoluta
+    const idxPctRend=hdr.findIndex(h=>h.includes("porcentaje de rendimiento")||h.includes("% de r")||h.includes("% rend")); // % ganancia/pérdida
+    const idxMoneda=hdr.findIndex(h=>h.includes("moneda")); // Pesos / Dólares
+    // ── Columnas nativas de IOL (siempre en ARS) ──
+    const idxUltPrecio=hdr.findIndex(h=>h.includes("último precio")||h.includes("ultimo precio")||h.includes("últ. precio")||h.includes("ult. precio")); // precio actual IOL/plantilla
+    const idxValorizado=hdr.findIndex(h=>h.includes("valorizado")); // valor total posición IOL
+    const idxRendBruto=hdr.findIndex(h=>h.includes("rendimiento bruto")); // ganancia $ IOL
     if(idxTicker<0||idxPPC<0)continue; // esta hoja no tiene datos válidos
     const startIdx=rows.indexOf(headerRow)+1;
-    // nombre del broker desde la hoja de la plantilla, o detectar Balanz por su formato nativo
+    // nombre del broker desde la hoja de la plantilla, o detectar por formato nativo
     const sn=sheetName.toLowerCase();
+    // IOL nativo: tiene "valorizado" + "último precio" + "rendimiento bruto"
+    const isIOLNative=idxValorizado>=0&&idxUltPrecio>=0;
     if(sn.includes("balanz"))broker="balanz";
-    else if(sn.includes("iol"))broker="iol";
+    else if(sn.includes("iol")||isIOLNative)broker="iol";
+    else if(sn.includes("cocos"))broker="cocos";
+    else if(sn.includes("bull"))broker="bull";
     else if(hdr.some(h=>h.includes("precio promedio de compra"))&&hdr.some(h=>h.includes("tipo de instrumento")))broker="balanz";
     else if(sn.includes("mis instrumentos"))broker="balanz";
+    const isBalanzNative=broker==="balanz"&&idxValActual>=0; // el export nativo trae valores calculados
+    // Plantilla EstrategiasLB con "Ultimo Precio" cargado → puede calcular valor/rendimiento
+    const isTemplateWithPrice=!isIOLNative&&!isBalanzNative&&idxUltPrecio>=0;
+    // ── Detectar la moneda de la VISTA del export ──
+    // Balanz exporta respetando el toggle ARS/USD activo. Si los precios son chicos
+    // (CEDEARs < 100), la vista está en USD. Si son grandes (miles), está en ARS.
+    let vistaEnUSD=false;
+    if(isBalanzNative&&idxPrecio>=0){
+      const precios=[];
+      for(let i=startIdx;i<rows.length;i++){
+        const r=rows[i];if(!r)continue;
+        const px=parseNum(r[idxPrecio]);
+        if(px>0)precios.push(px);
+      }
+      if(precios.length){
+        const prom=precios.reduce((a,b)=>a+b,0)/precios.length;
+        // Un CEDEAR/bono en ARS vale miles; en USD vale decenas. Umbral conservador: 100.
+        vistaEnUSD=prom<100;
+      }
+    }
     for(let i=startIdx;i<rows.length;i++){
       const r=rows[i];if(!r||!r.length)continue;
-      const ticker=String(r[idxTicker]||"").toUpperCase().trim().split(/\s/)[0];
+      const rawTicker=String(r[idxTicker]||"").toUpperCase().trim();
+      // Saltar fila de CAUCIÓN COLOCADORA (IOL) — no es una posición negociable con ticker
+      if(rawTicker.includes("CAUCI")||rawTicker.includes("CAUCION"))continue;
+      const ticker=rawTicker.split(/\s/)[0];
       if(!ticker||ticker.length<2||ticker.length>8)continue;
       const ppc=parseNum(r[idxPPC]);
       const cant=idxCant>=0?parseNum(r[idxCant]):0;
       if(cant<=0||ppc<=0)continue;
       let tipo=idxTipo>=0?String(r[idxTipo]||"").toLowerCase().trim():"";
+      // normalizar plural de Balanz: "bonos" → "bono", "cedears" → "cedear"
+      if(tipo.endsWith("s"))tipo=tipo.slice(0,-1);
       if(!["accion","cedear","bono","on","letra","fci"].includes(tipo)){
-        // inferir tipo desde descripción o desde la hoja Balanz
+        // inferir tipo desde descripción o desde patrón del ticker
         const desc=idxDesc>=0?String(r[idxDesc]||"").toLowerCase():"";
         if(desc.includes("cedear"))tipo="cedear";
         else if(desc.includes("letra")||desc.includes("lecap"))tipo="letra";
-        else if(desc.includes("bono"))tipo="bono";
+        else if(desc.includes("bono")||desc.includes("bopreal"))tipo="bono";
         else if(desc.includes("on ")||desc.includes("oblig"))tipo="on";
-        else tipo=typeOf(ticker);
+        else tipo=inferTipoTicker(ticker); // patrón de ticker argentino (AL30, AO28, TX26, S31M5…)
       }
       let nombre=idxDesc>=0?String(r[idxDesc]||"").replace(/^(cedear|on)\s+/i,"").trim():nameOf(ticker);
       if(nombre.length>40)nombre=nombre.slice(0,40);
       // Si la columna PPC era "Valor inicial" (total), dividir por cantidad
       let ppcUnit=ppc;
       if(hdr[idxPPC].includes("valor inicial")||hdr[idxPPC].includes("v. inicial"))ppcUnit=ppc/cant;
-      holdings.push({ticker,tipo,cant,ppc:ppcUnit,nombre});
+
+      const h={ticker,tipo,cant,ppc:ppcUnit,nombre};
+
+      // ── Datos ricos de Balanz: usar sus valores ya calculados ──
+      if(isBalanzNative){
+        // La moneda de los VALORES es la de la vista del export (ARS o USD).
+        // La columna "Moneda" indica la moneda de emisión, pero los montos están en la vista.
+        h.moneda=vistaEnUSD?"usd":"ars";
+        h.precioActual=idxPrecio>=0?parseNum(r[idxPrecio]):0; // precio unitario de mercado (en moneda de la vista)
+        h.valActual=idxValActual>=0?parseNum(r[idxValActual]):0; // total posición hoy (en moneda de la vista)
+        h.valInicial=idxValInicial>=0?parseNum(r[idxValInicial]):0; // total invertido (en moneda de la vista)
+        h.rend=idxRend>=0?parseNum(r[idxRend]):0; // ganancia absoluta (en moneda de la vista)
+        h.pctRend=idxPctRend>=0?parseNum(r[idxPctRend]):0; // % de rendimiento (Balanz ya lo calculó, no depende de moneda)
+        h.monedaEmision=idxMoneda>=0?String(r[idxMoneda]||"").toLowerCase().trim():""; // moneda de emisión (info)
+        h.fromBalanz=true; // marca que trae datos confiables de Balanz
+      }
+      // ── Datos ricos de IOL: siempre en ARS ──
+      else if(isIOLNative){
+        h.moneda="ars"; // IOL exporta siempre en pesos
+        h.precioActual=idxUltPrecio>=0?parseNum(r[idxUltPrecio]):0; // último precio (ARS)
+        h.valActual=idxValorizado>=0?parseNum(r[idxValorizado]):0; // valorizado total (ARS)
+        h.rend=idxRendBruto>=0?parseNum(r[idxRendBruto]):0; // rendimiento bruto $ (ARS)
+        // valor inicial = valorizado - rendimiento (IOL no lo trae directo)
+        h.valInicial=(h.valActual&&h.rend!=null)?(h.valActual-h.rend):(ppcUnit*cant);
+        // % de rendimiento derivado del PPC (IOL no trae la columna %)
+        h.pctRend=(h.valInicial>0)?(h.rend/h.valInicial*100):null;
+        h.fromBalanz=true; // reutilizamos el mismo pipeline de datos confiables
+      }
+      // ── Plantilla EstrategiasLB con Último Precio cargado (Cocos, Bull, etc.) ──
+      else if(isTemplateWithPrice){
+        const ultPx=parseNum(r[idxUltPrecio]);
+        if(ultPx>0){
+          const ff=priceFactor(tipo); // bonos/letras cotizan por cada 100 nominales
+          h.moneda="ars";
+          h.precioActual=ultPx;
+          h.valActual=cant*ultPx*ff;
+          h.valInicial=cant*ppcUnit*ff;
+          h.rend=h.valActual-h.valInicial;
+          h.pctRend=(h.valInicial>0)?((ultPx-ppcUnit)/ppcUnit*100):null;
+          h.fromBalanz=true; // usa el pipeline de datos confiables
+        }
+      }
+      holdings.push(h);
     }
   }
   return{holdings,broker};
@@ -1607,7 +1735,21 @@ function confirmXLS(){
   if(!S.prevXLS)return;
   const res=S.prevXLS;
   // Guardar PPC de cada ticker + crear/actualizar las posiciones
-  const items=res.holdings.map(h=>{S.ppc[h.ticker]=h.ppc;return{ticker:h.ticker,tipo:h.tipo,cant:h.cant,precio:h.ppc,valorARS:h.cant*h.ppc,nombre:h.nombre};});
+  const items=res.holdings.map(h=>{
+    S.ppc[h.ticker]=h.ppc;
+    const it={ticker:h.ticker,tipo:h.tipo,cant:h.cant,precio:h.ppc,valorARS:h.cant*h.ppc,nombre:h.nombre};
+    // Persistir los datos calculados por Balanz (si vienen del export nativo)
+    if(h.fromBalanz){
+      it.fromBalanz=true;
+      it.moneda=h.moneda;           // "ars" o "usd"
+      it.precioActual=h.precioActual; // precio de mercado unitario (en su moneda)
+      it.valActual=h.valActual;     // total posición hoy (en su moneda)
+      it.valInicial=h.valInicial;   // total invertido (en su moneda)
+      it.rend=h.rend;               // ganancia absoluta (en su moneda)
+      it.pctRend=h.pctRend;         // % de rendimiento (Balanz)
+    }
+    return it;
+  });
   learnHoldings(res.holdings);
   savePPC();
   S.portfolios=S.portfolios.filter(p=>p.broker!==res.broker);

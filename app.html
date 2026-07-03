@@ -111,7 +111,8 @@
 .prof-conservador{background:rgba(96,165,250,.12);color:#60a5fa;border-color:rgba(96,165,250,.3)}
 .prof-moderado{background:rgba(212,175,55,.12);color:var(--gold);border-color:rgba(212,175,55,.3)}
 .prof-agresivo{background:rgba(241,102,90,.12);color:var(--red);border-color:rgba(241,102,90,.3)}
-.prof-none{background:var(--bg2);color:var(--muted);border-color:var(--line2);font-weight:600}
+.prof-none{background:linear-gradient(135deg,rgba(212,175,55,.20),rgba(212,175,55,.06));color:var(--gold);border-color:rgba(212,175,55,.5);font-weight:700;animation:profPulse 2.5s ease-in-out infinite}
+@keyframes profPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.35)}50%{box-shadow:0 0 0 5px rgba(212,175,55,0)}}
 .prof-badge:hover{filter:brightness(1.15)}
 .prof-empty{background:var(--bg2);border:1px dashed var(--line2);border-radius:10px;padding:14px;margin-bottom:12px;text-align:center}
 .prof-empty-t{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
@@ -436,6 +437,26 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 .palerts-noprofile{background:var(--panel);border:1px dashed var(--line2);border-radius:12px;padding:16px 20px;margin-bottom:14px;text-align:center}
 .palerts-noprofile-t{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:6px}
 .palerts-noprofile-d{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+/* BANNER PERFIL EN CARTERA */
+.cpb{background:linear-gradient(135deg,rgba(212,175,55,.14),rgba(0,180,216,.05));border:1px solid rgba(212,175,55,.35);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cpb-ic{font-size:26px;line-height:1}
+.cpb-c{flex:1;min-width:200px}
+.cpb-t{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.cpb-d{font-size:12px;color:var(--muted);line-height:1.5}
+.cpb-btn{background:var(--gold);color:#0A1628;border:none;font-size:12.5px;font-weight:800;padding:9px 20px;border-radius:22px;cursor:pointer;font-family:inherit;letter-spacing:.02em;transition:.15s;white-space:nowrap}
+.cpb-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+/* SECCIONES DE AVISOS */
+.avisos-section{margin-bottom:26px}
+.avisos-sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.avisos-sec-ic{font-size:18px;line-height:1}
+.avisos-sec-t{font-size:13px;font-weight:800;color:var(--txt);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.avisos-sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.avisos-empty{font-size:12px;color:var(--muted2);font-style:italic;padding:10px 14px;background:var(--panel);border:1px dashed var(--line);border-radius:10px}
+/* CONTROL DE TAMAÑO DE LETRA */
+.font-ctrl{display:inline-flex;gap:2px;background:var(--bg2);border:1px solid var(--line2);border-radius:16px;padding:2px}
+.font-btn{background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;padding:4px 9px;border-radius:14px;cursor:pointer;font-family:inherit;transition:.15s;line-height:1}
+.font-btn:hover{background:var(--gd);color:var(--gold)}
+.font-btn:active{transform:scale(.92)}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -457,6 +478,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <span class="logo-n">Estrategias<span class="logo-une">UNE</span></span>
   </a>
   <span class="beta">Beta</span>
+  <span id="prof-slot-header" style="margin-right:4px"></span>
   <div class="ntabs">
     <button class="ntab on" onclick="goV('v-d')">📊 Cartera</button>
     <button class="ntab" onclick="goV('v-an')">📡 Análisis</button>
@@ -472,6 +494,10 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <span id="upd-t" style="font-size:12px;color:var(--muted2)"></span>
     <button class="bgear" onclick="openFund()" title="Editor de Fundamentales">⚙️</button>
     <button class="theme-tgl" onclick="toggleTheme()" id="theme-tgl" title="Cambiar tema (T)">🌙</button>
+    <div class="font-ctrl" title="Tamaño de letra">
+      <button class="font-btn" onclick="adjustFontSize(-1)" title="Achicar letra">A−</button>
+      <button class="font-btn" onclick="adjustFontSize(1)" title="Agrandar letra">A+</button>
+    </div>
     <button class="theme-tgl" onclick="document.getElementById('kbd-modal').classList.add('on')" title="Ver atajos de teclado (?)" style="padding:5px 9px">⌨️</button>
     <div class="ccyg">
       <button class="ccy on" data-c="ars" onclick="setCcy('ars')">ARS</button>
@@ -490,6 +516,9 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div class="sc" id="sc-gan"><div class="sc-l">Variación de hoy</div><div class="sc-v mono" id="t-gan" style="font-size:22px">—</div><div class="sc-s" id="t-gan-pct">Movimiento del día</div></div>
     <div class="sc"><div class="sc-l">Posiciones</div><div class="sc-v" id="t-cnt" style="font-size:34px">0</div><div class="sc-s" id="t-brk">—</div></div>
   </div>
+
+  <!-- BANNER COMPLETAR PERFIL (solo si no hay perfil definido) -->
+  <div id="cartera-profile-banner"></div>
   <div class="cr">
     <div class="cc"><div class="cct">Composición</div><div class="dw"><canvas id="ch-d"></canvas></div><div id="leg-d" class="ml"></div></div>
     <div class="cc">
@@ -589,35 +618,49 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 <div class="cont view" id="v-av">
   <div style="margin-bottom:20px">
     <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:6px">🔔 Avisos y recordatorios</h2>
-    <p style="color:var(--muted);font-size:14.5px">Todo lo que UNE detectó y quiere que sepas: recordatorios, alertas de riesgo, comparaciones y estimaciones.</p>
+    <p style="color:var(--muted);font-size:14.5px">Todo lo que UNE detectó y quiere que sepas, organizado por tipo.</p>
   </div>
 
-  <!-- ALERTAS PREMIUM ESTRATEGIASLB (Google Sheet) -->
-  <div id="palerts-slot"></div>
+  <!-- SECCIÓN: ALERTAS DEL ASESOR -->
+  <div class="avisos-section">
+    <div class="avisos-sec-hd"><span class="avisos-sec-ic">⭐</span><span class="avisos-sec-t">Alertas de EstrategiasLB</span><span class="avisos-sec-line"></span></div>
+    <div id="palerts-slot"></div>
+  </div>
 
-  <!-- BANNER CAUCIÓN VIERNES -->
-  <div id="cauc-slot"></div>
+  <!-- SECCIÓN: RECORDATORIOS -->
+  <div class="avisos-section" id="sec-recordatorios">
+    <div class="avisos-sec-hd"><span class="avisos-sec-ic">📌</span><span class="avisos-sec-t">Recordatorios</span><span class="avisos-sec-line"></span></div>
+    <!-- BANNER CAUCIÓN VIERNES -->
+    <div id="cauc-slot"></div>
+    <!-- BANNER REBALANCEO MENSUAL -->
+    <div id="rebal-slot"></div>
+    <!-- AVISO DE DIVIDENDOS PRÓXIMOS -->
+    <div id="div-slot"></div>
+    <div id="sec-recordatorios-empty" class="avisos-empty">No hay recordatorios activos en este momento.</div>
+  </div>
 
-  <!-- BANNER REBALANCEO MENSUAL -->
-  <div id="rebal-slot"></div>
+  <!-- SECCIÓN: RIESGO -->
+  <div class="avisos-section" id="sec-riesgo">
+    <div class="avisos-sec-hd"><span class="avisos-sec-ic">🛡️</span><span class="avisos-sec-t">Alertas de riesgo</span><span class="avisos-sec-line"></span></div>
+    <!-- ALERTAS DE CONCENTRACIÓN Y ANTI-PÁNICO -->
+    <div id="conc-alerts" style="display:none"></div>
+    <div id="sec-riesgo-empty" class="avisos-empty">Tu cartera no tiene alertas de riesgo activas. Buena señal.</div>
+  </div>
 
-  <!-- AVISO DE DIVIDENDOS PRÓXIMOS -->
-  <div id="div-slot"></div>
-
-  <!-- ALERTAS DE CONCENTRACIÓN Y ANTI-PÁNICO -->
-  <div id="conc-alerts" style="display:none"></div>
-
-  <!-- COMPARACIÓN MENSUAL CON INFLACIÓN -->
-  <div id="month-comp-slot"></div>
-
-  <!-- MÓDULO IMPOSITIVO BIENES PERSONALES -->
-  <div class="bbpp-card" id="bbpp-card" style="display:none">
-    <div class="bbpp-hd" onclick="toggleBBPP()">
-      <span style="font-size:18px">🧾</span>
-      <div class="bbpp-hd-t">Estimación de Bienes Personales — orientativa</div>
-      <span class="bbpp-hd-c">▼</span>
+  <!-- SECCIÓN: ANÁLISIS FINANCIERO -->
+  <div class="avisos-section">
+    <div class="avisos-sec-hd"><span class="avisos-sec-ic">📊</span><span class="avisos-sec-t">Análisis financiero</span><span class="avisos-sec-line"></span></div>
+    <!-- COMPARACIÓN MENSUAL CON INFLACIÓN -->
+    <div id="month-comp-slot"></div>
+    <!-- MÓDULO IMPOSITIVO BIENES PERSONALES -->
+    <div class="bbpp-card" id="bbpp-card" style="display:none">
+      <div class="bbpp-hd" onclick="toggleBBPP()">
+        <span style="font-size:18px">🧾</span>
+        <div class="bbpp-hd-t">Estimación de Bienes Personales — orientativa</div>
+        <span class="bbpp-hd-c">▼</span>
+      </div>
+      <div class="bbpp-body"></div>
     </div>
-    <div class="bbpp-body"></div>
   </div>
 </div>
 
@@ -1122,7 +1165,24 @@ function getBrokerH(broker){
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
-function goV(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));document.getElementById(id)?.classList.add("on");document.querySelectorAll(".ntab").forEach((t,i)=>{const vs=["v-d","v-an","v-av","v-a","v-c","v-div"];t.classList.toggle("on",vs[i]===id);});S.view=id;setPref("lastView",id);if(id==="v-d")renderD();if(id==="v-an"){renderSignals();renderIndices();renderMarketContext();}if(id==="v-av"){renderPremiumAlerts();renderCaucionBanner();renderRebalanceBanner();renderDividendReminder();renderConcentrationAlerts();renderMonthlyComparison();renderBBPP();}if(id==="v-a")renderMan();if(id==="v-div")renderDiv();if(id==="v-c")renderCC();}
+function goV(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));document.getElementById(id)?.classList.add("on");document.querySelectorAll(".ntab").forEach((t,i)=>{const vs=["v-d","v-an","v-av","v-a","v-c","v-div"];t.classList.toggle("on",vs[i]===id);});S.view=id;setPref("lastView",id);if(id==="v-d")renderD();if(id==="v-an"){renderSignals();renderIndices();renderMarketContext();}if(id==="v-av"){renderPremiumAlerts();renderCaucionBanner();renderRebalanceBanner();renderDividendReminder();renderConcentrationAlerts();renderMonthlyComparison();renderBBPP();setTimeout(updateAvisosSections,50);}if(id==="v-a")renderMan();if(id==="v-div")renderDiv();if(id==="v-c")renderCC();}
+
+// ═══ GESTIÓN DE SECCIONES VACÍAS EN AVISOS ═══
+function updateAvisosSections(){
+  // Recordatorios: caución, rebalanceo, dividendos
+  const recEmpty=document.getElementById("sec-recordatorios-empty");
+  if(recEmpty){
+    const hasRec=["cauc-slot","rebal-slot","div-slot"].some(id=>document.getElementById(id)?.innerHTML.trim());
+    recEmpty.style.display=hasRec?"none":"block";
+  }
+  // Riesgo: alertas de concentración
+  const riesgoEmpty=document.getElementById("sec-riesgo-empty");
+  if(riesgoEmpty){
+    const conc=document.getElementById("conc-alerts");
+    const hasRiesgo=conc&&conc.style.display!=="none"&&conc.innerHTML.trim();
+    riesgoEmpty.style.display=hasRiesgo?"none":"block";
+  }
+}
 
 // ═══ BADGE DE AVISOS ACTIVOS ═══
 function updateAvisosBadge(){
@@ -1143,6 +1203,7 @@ function updateAvisosBadge(){
   if(conc&&conc.style.display!=="none")count+=conc.querySelectorAll(".conc-a").length;
   if(count>0){badge.textContent=count;badge.style.display="block";}
   else badge.style.display="none";
+  try{updateAvisosSections();}catch{}
 }
 function renderD(){
   const hs=S.bTab==="todos"?getConsolidated():getBrokerH(S.bTab);
@@ -1820,14 +1881,33 @@ async function renderSignals(){
 
 // ── PERFIL DE INVERSOR ──
 function renderProfileBadge(){
+  const html=(()=>{
+    if(S.profile){
+      const t=S.profile.type;
+      const label=t.charAt(0).toUpperCase()+t.slice(1);
+      return `<span class="prof-badge prof-${t}" onclick="openProfileTest()" title="Rehacer test de perfil">${label}</span>`;
+    }
+    return `<span class="prof-badge prof-none" onclick="openProfileTest()" title="Definir tu perfil de inversor">⚡ Definir perfil</span>`;
+  })();
   const slot=document.getElementById("prof-slot");
-  if(!slot)return;
-  if(S.profile){
-    const t=S.profile.type;
-    const label=t.charAt(0).toUpperCase()+t.slice(1);
-    slot.innerHTML=`<span class="prof-badge prof-${t}" onclick="openProfileTest()" title="Rehacer test">${label}</span>`;
-  }else{
-    slot.innerHTML=`<span class="prof-badge prof-none" onclick="openProfileTest()">Definir perfil</span>`;
+  if(slot)slot.innerHTML=html;
+  const headerSlot=document.getElementById("prof-slot-header");
+  if(headerSlot)headerSlot.innerHTML=html;
+  // Banner en la solapa Cartera: solo si NO hay perfil definido
+  const cpb=document.getElementById("cartera-profile-banner");
+  if(cpb){
+    if(!S.profile||!S.profile.type){
+      cpb.innerHTML=`<div class="cpb">
+        <div class="cpb-ic">⚡</div>
+        <div class="cpb-c">
+          <div class="cpb-t">Completá tu perfil de inversor para recibir las alertas de EstrategiasLB</div>
+          <div class="cpb-d">Son 7 preguntas rápidas (2 minutos). Con tu perfil definido, vas a ver las alertas y orientaciones seleccionadas específicamente para vos.</div>
+        </div>
+        <button class="cpb-btn" onclick="openProfileTest()">Hacer el test ahora →</button>
+      </div>`;
+    }else{
+      cpb.innerHTML="";
+    }
   }
 }
 
@@ -2805,6 +2885,30 @@ function toggleTheme(){
   applyTheme(nxt);
 }
 
+// ═══ CONTROL DE TAMAÑO DE LETRA (accesibilidad) ═══
+// Escala global vía zoom del body. Niveles: 0=100%, 1=110%, 2=120%, 3=130%. Persistido.
+const FONT_LEVELS=[1,1.1,1.2,1.3];
+function applyFontSize(level){
+  const l=Math.max(0,Math.min(FONT_LEVELS.length-1,level));
+  const scale=FONT_LEVELS[l];
+  // Usamos zoom (soportado en Chrome/Edge/Safari) con fallback a transform en el root
+  document.documentElement.style.setProperty("--font-scale",scale);
+  document.body.style.zoom=scale;
+  try{localStorage.setItem("elb_fontsize_v1",String(l));}catch{}
+}
+function adjustFontSize(delta){
+  let cur=0;
+  try{cur=parseInt(localStorage.getItem("elb_fontsize_v1")||"0",10);}catch{}
+  const nxt=Math.max(0,Math.min(FONT_LEVELS.length-1,cur+delta));
+  applyFontSize(nxt);
+  if(nxt===cur){
+    snk(delta>0?"Ya estás en el tamaño máximo":"Ya estás en el tamaño mínimo");
+  }else{
+    const pct=Math.round(FONT_LEVELS[nxt]*100);
+    snk("Tamaño de letra: "+pct+"%");
+  }
+}
+
 // ═══════════════════════════════════════════════════════════
 // ── RONDA 4.2: NOMBRES LOCALIZADOS DE TICKERS COMUNES ──
 // La sobreescritura de nameOf() está en su definición original.
@@ -3051,20 +3155,35 @@ async function fetchPremiumAlerts(force){
     const text=await r.text();
     const rows=parseCSV(text);
     if(rows.length<2)return [];
-    // Mapear headers por nombre
-    const hdr=rows[0].map(normTxt);
+    // El sheet puede tener filas de título arriba (logo, "Recomendaciones del mes", etc).
+    // Buscamos la fila que contenga los headers reales: debe tener "perfil" Y ("ticket" o "ticker").
+    let hdrRow=0;
+    for(let ri=0;ri<Math.min(rows.length,15);ri++){
+      const cells=rows[ri].map(normTxt);
+      const hasPerfil=cells.some(c=>c.includes("perfil"));
+      const hasTicket=cells.some(c=>c.includes("ticket")||c.includes("ticker")||c.includes("simbolo"));
+      if(hasPerfil&&hasTicket){hdrRow=ri;break;}
+    }
+    const hdr=rows[hdrRow].map(normTxt);
+    const dataRows=rows.slice(hdrRow+1);
     const col=(names)=>{for(const n of names){const i=hdr.findIndex(h=>h.includes(n));if(i>=0)return i;}return -1;};
     const iCod=col(["codigo","cod"]);
     const iComp=col(["compania","company","empresa"]);
-    const iTick=col(["ticker","simbolo"]);
+    const iTick=col(["ticket","ticker","simbolo"]); // el sheet usa "Ticket"
     const iBeta=col(["beta"]);
     const iPerf=col(["perfil","profile"]);
-    const iFecha=col(["fecha","date"]);
-    const iAcc=col(["accion","action","tipo"]);
+    const iFecha=col(["fecha recomen","fecha de recomen","fecha"]);
+    const iEstado=col(["estado","status"]);
+    const iAcc=col(["tipo de opera","tipo de oper","tipo operacion","accion","action","operacion"]);
+    const iValCompra=col(["valor compra","valor de opera","valor de compra"]);
+    const i2da=col(["2da entrada","segunda entrada"]);
+    const iObjetivo=col(["zona objetivo","take profit","objetivo","target"]);
+    const iStop=col(["stop loss","stoploss","stop"]);
+    const iValUSD=col(["valor actual en usd","valor usd"]);
     const iNota=col(["nota","comentario","obs"]);
-    const iPrecio=col(["precio","price","target"]);
-    if(iTick<0||iPerf<0){console.warn("Alertas: el sheet no tiene columnas Ticker/PERFIL reconocibles");return [];}
-    const alerts=rows.slice(1).map(r=>{
+    const iSector=col(["sector de mercado","sector"]);
+    if(iTick<0||iPerf<0){console.warn("Alertas: el sheet no tiene columnas Ticket/PERFIL reconocibles. Headers:",hdr);return [];}
+    const alerts=dataRows.map(r=>{
       const get=i=>i>=0&&i<r.length?(r[i]||"").toString().trim():"";
       return {
         codigo:get(iCod),
@@ -3073,11 +3192,22 @@ async function fetchPremiumAlerts(force){
         beta:get(iBeta),
         perfil:normTxt(get(iPerf)),
         fecha:get(iFecha),
+        estado:normTxt(get(iEstado)),
         accion:normTxt(get(iAcc)),
+        valCompra:get(iValCompra),
+        entrada2:get(i2da),
+        objetivo:get(iObjetivo),
+        stop:get(iStop),
+        valUSD:get(iValUSD),
         nota:get(iNota),
-        precio:get(iPrecio)
+        sector:get(iSector)
       };
-    }).filter(a=>a.ticker&&a.perfil);
+    }).filter(a=>{
+      // Solo filas con ticker y perfil válido (descarta filas vacías y headers de la tabla de seguimiento)
+      if(!a.ticker||!a.perfil)return false;
+      const perfilesValidos=["conservador","moderado","agresivo"];
+      return perfilesValidos.includes(a.perfil);
+    });
     try{localStorage.setItem(CFG.PALERTS,JSON.stringify({ts:Date.now(),alerts}));}catch{}
     return alerts;
   }catch(e){
@@ -3131,19 +3261,23 @@ async function renderPremiumAlerts(force){
     const inPort=portTickers.has(a.ticker);
     const nombre=a.compania||nameOf(a.ticker)||"";
     const metaParts=[];
+    if(a.valCompra)metaParts.push("Entrada: "+a.valCompra);
+    if(a.objetivo)metaParts.push("🎯 Objetivo: "+a.objetivo);
+    if(a.stop)metaParts.push("🛑 Stop: "+a.stop);
     if(a.beta&&normTxt(a.beta)!=="no disponible")metaParts.push("Beta 5a: "+a.beta);
-    if(a.precio)metaParts.push("Ref: "+a.precio);
-    if(a.fecha)metaParts.push(a.fecha);
+    if(a.fecha)metaParts.push("📅 "+a.fecha);
     let actBadge="";
-    if(a.accion.includes("compra")||a.accion.includes("buy"))actBadge=`<span class="palert-act compra">▲ ${a.accion}</span>`;
-    else if(a.accion.includes("venta")||a.accion.includes("sell"))actBadge=`<span class="palert-act venta">▼ ${a.accion}</span>`;
+    if(a.accion.includes("compra")||a.accion.includes("buy"))actBadge=`<span class="palert-act compra">▲ COMPRA</span>`;
+    else if(a.accion.includes("venta")||a.accion.includes("sell"))actBadge=`<span class="palert-act venta">▼ VENTA</span>`;
     else if(a.accion)actBadge=`<span class="palert-act neutral">${a.accion}</span>`;
+    const sectorTag=a.sector?`<div style="font-size:10px;color:var(--muted2);margin-top:4px">📊 ${a.sector}</div>`:"";
     return `<div class="palert-item ${inPort?"in-port":""}">
       <div class="palert-l">
         <div class="palert-tk">${a.ticker}${a.codigo?`<span class="palert-code">${a.codigo}</span>`:""}${inPort?`<span class="palert-own">EN TU CARTERA</span>`:""}</div>
         ${nombre?`<div class="palert-name">${nombre}</div>`:""}
         ${metaParts.length?`<div class="palert-meta">${metaParts.map(m=>`<span>${m}</span>`).join("")}</div>`:""}
-        ${a.nota?`<div class="palert-nota">${a.nota}</div>`:""}
+        ${sectorTag}
+        ${a.nota?`<div class="palert-nota">💬 ${a.nota}</div>`:""}
       </div>
       ${actBadge}
     </div>`;
@@ -3186,6 +3320,7 @@ async function init(){
   load();
   // Aplicar tema (R4)
   try{applyTheme(localStorage.getItem(CFG.THEME)||"dark");}catch{}
+  try{applyFontSize(parseInt(localStorage.getItem("elb_fontsize_v1")||"0",10));}catch{}
   // Aplicar preferencias visuales al UI
   document.querySelectorAll(".hist-btn").forEach(b=>{b.classList.toggle("on",b.getAttribute("data-p")===S.histPeriod);});
   renderD();renderProfileBadge();renderCaucionBanner();

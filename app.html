@@ -416,6 +416,9 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 .palerts-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
 .palerts-title{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:.03em}
 .palerts-count{background:var(--gold);color:#0A1628;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;font-family:"JetBrains Mono",monospace}
+.palerts-refresh{margin-left:auto;background:var(--bg2);border:1px solid var(--line2);color:var(--muted);font-size:11px;font-weight:600;padding:5px 12px;border-radius:14px;cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.palerts-refresh:hover{border-color:var(--gold);color:var(--gold)}
+.palerts-refresh:disabled{opacity:.6;cursor:wait}
 .palerts-sub{font-size:11px;color:var(--muted);margin-bottom:12px;font-style:italic}
 .palerts-list{display:flex;flex-direction:column;gap:8px}
 .palert-item{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:rgba(0,0,0,.15);border-radius:9px;gap:12px;flex-wrap:wrap;border-left:3px solid var(--gold)}
@@ -3111,7 +3114,7 @@ function closeContacts(){
 //   Código | COMPAÑÍA | Ticker | Beta... | PERFIL
 // Opcionales futuras: FECHA | ACCION | NOTA | PRECIO
 // ═══════════════════════════════════════════════════════════
-const PALERTS_TTL_MIN=10; // cache local en minutos
+const PALERTS_TTL_MIN=3; // cache local en minutos (bajo para ver alertas nuevas rápido)
 
 // Parser CSV robusto: soporta comillas, comas internas y saltos de línea en campos
 function parseCSV(text){
@@ -3151,7 +3154,9 @@ async function fetchPremiumAlerts(force){
     }
   }catch{}
   try{
-    const r=await fetchRobust(CFG.ALERTS_URL,{timeout:12000,retries:1});
+    // Cache-buster: agregar timestamp cuando se fuerza, para saltear caché del navegador y de Google
+    const url=force?(CFG.ALERTS_URL+(CFG.ALERTS_URL.includes("?")?"&":"?")+"_cb="+Date.now()):CFG.ALERTS_URL;
+    const r=await fetchRobust(url,{timeout:12000,retries:1});
     const text=await r.text();
     const rows=parseCSV(text);
     if(rows.length<2)return [];
@@ -3165,7 +3170,13 @@ async function fetchPremiumAlerts(force){
       if(hasPerfil&&hasTicket){hdrRow=ri;break;}
     }
     const hdr=rows[hdrRow].map(normTxt);
-    const dataRows=rows.slice(hdrRow+1);
+    // Cortar en la fila de "Seguimiento de Recomendaciones" (segunda tabla) — solo queremos las alertas del mes
+    let dataEnd=rows.length;
+    for(let ri=hdrRow+1;ri<rows.length;ri++){
+      const joined=rows[ri].map(normTxt).join(" ");
+      if(joined.includes("seguimiento de recomendaciones")){dataEnd=ri;break;}
+    }
+    const dataRows=rows.slice(hdrRow+1,dataEnd);
     const col=(names)=>{for(const n of names){const i=hdr.findIndex(h=>h.includes(n));if(i>=0)return i;}return -1;};
     const iCod=col(["codigo","cod"]);
     const iComp=col(["compania","company","empresa"]);
@@ -3248,7 +3259,7 @@ async function renderPremiumAlerts(force){
   const mine=alerts.filter(a=>a.perfil===myProfile);
   if(!mine.length){
     slot.innerHTML=`<div class="palerts-card">
-      <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span></div>
+      <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span><button class="palerts-refresh" onclick="refreshPremiumAlerts()" title="Buscar alertas nuevas ahora">🔄 Actualizar</button></div>
       <div class="palerts-empty">Por ahora no hay alertas activas para tu perfil ${S.profile.type}. Cuando tu asesor publique una, va a aparecer acá.</div>
     </div>`;
     try{updateAvisosBadge();}catch{}
@@ -3283,12 +3294,19 @@ async function renderPremiumAlerts(force){
     </div>`;
   }).join("");
   slot.innerHTML=`<div class="palerts-card">
-    <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span><span class="palerts-count">${mine.length}</span><span style="font-size:10.5px;color:var(--muted);font-style:italic">seleccionadas para tu perfil ${S.profile.type}${period?" · "+period:""}</span></div>
+    <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span><span class="palerts-count">${mine.length}</span><span style="font-size:10.5px;color:var(--muted);font-style:italic">seleccionadas para tu perfil ${S.profile.type}${period?" · "+period:""}</span><button class="palerts-refresh" onclick="refreshPremiumAlerts()" title="Buscar alertas nuevas ahora">🔄 Actualizar</button></div>
     <div class="palerts-sub">Papeles que tu asesor marcó para clientes con tu perfil. Consultá antes de operar.</div>
     <div class="palerts-list">${items}</div>
     <button class="palerts-cta" onclick="sharePremiumAlertsWithTeam()">💬 Consultar estas alertas con el equipo</button>
   </div>`;
   try{updateAvisosBadge();}catch{}
+}
+
+async function refreshPremiumAlerts(){
+  const btn=document.querySelector(".palerts-refresh");
+  if(btn){btn.textContent="🔄 Buscando…";btn.disabled=true;}
+  await renderPremiumAlerts(true); // force=true ignora caché local y de red
+  snk("✓ Alertas actualizadas");
 }
 
 function sharePremiumAlertsWithTeam(){

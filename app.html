@@ -1543,7 +1543,30 @@ function parseIOL(txt){
   }
   return{holdings:hs};
 }
-function showPrev(res){const bc=BC[res.broker]||"#D4AF37";document.getElementById("i-broker").innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700;color:${bc};background:${bc}20;border:1px solid ${bc}40">${cap(res.broker)}</span><span style="font-size:14px;color:var(--muted)">${res.holdings.length} posiciones encontradas</span></div>`;const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono">${fa(h.precio)}</td><td class="mono">${fa(h.valorARS)}</td></tr>`).join("");const more=res.holdings.length>8?`<tr><td colspan="5" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";document.getElementById("i-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>Precio PDF</th><th>Valor</th></tr></thead><tbody>${rows}${more}</tbody></table>`;document.getElementById("is1").style.display="none";document.getElementById("is2").style.display="block";document.getElementById("i-err").style.display="none";}
+function showPrev(res){
+  const brokers=[["balanz","Balanz"],["iol","IOL"],["cocos","Cocos Capital"],["bull","Bull Market"],["manual","Otro / Manual"]];
+  const detected=res.broker||"manual";
+  const chips=brokers.map(([id,label])=>{
+    const bc=BC[id]||"#D4AF37";
+    const on=id===detected;
+    return `<button class="brk-chip${on?" on":""}" data-brk="${id}" onclick="pickPDFBroker('${id}')" style="--bchip:${bc}">${label}</button>`;
+  }).join("");
+  document.getElementById("i-broker").innerHTML=`
+    <div style="font-size:13px;color:var(--muted);margin-bottom:8px">¿De qué broker es este PDF? <span style="color:var(--muted2)">(detectamos <strong style="color:${BC[detected]||"#D4AF37"}">${cap(detected==="manual"?"Otro":detected)}</strong>, confirmá o cambialo)</span></div>
+    <div class="brk-chips">${chips}</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:10px">${res.holdings.length} posiciones encontradas</div>`;
+  const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono">${fa(h.precio)}</td><td class="mono">${fa(h.valorARS)}</td></tr>`).join("");
+  const more=res.holdings.length>8?`<tr><td colspan="5" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";
+  document.getElementById("i-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>Precio PDF</th><th>Valor</th></tr></thead><tbody>${rows}${more}</tbody></table>`;
+  document.getElementById("is1").style.display="none";
+  document.getElementById("is2").style.display="block";
+  document.getElementById("i-err").style.display="none";
+}
+function pickPDFBroker(id){
+  if(!S.prev)return;
+  S.prev.broker=id;
+  document.querySelectorAll("#i-broker .brk-chip").forEach(c=>c.classList.toggle("on",c.dataset.brk===id));
+}
 function confirmImp(){if(!S.prev)return;learnHoldings(S.prev.holdings);S.portfolios=S.portfolios.filter(p=>p.broker!==S.prev.broker);S.portfolios.push({id:Date.now().toString(36),broker:S.prev.broker,fecha:S.prev.fecha,items:S.prev.holdings});save();closeImp();S.bTab=S.prev.broker;renderD();snk("✓ "+S.prev.holdings.length+" posiciones de "+cap(S.prev.broker)+" importadas");}
 function resetImp(){S.prev=null;document.getElementById("is1").style.display="block";document.getElementById("is2").style.display="none";document.getElementById("i-err").style.display="none";document.getElementById("pfi").value="";}
 
@@ -1556,13 +1579,35 @@ function impTab(t){
   document.getElementById("i-err").style.display="none";
 }
 function downloadTemplate(){
-  // Plantilla con hojas separadas por broker
+  // Plantilla con hoja de instrucciones + una hoja por broker con ejemplos
   const wb=XLSX.utils.book_new();
+  // Hoja de instrucciones
+  const guia=[
+    ["PLANTILLA DE CARTERA · EstrategiasLB"],
+    [""],
+    ["Cómo completar:"],
+    ["1. Elegí la hoja de tu broker (Cocos, Bull Market u Otro).",""],
+    ["2. Completá una fila por cada papel que tengas.",""],
+    ["3. Guardá y subí este archivo en la app (solapa Importar → Preciso/Excel).",""],
+    [""],
+    ["Columnas:"],
+    ["Ticker","El símbolo del papel (ej: GGAL, AAPL, AL30)"],
+    ["Cantidad","Cuántos nominales/acciones tenés"],
+    ["Precio de compra (PPC)","Tu precio promedio de compra, en PESOS"],
+    ["Ultimo Precio (opcional)","Precio de mercado actual, en PESOS. Si lo cargás, la app calcula tu ganancia."],
+    ["Tipo","accion · cedear · bono · on · letra · fci"],
+    [""],
+    ["IMPORTANTE: cargá todos los valores en PESOS (ARS)."],
+    ["Para Balanz e IOL no uses esta plantilla — importá su Excel nativo directo."],
+  ];
+  const wsG=XLSX.utils.aoa_to_sheet(guia);
+  wsG["!cols"]=[{wch:28},{wch:60}];
+  XLSX.utils.book_append_sheet(wb,wsG,"Instrucciones");
+  // Hojas por broker con ejemplos
   const cols=[["Ticker","Cantidad","Precio de compra (PPC)","Ultimo Precio (opcional)","Tipo (accion/cedear/bono/on/letra/fci)"]];
   const ej=[["GGAL",1000,3500,4100,"accion"],["MELI",200,18000,23130,"cedear"],["AL30",5000,950,1050,"bono"]];
   for(const bk of ["Cocos","Bull Market","Otro"]){
-    const rows=bk==="Cocos"?[...cols,...ej]:[...cols];
-    const ws=XLSX.utils.aoa_to_sheet(rows);
+    const ws=XLSX.utils.aoa_to_sheet([...cols,...ej]);
     ws["!cols"]=[{wch:12},{wch:12},{wch:22},{wch:22},{wch:38}];
     XLSX.utils.book_append_sheet(wb,ws,bk);
   }
@@ -1587,11 +1632,13 @@ function onXLS(file){
 function parseXLSWorkbook(wb){
   const holdings=[];let broker="manual";
   for(const sheetName of wb.SheetNames){
+    // Saltar la hoja de instrucciones de la plantilla EstrategiasLB
+    if(sheetName.toLowerCase().includes("instruccion"))continue;
     const ws=wb.Sheets[sheetName];
     const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:""});
     if(!rows.length)continue;
     // Detectar formato: Balanz nativo (tiene "Precio promedio de compra") o plantilla
-    const headerRow=rows.find(r=>r.some(c=>String(c).toLowerCase().includes("ticker")||String(c).toLowerCase().includes("precio promedio")))||rows[0];
+    const headerRow=rows.find(r=>r.some(c=>String(c).toLowerCase().trim()==="ticker"||String(c).toLowerCase().includes("precio promedio")))||rows[0];
     const hdr=headerRow.map(c=>String(c).toLowerCase().trim());
     const idxTicker=hdr.findIndex(h=>h==="ticker"||h==="símbolo"||h==="simbolo");
     const idxPPC=hdr.findIndex(h=>h.includes("precio promedio")||h.includes("precio de compra")||h.includes("ppc")||h.includes("valor inicial")||h.includes("v. inicial"));
@@ -3534,3 +3581,4 @@ init();
 </div>
 </body>
 </html>
+  

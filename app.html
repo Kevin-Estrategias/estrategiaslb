@@ -409,6 +409,33 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 .ct-foot{padding:14px 26px;border-top:1px solid var(--line);background:var(--bg2);font-size:11px;color:var(--muted);line-height:1.5;text-align:center}
 .ct-close{background:none;border:none;color:var(--muted2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;position:absolute;top:12px;right:14px}
 .ct-close:hover{color:var(--txt);background:rgba(255,255,255,.06)}
+/* ALERTAS PREMIUM (Google Sheet) */
+.palerts-card{background:linear-gradient(135deg,rgba(212,175,55,.10),rgba(212,175,55,.02));border:1.5px solid rgba(212,175,55,.40);border-radius:14px;padding:16px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.palerts-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#10B981)}
+.palerts-hdr{display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.palerts-title{font-size:14px;font-weight:800;color:var(--gold);letter-spacing:.03em}
+.palerts-count{background:var(--gold);color:#0A1628;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;font-family:"JetBrains Mono",monospace}
+.palerts-sub{font-size:11px;color:var(--muted);margin-bottom:12px;font-style:italic}
+.palerts-list{display:flex;flex-direction:column;gap:8px}
+.palert-item{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:rgba(0,0,0,.15);border-radius:9px;gap:12px;flex-wrap:wrap;border-left:3px solid var(--gold)}
+.palert-item.in-port{border-left-color:#10B981}
+.palert-l{flex:1;min-width:0}
+.palert-tk{font-size:14px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.palert-tk .palert-code{font-size:9.5px;color:var(--muted2);font-weight:500;font-family:"JetBrains Mono",monospace;background:var(--bg2);padding:1px 6px;border-radius:4px}
+.palert-tk .palert-own{font-size:9px;font-weight:800;color:#10B981;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);padding:1px 7px;border-radius:8px;letter-spacing:.04em}
+.palert-name{font-size:11.5px;color:var(--muted);margin-top:2px}
+.palert-meta{font-size:10.5px;color:var(--muted2);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.palert-nota{font-size:11px;color:var(--gold-light,#e8d080);margin-top:5px;font-style:italic;line-height:1.4}
+.palert-act{font-size:10px;font-weight:800;padding:4px 11px;border-radius:12px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.palert-act.compra{background:rgba(16,185,129,.15);color:#10B981;border:1px solid rgba(16,185,129,.4)}
+.palert-act.venta{background:rgba(241,102,90,.15);color:var(--red);border:1px solid rgba(241,102,90,.4)}
+.palert-act.neutral{background:rgba(212,175,55,.14);color:var(--gold);border:1px solid rgba(212,175,55,.4)}
+.palerts-cta{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;font-size:12px;font-weight:700;padding:9px 18px;border-radius:22px;cursor:pointer;font-family:inherit;width:100%;margin-top:12px;transition:.15s}
+.palerts-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.palerts-empty{font-size:12px;color:var(--muted);padding:8px 0;font-style:italic}
+.palerts-noprofile{background:var(--panel);border:1px dashed var(--line2);border-radius:12px;padding:16px 20px;margin-bottom:14px;text-align:center}
+.palerts-noprofile-t{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:6px}
+.palerts-noprofile-d{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:10px}
 /* Firma */
 .firma{text-align:center;padding:24px 12px 32px;font-size:12px;color:var(--muted2);border-top:1px solid var(--line);margin-top:32px}
 .firma strong{color:var(--gold2);font-weight:600}
@@ -432,6 +459,8 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
   <span class="beta">Beta</span>
   <div class="ntabs">
     <button class="ntab on" onclick="goV('v-d')">📊 Cartera</button>
+    <button class="ntab" onclick="goV('v-an')">📡 Análisis</button>
+    <button class="ntab" onclick="goV('v-av')" style="position:relative">🔔 Avisos<span id="avisos-badge" style="display:none;position:absolute;top:2px;right:2px;background:var(--red);color:#fff;font-size:9px;font-weight:800;min-width:15px;height:15px;border-radius:8px;padding:0 4px;line-height:15px;text-align:center;font-family:'JetBrains Mono',monospace"></span></button>
     <button class="ntab" onclick="goV('v-a')">➕ Agregar</button>
     <button class="ntab" onclick="goV('v-c')">⇄ CCL Calc</button>
     <button class="ntab" onclick="goV('v-div')">📅 Dividendos</button>
@@ -477,90 +506,111 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
       <button class="bdel" onclick="openClear()" title="Borrar cartera"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10"/></svg></button>
     </div>
   </div>
+
+  <!-- HERRAMIENTAS: exportar / backup / compartir con asesor -->
+  <div class="tools-row" style="margin-bottom:10px">
+    <button class="tool-btn share-wa" onclick="shareWithAdvisor()" title="Enviar el estado de tu cartera al equipo de EstrategiasLB">💬 Compartir cartera</button>
+    <button class="tool-btn share-wa" onclick="openContacts('Hola equipo, tengo una consulta desde EstrategiasUNE.','Elegí con quién querés hablar según el tema de tu consulta.')" title="Contactar al equipo de EstrategiasLB">👥 Contactar equipo</button>
+    <button class="tool-btn" onclick="exportCSV()" title="Descargar cartera actual como CSV">📄 CSV</button>
+    <button class="tool-btn" onclick="exportBackup()" title="Descargar backup completo de tus datos (JSON)">💾 Backup</button>
+    <button class="tool-btn" onclick="document.getElementById('imp-backup').click()" title="Restaurar backup desde un archivo JSON">📥 Restaurar</button>
+    <input type="file" id="imp-backup" accept=".json" style="display:none" onchange="importBackup(event)">
+  </div>
+
+  <!-- CHART HISTÓRICO -->
+  <div id="hist-card" style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:8px">📈 Evolución de tu cartera <span style="font-size:10px;color:var(--muted2);font-weight:500" id="hist-note"></span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <div class="hist-period-group" style="display:flex;gap:2px;background:var(--bg2);border-radius:8px;padding:3px">
+          <button class="hist-btn" data-p="1W" onclick="setHistPeriod('1W')">1S</button>
+          <button class="hist-btn" data-p="1M" onclick="setHistPeriod('1M')">1M</button>
+          <button class="hist-btn on" data-p="3M" onclick="setHistPeriod('3M')">3M</button>
+          <button class="hist-btn" data-p="6M" onclick="setHistPeriod('6M')">6M</button>
+          <button class="hist-btn" data-p="1Y" onclick="setHistPeriod('1Y')">1A</button>
+        </div>
+        <label class="hist-toggle" title="Comparar contra SPY (S&amp;P 500)"><input type="checkbox" id="hist-spy" onchange="renderHistoricalChart()" checked><span>vs SPY</span></label>
+        <label class="hist-toggle" title="Comparar contra dólar MEP"><input type="checkbox" id="hist-mep" onchange="renderHistoricalChart()"><span>+ MEP</span></label>
+      </div>
+    </div>
+    <div id="hist-info" style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.45"></div>
+    <div style="position:relative;height:260px"><canvas id="hist-canvas"></canvas></div>
+    <div id="hist-legend" style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px;justify-content:center"></div>
+  </div>
+
+  <!-- BUSCADOR + TABLA -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px">
+    <div style="position:relative;flex:1;max-width:340px">
+      <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:14px;pointer-events:none">🔍</span>
+      <input id="ttbl-search" type="text" placeholder="Buscar ticker (ej: GGAL, AAPL, TSLA)…" oninput="renderD()" style="width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:9px 12px 9px 36px;color:var(--txt);font-size:13px;font-family:inherit">
+    </div>
+    <div id="ttbl-info" style="font-size:11px;color:var(--muted2)"></div>
+  </div>
+  <div class="tw"><table class="ht" id="main-t"><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
+
+  <div style="margin-top:12px;font-size:12px;color:var(--muted2)">
+    <strong style="color:var(--gold)">PPC</strong> = Precio Promedio de Compra · Hacé clic en "+ Ingresar costo" para ingresar tu precio de compra y ver ganancia/pérdida · El <strong style="color:var(--gold)">Peso</strong> muestra cuánto pondera cada papel en tu cartera · <strong style="color:var(--gold)">Información orientativa</strong> — no constituye recomendación de inversión ni asesoramiento personalizado; toda decisión debe consultarse con el asesor antes de operar. EstrategiasLB · Asesor Idóneo CNV M.N. 2220
+  </div>
+</div>
+
+<!-- ANÁLISIS -->
+<div class="cont view" id="v-an">
+  <div style="margin-bottom:20px">
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:6px">📡 Análisis técnico de tu cartera</h2>
+    <p style="color:var(--muted);font-size:14.5px">El criterio QQcross de EstrategiasLB aplicado a tus papeles, adaptado a tu perfil de inversor.</p>
+  </div>
+
+  <!-- PANEL MOMENTO DE MIRAR -->
+  <div id="moment-slot"></div>
+
   <div class="dash-grid with-sides">
-    <!-- IZQUIERDA: índices + señales apilados -->
     <div class="side-col">
       <div class="side-card">
         <div class="side-title">🌎 Índices & Mercados</div>
         <div id="idx-list"><div class="sig-load">Cargando…</div></div>
       </div>
+      <!-- CONTEXTO DE MERCADO -->
+      <div id="mctx-slot"></div>
+    </div>
+    <div>
       <div class="side-card">
         <div class="side-title">📊 Análisis de tu cartera <span id="prof-slot" style="margin-left:auto"></span></div>
-        <div id="cauc-slot"></div>
         <div id="sig-list"><div class="sig-load">Calculando análisis…</div></div>
         <button class="sig-hist-btn" onclick="openSigHistory()" title="Ver historial de orientaciones pasadas (H)">📋 Ver historial de orientaciones</button>
         <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce EMA 11 × WMA 21) con contexto de tendencia SMA 200, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
       </div>
     </div>
-    <!-- DERECHA: chart histórico + tabla -->
-    <div>
-      <!-- BANNER REBALANCEO MENSUAL (R3) -->
-      <div id="rebal-slot"></div>
-
-      <!-- CONTEXTO DE MERCADO (R3) -->
-      <div id="mctx-slot"></div>
-
-      <!-- COMPARACIÓN MENSUAL CON INFLACIÓN (R3) -->
-      <div id="month-comp-slot"></div>
-
-      <!-- AVISO DE DIVIDENDOS PRÓXIMOS (R3) -->
-      <div id="div-slot"></div>
-
-      <!-- PANEL MOMENTO DE MIRAR (Ronda 2) -->
-      <div id="moment-slot"></div>
-
-      <!-- HERRAMIENTAS: exportar / backup / compartir con asesor (Ronda 1+2) -->
-      <div class="tools-row" style="margin-bottom:10px">
-        <button class="tool-btn share-wa" onclick="shareWithAdvisor()" title="Enviar el estado de tu cartera al equipo de EstrategiasLB">💬 Compartir cartera</button>
-        <button class="tool-btn share-wa" onclick="openContacts('Hola equipo, tengo una consulta desde EstrategiasUNE.','Elegí con quién querés hablar según el tema de tu consulta.')" title="Contactar al equipo de EstrategiasLB">👥 Contactar equipo</button>
-        <button class="tool-btn" onclick="exportCSV()" title="Descargar cartera actual como CSV">📄 CSV</button>
-        <button class="tool-btn" onclick="exportBackup()" title="Descargar backup completo de tus datos (JSON)">💾 Backup</button>
-        <button class="tool-btn" onclick="document.getElementById('imp-backup').click()" title="Restaurar backup desde un archivo JSON">📥 Restaurar</button>
-        <input type="file" id="imp-backup" accept=".json" style="display:none" onchange="importBackup(event)">
-      </div>
-
-      <!-- CHART HISTÓRICO (Entrega B) -->
-      <div id="hist-card" style="background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px">
-          <div>
-            <div style="font-size:14px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:8px">📈 Evolución de tu cartera <span style="font-size:10px;color:var(--muted2);font-weight:500" id="hist-note"></span></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="hist-period-group" style="display:flex;gap:2px;background:var(--bg2);border-radius:8px;padding:3px">
-              <button class="hist-btn" data-p="1W" onclick="setHistPeriod('1W')">1S</button>
-              <button class="hist-btn" data-p="1M" onclick="setHistPeriod('1M')">1M</button>
-              <button class="hist-btn on" data-p="3M" onclick="setHistPeriod('3M')">3M</button>
-              <button class="hist-btn" data-p="6M" onclick="setHistPeriod('6M')">6M</button>
-              <button class="hist-btn" data-p="1Y" onclick="setHistPeriod('1Y')">1A</button>
-            </div>
-            <label class="hist-toggle" title="Comparar contra SPY (S&amp;P 500)"><input type="checkbox" id="hist-spy" onchange="renderHistoricalChart()" checked><span>vs SPY</span></label>
-            <label class="hist-toggle" title="Comparar contra dólar MEP"><input type="checkbox" id="hist-mep" onchange="renderHistoricalChart()"><span>+ MEP</span></label>
-          </div>
-        </div>
-        <div id="hist-info" style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.45"></div>
-        <div style="position:relative;height:260px"><canvas id="hist-canvas"></canvas></div>
-        <div id="hist-legend" style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:10px;justify-content:center"></div>
-      </div>
-
-      <!-- ALERTAS DE CONCENTRACIÓN (Entrega B) -->
-      <div id="conc-alerts" style="display:none"></div>
-
-      <!-- BUSCADOR + TABLA (Entrega A) -->
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px">
-        <div style="position:relative;flex:1;max-width:340px">
-          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:14px;pointer-events:none">🔍</span>
-          <input id="ttbl-search" type="text" placeholder="Buscar ticker (ej: GGAL, AAPL, TSLA)…" oninput="renderD()" style="width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:9px 12px 9px 36px;color:var(--txt);font-size:13px;font-family:inherit">
-        </div>
-        <div id="ttbl-info" style="font-size:11px;color:var(--muted2)"></div>
-      </div>
-      <div class="tw"><table class="ht" id="main-t"><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
-    </div>
   </div>
-  <div style="margin-top:12px;font-size:12px;color:var(--muted2)">
-    <strong style="color:var(--gold)">PPC</strong> = Precio Promedio de Compra · Hacé clic en "+ Ingresar costo" para ingresar tu precio de compra y ver ganancia/pérdida · El <strong style="color:var(--gold)">Peso</strong> muestra cuánto pondera cada papel en tu cartera · <strong style="color:var(--gold)">Información orientativa</strong> — no constituye recomendación de inversión ni asesoramiento personalizado; toda decisión debe consultarse con el asesor antes de operar. EstrategiasLB · Asesor Idóneo CNV M.N. 2220
+</div>
+
+<!-- AVISOS -->
+<div class="cont view" id="v-av">
+  <div style="margin-bottom:20px">
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:6px">🔔 Avisos y recordatorios</h2>
+    <p style="color:var(--muted);font-size:14.5px">Todo lo que UNE detectó y quiere que sepas: recordatorios, alertas de riesgo, comparaciones y estimaciones.</p>
   </div>
 
-  <!-- MÓDULO IMPOSITIVO BIENES PERSONALES (Entrega C) -->
+  <!-- ALERTAS PREMIUM ESTRATEGIASLB (Google Sheet) -->
+  <div id="palerts-slot"></div>
+
+  <!-- BANNER CAUCIÓN VIERNES -->
+  <div id="cauc-slot"></div>
+
+  <!-- BANNER REBALANCEO MENSUAL -->
+  <div id="rebal-slot"></div>
+
+  <!-- AVISO DE DIVIDENDOS PRÓXIMOS -->
+  <div id="div-slot"></div>
+
+  <!-- ALERTAS DE CONCENTRACIÓN Y ANTI-PÁNICO -->
+  <div id="conc-alerts" style="display:none"></div>
+
+  <!-- COMPARACIÓN MENSUAL CON INFLACIÓN -->
+  <div id="month-comp-slot"></div>
+
+  <!-- MÓDULO IMPOSITIVO BIENES PERSONALES -->
   <div class="bbpp-card" id="bbpp-card" style="display:none">
     <div class="bbpp-hd" onclick="toggleBBPP()">
       <span style="font-size:18px">🧾</span>
@@ -825,6 +875,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div class="kbd-row"><span class="kbd-lbl">Contactar al equipo</span><span class="kbd-key">C</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Cambiar tema</span><span class="kbd-key">T</span></div>
     <div class="kbd-row"><span class="kbd-lbl">Ver este menú</span><span class="kbd-key">?</span></div>
+    <div style="font-size:11px;color:var(--muted2);margin-top:12px;line-height:1.5;padding-top:10px;border-top:1px solid var(--line)">La app está organizada en solapas: <strong style="color:var(--gold)">Cartera</strong> (tu plata), <strong style="color:var(--gold)">Análisis</strong> (el criterio técnico) y <strong style="color:var(--gold)">Avisos</strong> (recordatorios y alertas). El número rojo en Avisos indica cuántos hay activos.</div>
     <button class="pt-nav-b prim" style="margin-top:14px;width:100%" onclick="document.getElementById('kbd-modal').classList.remove('on')">Cerrar</button>
   </div>
 </div>
@@ -839,7 +890,10 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 <script>
 
 if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ONB:"elb_onb_v1",PREFS:"elb_prefs_v1",NOTES:"elb_notes_v1",SIGHIST:"elb_sighist_v1",REBAL:"elb_rebal_v1",INFL:"elb_infl_v1",MCTX:"elb_mctx_v1",THEME:"elb_theme_v1",INFL_URL:"https://api.argentinadatos.com/v1/finanzas/indices/inflacion",ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
+const CFG={DOLAR:"https://dolarapi.com/v1/dolares",ST:"elb_v3",PST:"elb_px_v3",PPT:"elb_ppc_v1",FT:"elb_fund_v1",LRN:"elb_learned_v1",PROF:"elb_profile_v1",CAUC:"elb_caucion_v1",SNP:"elb_snapshots_v1",BMK:"elb_benchmark_v1",BBPP:"elb_bbpp_v1",ONB:"elb_onb_v1",PREFS:"elb_prefs_v1",NOTES:"elb_notes_v1",SIGHIST:"elb_sighist_v1",REBAL:"elb_rebal_v1",INFL:"elb_infl_v1",MCTX:"elb_mctx_v1",THEME:"elb_theme_v1",PALERTS:"elb_palerts_v1",INFL_URL:"https://api.argentinadatos.com/v1/finanzas/indices/inflacion",
+// ⬇️ PEGAR ACÁ la URL del Google Sheet publicado como CSV (Archivo → Compartir → Publicar en la web → pestaña de alertas → CSV)
+ALERTS_URL:"https://docs.google.com/spreadsheets/d/e/2PACX-1vR3M0t-_canIfQ4rQDhOD5I1sJZAPDsl9OPiD2OnP-Pj1hwNaGbCOgPnSePapZ7bbSrpE_tSplVmMXV/pub?gid=344155312&single=true&output=csv",
+ARG:"./data/prices_arg.json",CED:"./data/prices_ced.json",META:"./data/meta.json"};
 const FUND_DB={
   MELI:{r:"A",n:"Monopolio de facto LatAm, crecimiento sostenido"},GOOGL:{r:"A",n:"IA + publicidad + cloud, caja neta récord"},
   MSFT:{r:"A",n:"Azure + Copilot, dividendo creciente"},AAPL:{r:"A",n:"Ecosistema cerrado, margen operativo ~30%"},
@@ -1068,7 +1122,28 @@ function getBrokerH(broker){
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
-function goV(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));document.getElementById(id)?.classList.add("on");document.querySelectorAll(".ntab").forEach((t,i)=>{const vs=["v-d","v-a","v-c","v-div"];t.classList.toggle("on",vs[i]===id);});S.view=id;if(id==="v-d")renderD();if(id==="v-a")renderMan();if(id==="v-div")renderDiv();if(id==="v-c")renderCC();}
+function goV(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));document.getElementById(id)?.classList.add("on");document.querySelectorAll(".ntab").forEach((t,i)=>{const vs=["v-d","v-an","v-av","v-a","v-c","v-div"];t.classList.toggle("on",vs[i]===id);});S.view=id;setPref("lastView",id);if(id==="v-d")renderD();if(id==="v-an"){renderSignals();renderIndices();renderMarketContext();}if(id==="v-av"){renderPremiumAlerts();renderCaucionBanner();renderRebalanceBanner();renderDividendReminder();renderConcentrationAlerts();renderMonthlyComparison();renderBBPP();}if(id==="v-a")renderMan();if(id==="v-div")renderDiv();if(id==="v-c")renderCC();}
+
+// ═══ BADGE DE AVISOS ACTIVOS ═══
+function updateAvisosBadge(){
+  const badge=document.getElementById("avisos-badge");
+  if(!badge)return;
+  let count=0;
+  // Alertas premium del asesor: contar items
+  const pal=document.getElementById("palerts-slot");
+  if(pal)count+=pal.querySelectorAll(".palert-item").length;
+  // Caución (viernes no dismissado)
+  if(document.getElementById("cauc-slot")?.innerHTML.trim())count++;
+  // Rebalanceo
+  if(document.getElementById("rebal-slot")?.innerHTML.trim())count++;
+  // Dividendos
+  if(document.getElementById("div-slot")?.innerHTML.trim())count++;
+  // Alertas concentración/anti-pánico: contar items
+  const conc=document.getElementById("conc-alerts");
+  if(conc&&conc.style.display!=="none")count+=conc.querySelectorAll(".conc-a").length;
+  if(count>0){badge.textContent=count;badge.style.display="block";}
+  else badge.style.display="none";
+}
 function renderD(){
   const hs=S.bTab==="todos"?getConsolidated():getBrokerH(S.bTab);
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
@@ -1850,6 +1925,8 @@ function finishProfileTest(){
   S.profile={type,score,completedAt:new Date().toISOString()};
   saveProfile();
   showProfileResult();
+  // Refrescar alertas premium con el perfil nuevo
+  try{renderPremiumAlerts();}catch{}
 }
 function showProfileResult(){
   const t=S.profile.type;
@@ -2845,8 +2922,8 @@ function handleKeyboard(e){
   if(e.key==="Escape"){closeAllModals();return;}
   // ? → mostrar menú de atajos
   if(e.key==="?"||(e.shiftKey&&e.key==="/")){e.preventDefault();document.getElementById("kbd-modal").classList.add("on");return;}
-  // / → focus en buscador
-  if(e.key==="/"){e.preventDefault();const s=document.getElementById("ttbl-search");if(s){s.focus();s.select();}return;}
+  // / → focus en buscador (cambia a tab Cartera si es necesario)
+  if(e.key==="/"){e.preventDefault();if(S.view!=="v-d")goV("v-d");const s=document.getElementById("ttbl-search");if(s){s.focus();s.select();}return;}
   // Ignorar teclas con modificadores para el resto
   if(e.ctrlKey||e.metaKey||e.altKey)return;
   // R → refresh
@@ -2922,8 +2999,188 @@ function closeContacts(){
   document.getElementById("ct-hdr-s").textContent="Elegí a quién querés escribir según el tema de tu consulta. El mensaje ya viene pre-armado con el contexto de tu cartera.";
 }
 
+// ═══════════════════════════════════════════════════════════
+// ── ALERTAS PREMIUM DESDE GOOGLE SHEETS ──
+// El asesor carga alertas en un sheet publicado como CSV.
+// La app las filtra por el perfil del cliente y las muestra en Avisos.
+// Columnas reconocidas (por nombre de header, case-insensitive):
+//   Código | COMPAÑÍA | Ticker | Beta... | PERFIL
+// Opcionales futuras: FECHA | ACCION | NOTA | PRECIO
+// ═══════════════════════════════════════════════════════════
+const PALERTS_TTL_MIN=10; // cache local en minutos
+
+// Parser CSV robusto: soporta comillas, comas internas y saltos de línea en campos
+function parseCSV(text){
+  const rows=[];let row=[];let cur="";let inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){
+      if(c==='"'){
+        if(text[i+1]==='"'){cur+='"';i++;}
+        else inQ=false;
+      }else cur+=c;
+    }else{
+      if(c==='"')inQ=true;
+      else if(c===","){row.push(cur);cur="";}
+      else if(c==="\n"||c==="\r"){
+        if(c==="\r"&&text[i+1]==="\n")i++;
+        row.push(cur);cur="";
+        if(row.some(x=>x.trim()!==""))rows.push(row);
+        row=[];
+      }else cur+=c;
+    }
+  }
+  if(cur!==""||row.length){row.push(cur);if(row.some(x=>x.trim()!==""))rows.push(row);}
+  return rows;
+}
+
+// Normaliza texto de headers y perfiles: minúsculas, sin acentos
+function normTxt(s){return (s||"").toString().trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+
+async function fetchPremiumAlerts(force){
+  if(!CFG.ALERTS_URL){return null;} // no configurado — feature apagada
+  // Cache con TTL
+  try{
+    const cached=JSON.parse(localStorage.getItem(CFG.PALERTS)||"null");
+    if(!force&&cached&&cached.ts&&(Date.now()-cached.ts)<PALERTS_TTL_MIN*60*1000){
+      return cached.alerts;
+    }
+  }catch{}
+  try{
+    const r=await fetchRobust(CFG.ALERTS_URL,{timeout:12000,retries:1});
+    const text=await r.text();
+    const rows=parseCSV(text);
+    if(rows.length<2)return [];
+    // Mapear headers por nombre
+    const hdr=rows[0].map(normTxt);
+    const col=(names)=>{for(const n of names){const i=hdr.findIndex(h=>h.includes(n));if(i>=0)return i;}return -1;};
+    const iCod=col(["codigo","cod"]);
+    const iComp=col(["compania","company","empresa"]);
+    const iTick=col(["ticker","simbolo"]);
+    const iBeta=col(["beta"]);
+    const iPerf=col(["perfil","profile"]);
+    const iFecha=col(["fecha","date"]);
+    const iAcc=col(["accion","action","tipo"]);
+    const iNota=col(["nota","comentario","obs"]);
+    const iPrecio=col(["precio","price","target"]);
+    if(iTick<0||iPerf<0){console.warn("Alertas: el sheet no tiene columnas Ticker/PERFIL reconocibles");return [];}
+    const alerts=rows.slice(1).map(r=>{
+      const get=i=>i>=0&&i<r.length?(r[i]||"").toString().trim():"";
+      return {
+        codigo:get(iCod),
+        compania:get(iComp),
+        ticker:get(iTick).toUpperCase(),
+        beta:get(iBeta),
+        perfil:normTxt(get(iPerf)),
+        fecha:get(iFecha),
+        accion:normTxt(get(iAcc)),
+        nota:get(iNota),
+        precio:get(iPrecio)
+      };
+    }).filter(a=>a.ticker&&a.perfil);
+    try{localStorage.setItem(CFG.PALERTS,JSON.stringify({ts:Date.now(),alerts}));}catch{}
+    return alerts;
+  }catch(e){
+    console.warn("Alertas premium: error al leer el sheet",e.message||e);
+    // Fallback: usar cache viejo si existe aunque esté vencido
+    try{const c=JSON.parse(localStorage.getItem(CFG.PALERTS)||"null");if(c&&c.alerts)return c.alerts;}catch{}
+    return null;
+  }
+}
+
+// Extrae mes/año aproximado del código AL-YYMM-NN → "Junio 2026"
+function palertPeriod(codigo){
+  const m=(codigo||"").match(/AL-?(\d{2})(\d{2})-?\d*/i);
+  if(!m)return "";
+  const yy=parseInt(m[1],10),mm=parseInt(m[2],10);
+  if(mm<1||mm>12)return "";
+  const meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  return meses[mm-1][0].toUpperCase()+meses[mm-1].slice(1)+" 20"+yy;
+}
+
+async function renderPremiumAlerts(force){
+  const slot=document.getElementById("palerts-slot");
+  if(!slot)return;
+  if(!CFG.ALERTS_URL){slot.innerHTML="";return;} // feature no configurada
+  // Sin perfil → invitar a completar el test
+  if(!S.profile||!S.profile.type){
+    slot.innerHTML=`<div class="palerts-noprofile">
+      <div class="palerts-noprofile-t">⭐ Alertas EstrategiasLB</div>
+      <div class="palerts-noprofile-d">Tu asesor publica alertas seleccionadas según el perfil de cada cliente. Completá el test de perfil para ver las que corresponden a vos.</div>
+      <button class="pt-nav-b prim" onclick="openProfileTest()">Hacer el test de perfil (2 min)</button>
+    </div>`;
+    try{updateAvisosBadge();}catch{}
+    return;
+  }
+  const alerts=await fetchPremiumAlerts(force);
+  if(alerts===null){slot.innerHTML="";try{updateAvisosBadge();}catch{}return;} // error de red sin cache
+  const myProfile=normTxt(S.profile.type);
+  const mine=alerts.filter(a=>a.perfil===myProfile);
+  if(!mine.length){
+    slot.innerHTML=`<div class="palerts-card">
+      <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span></div>
+      <div class="palerts-empty">Por ahora no hay alertas activas para tu perfil ${S.profile.type}. Cuando tu asesor publique una, va a aparecer acá.</div>
+    </div>`;
+    try{updateAvisosBadge();}catch{}
+    return;
+  }
+  // Tickers en cartera para marcar "EN TU CARTERA"
+  const portTickers=new Set(getConsolidated().map(h=>h.ticker));
+  const period=palertPeriod(mine[0].codigo);
+  const items=mine.map(a=>{
+    const inPort=portTickers.has(a.ticker);
+    const nombre=a.compania||nameOf(a.ticker)||"";
+    const metaParts=[];
+    if(a.beta&&normTxt(a.beta)!=="no disponible")metaParts.push("Beta 5a: "+a.beta);
+    if(a.precio)metaParts.push("Ref: "+a.precio);
+    if(a.fecha)metaParts.push(a.fecha);
+    let actBadge="";
+    if(a.accion.includes("compra")||a.accion.includes("buy"))actBadge=`<span class="palert-act compra">▲ ${a.accion}</span>`;
+    else if(a.accion.includes("venta")||a.accion.includes("sell"))actBadge=`<span class="palert-act venta">▼ ${a.accion}</span>`;
+    else if(a.accion)actBadge=`<span class="palert-act neutral">${a.accion}</span>`;
+    return `<div class="palert-item ${inPort?"in-port":""}">
+      <div class="palert-l">
+        <div class="palert-tk">${a.ticker}${a.codigo?`<span class="palert-code">${a.codigo}</span>`:""}${inPort?`<span class="palert-own">EN TU CARTERA</span>`:""}</div>
+        ${nombre?`<div class="palert-name">${nombre}</div>`:""}
+        ${metaParts.length?`<div class="palert-meta">${metaParts.map(m=>`<span>${m}</span>`).join("")}</div>`:""}
+        ${a.nota?`<div class="palert-nota">${a.nota}</div>`:""}
+      </div>
+      ${actBadge}
+    </div>`;
+  }).join("");
+  slot.innerHTML=`<div class="palerts-card">
+    <div class="palerts-hdr"><span style="font-size:18px">⭐</span><span class="palerts-title">Alertas EstrategiasLB</span><span class="palerts-count">${mine.length}</span><span style="font-size:10.5px;color:var(--muted);font-style:italic">seleccionadas para tu perfil ${S.profile.type}${period?" · "+period:""}</span></div>
+    <div class="palerts-sub">Papeles que tu asesor marcó para clientes con tu perfil. Consultá antes de operar.</div>
+    <div class="palerts-list">${items}</div>
+    <button class="palerts-cta" onclick="sharePremiumAlertsWithTeam()">💬 Consultar estas alertas con el equipo</button>
+  </div>`;
+  try{updateAvisosBadge();}catch{}
+}
+
+function sharePremiumAlertsWithTeam(){
+  const perfil=S.profile?.type||"—";
+  let tickers="";
+  try{
+    const cached=JSON.parse(localStorage.getItem(CFG.PALERTS)||"null");
+    if(cached&&cached.alerts){
+      const myProfile=normTxt(perfil);
+      tickers=cached.alerts.filter(a=>a.perfil===myProfile).map(a=>"• "+a.ticker+(a.compania?" ("+a.compania+")":"")).join("\n");
+    }
+  }catch{}
+  const msg=`Hola, vi las alertas para mi perfil ${perfil} en EstrategiasUNE:\n\n${tickers}\n\n¿Podemos hablar de cuáles me convienen?`;
+  openContacts(msg,"Para hablar de las alertas te sugerimos escribir a Luis (estrategia) o Kevin (seguimiento operativo).");
+}
+
 // Hook post-render para mantener chart, alertas y BB.PP. sincronizados
 const _origRenderD=typeof renderD==="function"?renderD:null;
+
+// ═══ HOOK: badge de avisos se actualiza tras cada render de aviso ═══
+["renderCaucionBanner","renderRebalanceBanner","renderDividendReminder","renderConcentrationAlerts"].forEach(fn=>{
+  const orig=window[fn];
+  if(typeof orig==="function"){
+    window[fn]=function(...args){const r=orig.apply(this,args);try{updateAvisosBadge();}catch{}return r;};
+  }
+});
 
 async function init(){
   load();
@@ -2944,6 +3201,7 @@ async function init(){
   // Renders con fetch de red (R3) — en paralelo pero sin bloquear
   renderMarketContext();
   renderMonthlyComparison();
+  renderPremiumAlerts();
   // Mostrar onboarding si es la primera visita
   if(!S.onboarded){setTimeout(showOnboarding,600);}
 }

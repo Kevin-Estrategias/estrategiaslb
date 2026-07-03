@@ -56,6 +56,10 @@
 .imp-tab.on{color:var(--teal2);border-bottom-color:var(--teal)}
 .imp-tab-badge{font-size:9px;font-weight:600;background:rgba(74,222,128,.14);color:var(--green);padding:2px 6px;border-radius:10px;letter-spacing:.02em}
 .xls-opt{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.brk-chips{display:flex;flex-wrap:wrap;gap:7px}
+.brk-chip{padding:7px 15px;border-radius:20px;font-size:13px;font-weight:700;color:var(--muted);background:var(--bg2);border:1.5px solid var(--line2);cursor:pointer;transition:.15s;font-family:inherit}
+.brk-chip:hover{border-color:var(--bchip);color:var(--txt)}
+.brk-chip.on{color:var(--bchip);background:color-mix(in srgb,var(--bchip) 14%,transparent);border-color:var(--bchip)}
 .xls-opt-n{font-size:13.5px;font-weight:600;color:var(--gold2);margin-bottom:5px}
 .xls-opt-d{font-size:12.5px;color:var(--muted);line-height:1.5}
 .btmpl{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:13px;font-weight:600;color:#062420;background:linear-gradient(135deg,var(--teal),var(--teal2));border-radius:8px;padding:9px 15px;cursor:pointer;transition:.15s}
@@ -1722,14 +1726,29 @@ function parseNum(v){
 }
 function showPrevXLS(res){
   S.prevXLS=res;
-  const bc=BC[res.broker]||"#D4AF37";
-  document.getElementById("x-broker").innerHTML=`<div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700;color:${bc};background:${bc}20;border:1px solid ${bc}40">${cap(res.broker)}</span><span style="font-size:14px;color:var(--green)">✓ ${res.holdings.length} posiciones con PPC real</span></div>`;
+  const brokers=[["balanz","Balanz"],["iol","IOL"],["cocos","Cocos Capital"],["bull","Bull Market"],["manual","Otro / Manual"]];
+  const detected=res.broker||"manual";
+  const chips=brokers.map(([id,label])=>{
+    const bc=BC[id]||"#D4AF37";
+    const on=id===detected;
+    return `<button class="brk-chip${on?" on":""}" data-brk="${id}" onclick="pickXLSBroker('${id}')" style="--bchip:${bc}">${label}</button>`;
+  }).join("");
+  document.getElementById("x-broker").innerHTML=`
+    <div style="font-size:13px;color:var(--muted);margin-bottom:8px">¿De qué broker es esta cartera? <span style="color:var(--muted2)">(detectamos <strong style="color:${BC[detected]||"#D4AF37"}">${cap(detected==="manual"?"Otro":detected)}</strong>, confirmá o cambialo)</span></div>
+    <div class="brk-chips">${chips}</div>
+    <div style="font-size:13px;color:var(--green);margin-top:10px">✓ ${res.holdings.length} posiciones con PPC real</div>`;
   const rows=res.holdings.slice(0,8).map(h=>`<tr><td><strong>${h.ticker}</strong></td><td style="color:var(--muted)">${h.tipo}</td><td class="mono">${h.cant.toLocaleString("es-AR")}</td><td class="mono" style="color:var(--gold2)">${fa(h.ppc)}</td></tr>`).join("");
   const more=res.holdings.length>8?`<tr><td colspan="4" style="text-align:center;padding:8px;color:var(--muted2)">...y ${res.holdings.length-8} más</td></tr>`:"";
   document.getElementById("x-prev").innerHTML=`<table class="pt"><thead><tr><th>Ticker</th><th>Tipo</th><th>Cant.</th><th>PPC (tu compra)</th></tr></thead><tbody>${rows}${more}</tbody></table>`;
   document.getElementById("xs1").style.display="none";
   document.getElementById("xs2").style.display="block";
   document.getElementById("i-err").style.display="none";
+}
+function pickXLSBroker(id){
+  if(!S.prevXLS)return;
+  S.prevXLS.broker=id;
+  // actualizar chips activos
+  document.querySelectorAll(".brk-chip").forEach(c=>c.classList.toggle("on",c.dataset.brk===id));
 }
 function confirmXLS(){
   if(!S.prevXLS)return;

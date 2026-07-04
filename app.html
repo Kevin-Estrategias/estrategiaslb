@@ -58,7 +58,7 @@
 .gan-cell{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
 .gan-tag{font-size:9px;color:var(--muted2);font-style:italic}
 .ppc-cell{cursor:pointer;min-width:100px}.ppc-set{color:var(--txt)}.ppc-set:hover{color:var(--gold)}.ppc-add{color:var(--muted2);font-size:12px;border:1px dashed var(--line2);padding:3px 9px;border-radius:6px;cursor:pointer;transition:.15s}.ppc-add:hover{border-color:var(--gold);color:var(--gold)}
-.rec{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;white-space:nowrap}.rec-buy-a{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}.rec-buy-b{background:rgba(125,207,255,.1);color:var(--usd);border:1px solid rgba(125,207,255,.2)}.rec-sell-hi{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.3)}.rec-sell-md{background:rgba(212,175,55,.1);color:var(--gold2);border:1px solid rgba(212,175,55,.2)}.rec-hold{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--line)}.rec-review{background:rgba(241,102,90,.1);color:var(--red);border:1px solid rgba(241,102,90,.2)}
+.rec{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;white-space:nowrap}.rec-buy-a{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}.rec-buy-b{background:rgba(125,207,255,.1);color:var(--usd);border:1px solid rgba(125,207,255,.2)}.rec-sell-hi{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid rgba(212,175,55,.3)}.rec-sell-md{background:rgba(212,175,55,.1);color:var(--gold2);border:1px solid rgba(212,175,55,.2)}.rec-hold{background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--line)}.rec-review{background:rgba(241,102,90,.1);color:var(--red);border:1px solid rgba(241,102,90,.2)}.rec-rf{background:rgba(61,212,200,.1);color:var(--teal);border:1px solid rgba(61,212,200,.25)}
 .er td{text-align:center;padding:48px 20px;color:var(--muted2)}.be-icon{font-size:40px;margin-bottom:14px}.be-txt{font-size:16px;font-weight:600;margin-bottom:8px}.be-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
 .f{margin-bottom:14px}.f label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:500}.f input,.f select{width:100%;background:var(--bg2);border:1px solid var(--line2);border-radius:9px;padding:10px 13px;color:var(--txt);font-size:14px;transition:border-color .2s;appearance:none}.f input:focus,.f select:focus{outline:none;border-color:var(--gold)}.bprim{padding:11px 24px;border-radius:9px;background:var(--teal);color:#062420;font-weight:700;font-size:15px;transition:.15s}.bprim:hover{background:var(--teal2)}.bimp{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;background:var(--td);border:1px solid rgba(61,212,200,.35);color:var(--teal);font-size:13px;font-weight:600;transition:.15s}.bimp:hover{background:rgba(61,212,200,.2)}.bimp-lg{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:var(--teal);color:#062420;font-size:15px;font-weight:700}.bimp-lg:hover{background:var(--teal2)}
 .tr{position:relative}.sbx{position:absolute;left:0;right:0;top:calc(100% + 3px);background:#112234;border:1px solid var(--line2);border-radius:9px;z-index:20;max-height:180px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}.si{padding:9px 13px;cursor:pointer;font-size:13.5px;display:flex;gap:10px;align-items:center}.si:hover,.si.sel{background:var(--gd)}.sit{font-weight:700;color:var(--gold);min-width:52px}
@@ -260,9 +260,25 @@ th.sortable.desc::after{content:"▼";opacity:1;color:var(--gold);font-size:9px}
   .ht{font-size:12px}
   .ht th,.ht td{padding:8px 6px!important}
 }
-.row-expand{background:none;border:none;color:var(--gold);cursor:pointer;padding:2px 6px;font-size:12px;display:none}
-@media (max-width:900px){.row-expand{display:inline-block}}
+.row-expand{background:none;border:none;color:var(--gold);cursor:pointer;padding:2px 6px;font-size:14px;display:inline-block}
 tr.row-expanded td.col-hide,tr.row-expanded td.col-hide-md{display:table-cell!important;background:rgba(212,175,55,.04)}
+/* Panel de análisis fundamental (fila expandida) */
+tr.fund-detail-row{display:none}
+tr.fund-detail-row.show{display:table-row}
+.fund-detail{padding:16px 20px!important;background:rgba(212,175,55,.03);border-bottom:1px solid var(--line)}
+.fd-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.fd-score{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.fd-score-ring{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
+.fd-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.fd-cols{grid-template-columns:1fr}}
+.fd-col-t{font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:7px}
+.fd-pros .fd-col-t{color:var(--green)}
+.fd-contras .fd-col-t{color:var(--red)}
+.fd-item{font-size:12.5px;color:var(--txt);padding:4px 0 4px 18px;position:relative;line-height:1.45}
+.fd-pros .fd-item::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.fd-contras .fd-item::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:700}
+.fd-foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--muted2);line-height:1.5}
+.fd-rf{font-size:13px;color:var(--txt);line-height:1.6}
 /* MÓDULO BB.PP. */
 .bbpp-card{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;overflow:hidden}
 .bbpp-hd{padding:14px 18px;background:linear-gradient(135deg,rgba(212,175,55,.08),transparent);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
@@ -1204,25 +1220,150 @@ function fk(n){if(n==null)return"—";if(Math.abs(n)>=1e6)return"$"+(n/1e6).toFi
 function fv(ars){if(ars==null)return"—";if(S.ccy==="ars")return fa(ars);const r=S.ccy==="mep"?S.dolar.mep:S.dolar.ccl;return r?fu(ars/r):"—";}
 function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):"";}
 function sgn(n){if(n==null)return"";return n>=0?"+":"";}
-function getFund(ticker){return S.fund[ticker]||FUND_DB[ticker]||null;}
+function getFund(ticker){return S.fund[ticker]||FUND_DB[ticker]||S.autoFund?.[ticker]||null;}
+
+// ═══════════════════════════════════════════════════════════
+// ── FUNDAMENTALES AUTOMÁTICOS (Yahoo Finance) ──
+// Trae ratios reales de cada empresa y calcula un score propio
+// que se traduce a la etiqueta Sólido / Bueno / Especulativo.
+// Cachea 7 días para no golpear la fuente en cada carga.
+// ═══════════════════════════════════════════════════════════
+// Algunos CEDEARs argentinos usan un ticker distinto al de su acción en USA.
+const CEDEAR_TO_US={
+  "PBR":"PBR","RIO":"RIO","VALE":"VALE","BABA":"BABA","TSM":"TSM",
+  "BBD":"BBD","ITUB":"ITUB","JD":"JD","NU":"NU","GLOB":"GLOB",
+  "MELI":"MELI","VIST":"VIST","BIOX":"BIOX","GGAL":"GGAL"
+  // el resto usa su propio ticker (AAPL, CVX, PG, PEP, AAL, etc.)
+};
+function yahooTickerFor(ticker){
+  return CEDEAR_TO_US[ticker]||ticker;
+}
+async function fetchFundamental(ticker){
+  // Módulos de Yahoo con los ratios que necesitamos
+  const sym=yahooTickerFor(ticker);
+  const modules="defaultKeyStatistics,financialData,summaryDetail";
+  const url="https://query1.finance.yahoo.com/v10/finance/quoteSummary/"+encodeURIComponent(sym)+"?modules="+modules;
+  const eu=encodeURIComponent(url);
+  const proxies=[
+    "https://corsproxy.io/?url="+eu,
+    "https://api.codetabs.com/v1/proxy/?quest="+eu,
+    "https://api.allorigins.win/raw?url="+eu
+  ];
+  for(const pu of proxies){
+    try{
+      const r=await fetch(pu,{signal:AbortSignal.timeout?AbortSignal.timeout(9000):undefined});
+      if(!r.ok)continue;
+      const j=await r.json();
+      const res=j?.quoteSummary?.result?.[0];
+      if(!res)continue;
+      const ks=res.defaultKeyStatistics||{},fd=res.financialData||{},sd=res.summaryDetail||{};
+      const raw=(o,k)=>(o&&o[k]&&typeof o[k].raw==="number")?o[k].raw:null;
+      return {
+        pe:raw(sd,"trailingPE")||raw(ks,"forwardPE"),   // precio/ganancias
+        roe:raw(fd,"returnOnEquity"),                    // rentabilidad sobre capital
+        margin:raw(fd,"profitMargins"),                  // margen neto
+        d2e:raw(fd,"debtToEquity"),                      // deuda/capital
+        growth:raw(fd,"earningsGrowth")||raw(fd,"revenueGrowth"), // crecimiento
+        recKey:fd.recommendationKey||null                // consenso analistas (buy/hold/sell)
+      };
+    }catch{}
+  }
+  return null;
+}
+// Traduce ratios a un score 0-100 y a la letra A/B/C (Sólido/Bueno/Especulativo)
+function scoreFundamental(f){
+  if(!f)return null;
+  let score=50,señales=0;
+  const pros=[],contras=[]; // razones legibles para el cliente
+  // P/E: bajo-moderado es sano; muy alto es caro/especulativo
+  if(f.pe!=null){señales++;
+    if(f.pe>0&&f.pe<=18){score+=12;pros.push(`Cotiza barata en relación a sus ganancias (P/E ${f.pe.toFixed(0)})`);}
+    else if(f.pe<=30){score+=4;}
+    else if(f.pe>45){score-=12;contras.push(`Muy cara respecto de lo que gana (P/E ${f.pe.toFixed(0)}) — el precio ya descuenta mucho optimismo`);}
+    else if(f.pe<0){score-=2;contras.push("Hoy no tiene ganancias positivas (P/E negativo)");}
+  }
+  // ROE: alta rentabilidad sobre capital = negocio de calidad
+  if(f.roe!=null){señales++;
+    if(f.roe>=0.18){score+=14;pros.push(`Muy rentable: rinde ${(f.roe*100).toFixed(0)}% sobre el capital (ROE)`);}
+    else if(f.roe>=0.10){score+=6;pros.push(`Rentabilidad sólida (ROE ${(f.roe*100).toFixed(0)}%)`);}
+    else if(f.roe<0){score-=14;contras.push(`Destruye capital: rentabilidad negativa (ROE ${(f.roe*100).toFixed(0)}%)`);}
+  }
+  // Margen neto
+  if(f.margin!=null){señales++;
+    if(f.margin>=0.15){score+=10;pros.push(`Buen margen: gana ${(f.margin*100).toFixed(0)}¢ por cada peso que vende`);}
+    else if(f.margin>=0.05){score+=3;}
+    else if(f.margin<0){score-=12;contras.push("Pierde plata en su operación (margen neto negativo)");}
+  }
+  // Deuda/capital
+  if(f.d2e!=null){señales++;
+    if(f.d2e<=60){score+=8;pros.push("Deuda bajo control");}
+    else if(f.d2e<=120){score+=1;}
+    else{score-=10;contras.push(`Muy endeudada (deuda ${(f.d2e/100).toFixed(1)}x su capital) — más frágil ante subas de tasa`);}
+  }
+  // Crecimiento
+  if(f.growth!=null){señales++;
+    if(f.growth>=0.10){score+=8;pros.push(`Ganancias en crecimiento (+${(f.growth*100).toFixed(0)}%)`);}
+    else if(f.growth>=0){score+=2;}
+    else{score-=6;contras.push(`Sus ganancias vienen cayendo (${(f.growth*100).toFixed(0)}%)`);}
+  }
+  // Consenso de analistas
+  if(f.recKey){señales++;
+    if(/buy/.test(f.recKey)){score+=6;pros.push("El consenso de analistas la ve con buenos ojos");}
+    else if(/sell|underperform/.test(f.recKey)){score-=8;contras.push("El consenso de analistas la ve con cautela");}
+  }
+  if(señales<2)return null; // muy pocos datos para opinar
+  score=Math.max(0,Math.min(100,score));
+  const r=score>=68?"A":score>=50?"B":"C";
+  return {r,score:Math.round(score),señales,pros,contras};
+}
+// Trae y cachea el fundamental de una lista de tickers (solo acciones/CEDEARs)
+async function ensureAutoFundamentals(tickers){
+  if(!S.autoFund)S.autoFund={};
+  const now=Date.now(),TTL=7*24*3600*1000; // 7 días
+  let cache={};
+  try{cache=JSON.parse(localStorage.getItem("elb_autofund_v2")||"{}");}catch{}
+  const pend=[];
+  for(const t of tickers){
+    const c=cache[t];
+    if(c&&(now-c.ts)<TTL){S.autoFund[t]=c.data;continue;}
+    // no calificamos bonos/letras/ON con fundamentales de empresa
+    const tp=typeOf(t);
+    if(tp==="bono"||tp==="letra"||tp==="on"||tp==="fci"){S.autoFund[t]={r:"RF",rf:true};cache[t]={ts:now,data:S.autoFund[t]};continue;}
+    pend.push(t);
+  }
+  // traer en tandas chicas para no saturar los proxies
+  for(let i=0;i<pend.length;i+=3){
+    const batch=pend.slice(i,i+3);
+    await Promise.all(batch.map(async t=>{
+      const f=await fetchFundamental(t);
+      const sc=scoreFundamental(f);
+      const data=sc?{r:sc.r,score:sc.score,ratios:f,pros:sc.pros,contras:sc.contras}:{r:null,noData:true};
+      S.autoFund[t]=data;cache[t]={ts:now,data};
+    }));
+  }
+  try{localStorage.setItem("elb_autofund_v2",JSON.stringify(cache));}catch{}
+}
 function getRec(ganPct,ticker,source){
+  const f0=getFund(ticker);
+  // Bonos / letras / ON: no aplican fundamentales de empresa
+  if(f0&&f0.rf)return{cls:"rec-rf",txt:"Renta fija",icon:"🏦"};
   // Sin PPC real: recomendación orientativa según fundamental del papel
   if(source!=="ppc"||ganPct==null){
-    const f0=getFund(ticker);
     if(!f0)return null;
     if(f0.r==="A")return{cls:"rec-buy-a",txt:"Fundamental sólido",icon:"📈"};
     if(f0.r==="B")return{cls:"rec-buy-b",txt:"Fundamental bueno",icon:"⚖️"};
-    return{cls:"rec-review",txt:"Especulativo",icon:"⚠️"};
+    if(f0.r==="C")return{cls:"rec-review",txt:"Especulativo",icon:"⚠️"};
+    return null;
   }
   // Con PPC real: recomendación según ganancia real
   if(ganPct>=30)return{cls:"rec-sell-hi",txt:"Tomá ganancia",icon:"🎯"};
   if(ganPct>=20)return{cls:"rec-sell-md",txt:"Reducir parcialmente",icon:"📉"};
   if(ganPct>=0)return{cls:"rec-hold",txt:"Mantener",icon:"↔"};
-  const f=getFund(ticker);
-  if(!f)return{cls:"rec-hold",txt:"Analizar contexto",icon:"—"};
-  if(f.r==="A")return{cls:"rec-buy-a",txt:"Sumar posición",icon:"📈"};
-  if(f.r==="B")return{cls:"rec-buy-b",txt:"Sumar con cautela",icon:"⚖️"};
-  return{cls:"rec-review",txt:"Revisar tesis",icon:"⚠️"};
+  if(!f0)return{cls:"rec-hold",txt:"Analizar contexto",icon:"—"};
+  if(f0.r==="A")return{cls:"rec-buy-a",txt:"Sumar posición",icon:"📈"};
+  if(f0.r==="B")return{cls:"rec-buy-b",txt:"Sumar con cautela",icon:"⚖️"};
+  if(f0.r==="C")return{cls:"rec-review",txt:"Revisar tesis",icon:"⚠️"};
+  return{cls:"rec-hold",txt:"Analizar contexto",icon:"—"};
 }
 function getConsolidated(){
   const map={};
@@ -1326,8 +1467,29 @@ function updateAvisosBadge(){
   else badge.style.display="none";
   try{updateAvisosSections();}catch{}
 }
+// Dispara la carga de fundamentales solo para tickers que aún no tienen dato,
+// y re-renderiza una vez cuando llegan. Guard para no entrar en loop.
+function maybeLoadFundamentals(hs){
+  if(!S.autoFund)S.autoFund={};
+  const faltan=hs.map(h=>h.ticker).filter(t=>{
+    if(getFund(t))return false;           // ya tiene (manual, DB o auto)
+    if(S.autoFund[t]!==undefined)return false; // ya se intentó
+    return true;
+  });
+  if(!faltan.length)return;
+  if(S._loadingFund)return; // ya hay una carga en curso
+  S._loadingFund=true;
+  ensureAutoFundamentals(faltan).then(()=>{
+    S._loadingFund=false;
+    // re-render solo si seguimos en la vista de cartera
+    if(S.view==="v-d")renderD();
+    if(S.view==="v-an")renderSignals?.();
+  }).catch(()=>{S._loadingFund=false;});
+}
 function renderD(){
   const hs=S.bTab==="todos"?getConsolidated():getBrokerH(S.bTab);
+  // Cargar fundamentales automáticos para los papeles que aún no tienen calificación
+  maybeLoadFundamentals(hs);
   const tot=hs.reduce((s,h)=>s+(h.valorARS||0),0);
   hs.forEach(h=>{h.peso=tot>0?(h.valorARS/tot*100):0;});
   const bks=getActiveBrokers();
@@ -1478,7 +1640,9 @@ function renderTable(hs){
       resEl=`<span style="color:var(--muted2)">—</span>`;
       pctEl=`<span style="color:var(--muted2)">—</span>`;
     }
-    const recEl=h.rec?`<span class="rec ${h.rec.cls}">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px">—</span>`;
+    const af=S.autoFund?.[h.ticker];
+    const recTip=af&&af.score?` title="Análisis automático — score ${af.score}/100 según ratios de mercado (P/E, ROE, márgenes, deuda). No es recomendación personalizada del asesor."`:(h.rec&&h.rec.cls==="rec-rf"?' title="Instrumento de renta fija (bono/letra). No aplica análisis de fundamentales de empresa."':"");
+    const recEl=h.rec?`<span class="rec ${h.rec.cls}"${recTip} style="cursor:help">${h.rec.icon} ${h.rec.txt}</span>`:`<span style="color:var(--muted2);font-size:12px" title="Buscando datos fundamentales…">—</span>`;
     const bkCell=isTodos?`<td class="col-hide-md"><div class="bkdots">${bkDots}</div></td>`:"";
     const pesoEl=`<div class="peso-wrap"><span class="peso-n mono">${h.peso.toFixed(1)}%</span><span class="peso-bar"><span class="peso-fill" style="width:${Math.min(h.peso,100).toFixed(1)}%"></span></span></div>`;
     const hasNote=!!S.notes[h.ticker];
@@ -1487,8 +1651,45 @@ function renderTable(hs){
     const tkCell=`<td><div style="display:flex;align-items:center;gap:6px"><strong>${h.ticker}</strong><button class="note-btn ${hasNote?"has-note":""}" onclick="openNoteModal('${h.ticker}')" title="${noteTitle}${notePreview}">📝</button></div></td>`;
     const nombreCompleto=nameOf(h.ticker)||"";
     const nombreEsc=nombreCompleto.replace(/"/g,"&quot;");
-    return`<tr data-idx="${idx}">${tkCell}<td class="col-hide-md" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${nombreEsc}">${nombreCompleto}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="this.closest('tr').classList.toggle('row-expanded')" title="Ver detalle">⋯</button></td></tr>`;
+    const colspan=isTodos?12:11;
+    const detailHTML=buildFundDetail(h,af,colspan);
+    return`<tr data-idx="${idx}">${tkCell}<td class="col-hide-md" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${nombreEsc}">${nombreCompleto}</td><td class="col-hide-sm"><span class="tp ${tCls}">${cap(h.tipo)}</span></td>${bkCell}<td class="nr mono col-hide-sm">${h.cant.toLocaleString("es-AR")}</td><td class="nr">${pesoEl}</td><td class="ppc-cell col-hide">${ppcEl}</td><td class="nr col-hide">${prEl}</td><td class="nr mono"><strong>${fv(h.valorARS)}</strong></td><td class="nr">${resEl}</td><td class="nr col-hide-sm">${pctEl}</td><td class="col-hide">${recEl}</td><td><button class="row-expand" onclick="toggleFundDetail(this)" title="Ver análisis">⋯</button></td></tr>${detailHTML}`;
   }).join("");
+}
+// Panel de análisis fundamental que se despliega bajo la fila
+function buildFundDetail(h,af,colspan){
+  // Renta fija (bonos/letras)
+  if(h.rec&&h.rec.cls==="rec-rf"){
+    return `<tr class="fund-detail-row"><td class="fund-detail" colspan="${colspan}"><div class="fd-rf">🏦 <strong>${h.ticker}</strong> es un instrumento de <strong>renta fija</strong> (bono o letra). Su valor depende de la tasa, el plazo y la capacidad de pago del emisor — no de balances de una empresa, así que no le aplicamos el análisis de fundamentales de acciones. Para estos papeles lo que importa es el rendimiento a vencimiento y el riesgo del emisor.</div></td></tr>`;
+  }
+  // Acción/CEDEAR con análisis
+  if(af&&af.score&&(af.pros||af.contras)){
+    const rColor=af.r==="A"?"#22c55e":af.r==="B"?"#7dcfff":"#f1665a";
+    const rLabel=af.r==="A"?"Fundamental sólido":af.r==="B"?"Fundamental bueno":"Especulativo";
+    const pros=(af.pros||[]).map(p=>`<div class="fd-item">${p}</div>`).join("")||`<div class="fd-item" style="color:var(--muted2)">Sin puntos destacados</div>`;
+    const contras=(af.contras||[]).map(c=>`<div class="fd-item">${c}</div>`).join("")||`<div class="fd-item" style="color:var(--muted2)">Sin señales de alerta</div>`;
+    return `<tr class="fund-detail-row"><td class="fund-detail" colspan="${colspan}">
+      <div class="fd-hd">
+        <span class="fd-score-ring" style="background:${rColor}">${af.score}</span>
+        <div><div style="font-weight:800;font-size:14px">${h.ticker} · ${rLabel}</div><div style="font-size:11.5px;color:var(--muted)">Score ${af.score}/100 según sus números fundamentales</div></div>
+      </div>
+      <div class="fd-cols">
+        <div class="fd-pros"><div class="fd-col-t">A favor</div>${pros}</div>
+        <div class="fd-contras"><div class="fd-col-t">En contra</div>${contras}</div>
+      </div>
+      <div class="fd-foot">Este análisis se calcula automáticamente con los ratios de la empresa (P/E, rentabilidad, márgenes, deuda y crecimiento) tomados del mercado. Es una orientación objetiva, <strong>no una recomendación personalizada</strong>: cualquier decisión conviene conversarla con tu asesor. EstrategiasLB · CNV M.N. 2220</div>
+    </td></tr>`;
+  }
+  // Sin datos aún
+  return `<tr class="fund-detail-row"><td class="fund-detail" colspan="${colspan}"><div class="fd-rf" style="color:var(--muted)">Todavía no tenemos datos fundamentales de <strong>${h.ticker}</strong>. Puede ser un papel muy nuevo o poco cubierto. Actualizá en unos minutos con el botón 🔄.</div></td></tr>`;
+}
+function toggleFundDetail(btn){
+  const tr=btn.closest("tr");
+  const detail=tr.nextElementSibling;
+  if(detail&&detail.classList.contains("fund-detail-row")){
+    detail.classList.toggle("show");
+    btn.textContent=detail.classList.contains("show")?"▲":"⋯";
+  }
 }
 function editPPC(ticker){
   const cur=S.ppc[ticker]||"";

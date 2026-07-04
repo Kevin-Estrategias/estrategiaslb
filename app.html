@@ -27,6 +27,19 @@
 .login-foot{text-align:center;font-size:11.5px;color:var(--muted2);margin-top:24px;line-height:1.6}
 .topnav{display:flex;align-items:center;gap:8px;height:60px;padding:0 24px;background:rgba(6,16,26,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}.logo{display:flex;align-items:center;gap:9px;font-family:"Montserrat",sans-serif;font-weight:600;font-size:18px;white-space:nowrap;margin-right:8px}.logo-m{width:30px;height:30px;border-radius:8px;background:var(--td);border:1px solid rgba(61,212,200,.4);display:grid;place-items:center}.logo-n{background:linear-gradient(90deg,#D4AF37,#e8d080 60%,#D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.logo-une{-webkit-text-fill-color:#3DD4C8;color:#3DD4C8;font-weight:800}.beta{background:rgba(61,212,200,.15);border:1px solid rgba(61,212,200,.4);color:var(--teal);font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 8px;border-radius:20px;text-transform:uppercase}
 .ntabs{display:flex;gap:2px;margin-right:auto}.ntab{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);transition:.15s;white-space:nowrap}.ntab:hover{color:var(--txt);background:rgba(255,255,255,.04)}.ntab.on{color:var(--txt);background:rgba(255,255,255,.07)}.ccyg{display:flex;gap:3px;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:3px}.ccy{padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;color:var(--muted);transition:.15s}.ccy.on{background:var(--teal);color:#062420}.bref{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--line2);color:var(--muted);font-size:13px;transition:.15s}.bref:hover{color:var(--teal);border-color:var(--teal)}.bgear{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;border:1px solid var(--line2);color:var(--muted);font-size:16px;transition:.15s}.bgear:hover{color:var(--teal);border-color:var(--teal)}@keyframes spin{to{transform:rotate(360deg)}}.spin{animation:spin 1s linear infinite}
+/* HEADER RESPONSIVE: en laptops comunes (~1250-1500px) compactar; debajo, permitir 2 filas */
+@media(max-width:1560px){
+  .topnav{gap:6px;padding:0 14px}
+  .ntab{padding:7px 10px;font-size:13px}
+  .logo{font-size:16px;margin-right:4px}
+  .bref{padding:5px 9px;font-size:12px}
+  #upd-t{display:none} /* el timestamp de datos es secundario; se libera mucho espacio */
+  .ccy{padding:4px 9px;font-size:11px}
+}
+@media(max-width:1280px){
+  .topnav{flex-wrap:wrap;height:auto;min-height:60px;padding:8px 12px;row-gap:6px}
+  .ntabs{order:10;width:100%;margin-right:0;overflow-x:auto;padding-bottom:2px}
+}
 #status{display:none;padding:8px 24px;font-size:12.5px;text-align:center;border-bottom:1px solid var(--line)}#status.warn{display:block;background:rgba(241,102,90,.08);color:var(--red)}#status.info{display:block;background:var(--gd);color:var(--gold)}
 .cont{max-width:1600px;margin:0 auto;padding:20px}.view{display:none}.view.on{display:block}
 .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}@media(max-width:900px){.sg{grid-template-columns:repeat(2,1fr)}}
@@ -34,7 +47,7 @@
 .cr{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-bottom:20px}@media(max-width:900px){.cr{grid-template-columns:1fr}}.cc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}.cct{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}.dw{width:130px;height:130px;margin:0 auto 12px}.ml{font-size:12px;color:var(--muted)}.mli{display:flex;align-items:center;gap:7px;margin-bottom:5px}.mld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
 .bb{display:flex;flex-direction:column;gap:9px}.bbr{display:flex;align-items:center;gap:10px;font-size:13px}.bbl{width:70px;flex-shrink:0;font-weight:500}.bbt{flex:1;height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}.bbf{height:100%;border-radius:3px;transition:width .5s ease}.bbv{font-size:12px;color:var(--muted);min-width:75px;text-align:right}
 .btabs-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}.btabs{display:flex;gap:4px;flex-wrap:wrap}.btab{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line2);color:var(--muted);transition:.2s;display:flex;align-items:center;gap:6px}.btab:hover{color:var(--txt)}.btab.on{color:var(--txt);background:rgba(255,255,255,.07);border-color:var(--line2)}.btab-dot{width:7px;height:7px;border-radius:50%}
-.tw{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.ht{width:100%;border-collapse:collapse;font-size:13.5px}.ht th{padding:8px 12px;text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);background:var(--bg2);white-space:nowrap}.ht td{padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}.ht tr:last-child td{border-bottom:none}.ht tr:hover td{background:rgba(255,255,255,.02)}.ht .nr{text-align:right}
+.tw{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto;-webkit-overflow-scrolling:touch}.ht{width:100%;border-collapse:collapse;font-size:13.5px}.ht th{padding:8px 12px;text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);background:var(--bg2);white-space:nowrap}.ht td{padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}.ht tr:last-child td{border-bottom:none}.ht tr:hover td{background:rgba(255,255,255,.02)}.ht .nr{text-align:right}
 .tp{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:600}.pa{background:rgba(74,222,128,.1);color:var(--green)}.pc{background:rgba(125,207,255,.1);color:var(--usd)}.pb{background:rgba(212,175,55,.1);color:var(--gold)}.pf{background:rgba(247,168,62,.1);color:#f7a83e}.pl{background:rgba(212,175,55,.08);color:var(--gold)}.pk{background:rgba(247,168,62,.1);color:#f7a83e}.pon{background:rgba(168,85,247,.12);color:#c98bff}
 .bkdots{display:flex;gap:4px;align-items:center}.bkdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .up{color:var(--green);font-weight:600}.dn{color:var(--red);font-weight:600}
@@ -559,9 +572,9 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <button class="theme-tgl" onclick="document.getElementById('kbd-modal').classList.add('on')" title="Ver atajos de teclado (?)" style="padding:5px 9px">⌨️</button>
     <button class="theme-tgl" onclick="logout()" title="Cerrar sesión" style="padding:5px 9px">🚪</button>
     <div class="ccyg">
-      <button class="ccy on" data-c="ars" onclick="setCcy('ars')">ARS</button>
-      <button class="ccy" data-c="mep" onclick="setCcy('mep')">MEP</button>
-      <button class="ccy" data-c="ccl" onclick="setCcy('ccl')">CCL</button>
+      <button class="ccy on" data-c="ars" onclick="setCcy('ars')" title="Ver tu cartera en pesos argentinos">ARS</button>
+      <button class="ccy" data-c="mep" onclick="setCcy('mep')" title="Dólar MEP: el dólar que se compra legalmente en la bolsa con bonos. Ver tu cartera valuada en estos dólares.">MEP</button>
+      <button class="ccy" data-c="ccl" onclick="setCcy('ccl')" title="Dólar CCL (Contado con Liquidación): el dólar para girar fondos al exterior vía bonos o CEDEARs. Ver tu cartera valuada en estos dólares.">CCL</button>
     </div>
   </div>
 </header>
@@ -570,7 +583,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 <!-- CARTERA -->
 <div class="cont view on" id="v-d">
   <div class="sg">
-    <div class="sc hi"><div class="sc-l">Valor total</div><div class="sc-v mono" id="t-tot">$0</div><div class="sc-s" id="t-sub">Importá un PDF para empezar</div></div>
+    <div class="sc hi"><div class="sc-l">Valor total</div><div class="sc-v mono" id="t-tot">$0</div><div class="sc-s" id="t-sub">Importá el Excel de tu broker</div></div>
     <div class="sc"><div class="sc-l">En MEP</div><div class="sc-v mono" id="t-mep" style="font-size:22px;color:var(--usd)">—</div><div class="sc-s" id="t-mep-r"></div></div>
     <div class="sc" id="sc-gan"><div class="sc-l">Variación de hoy</div><div class="sc-v mono" id="t-gan" style="font-size:22px">—</div><div class="sc-s" id="t-gan-pct">Movimiento del día</div></div>
     <div class="sc"><div class="sc-l">Posiciones</div><div class="sc-v" id="t-cnt" style="font-size:34px">0</div><div class="sc-s" id="t-brk">—</div></div>
@@ -647,7 +660,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 <div class="cont view" id="v-an">
   <div style="margin-bottom:20px">
     <h2 style="font-family:'Montserrat',sans-serif;font-size:22px;margin-bottom:6px">📡 Análisis técnico de tu cartera</h2>
-    <p style="color:var(--muted);font-size:14.5px">El criterio QQcross de EstrategiasLB aplicado a tus papeles, adaptado a tu perfil de inversor.</p>
+    <p style="color:var(--muted);font-size:14.5px">El criterio <span title="QQcross: el sistema de señales propio de EstrategiasLB. Compara dos promedios del precio — uno rápido (últimos 11 días) y uno lento (últimos 21 días). Cuando el rápido cruza al lento hacia arriba, suele indicar impulso comprador; hacia abajo, impulso vendedor." style="border-bottom:1px dotted var(--muted);cursor:help">QQcross</span> de EstrategiasLB aplicado a tus papeles, adaptado a tu perfil de inversor. <span style="font-size:12.5px;color:var(--muted2)">(Pasá el mouse por los términos punteados para ver qué significan.)</span></p>
   </div>
 
   <!-- PANEL MOMENTO DE MIRAR -->
@@ -667,7 +680,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
         <div class="side-title">📊 Análisis de tu cartera <span id="prof-slot" style="margin-left:auto"></span></div>
         <div id="sig-list"><div class="sig-load">Calculando análisis…</div></div>
         <button class="sig-hist-btn" onclick="openSigHistory()" title="Ver historial de orientaciones pasadas (H)">📋 Ver historial de orientaciones</button>
-        <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce EMA 11 × WMA 21) con contexto de tendencia SMA 200, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
+        <div class="sig-disc"><strong style="color:var(--gold)">Información orientativa — no constituye recomendación de inversión.</strong> Este análisis se genera automáticamente a partir del sistema QQcross (cruce <span title="EMA 11: promedio del precio de los últimos 11 días, que da más peso a los días recientes. Reacciona rápido a los cambios." style="border-bottom:1px dotted var(--muted2);cursor:help">EMA 11</span> × <span title="WMA 21: promedio ponderado del precio de los últimos 21 días. Se mueve más lento y marca la tendencia de fondo." style="border-bottom:1px dotted var(--muted2);cursor:help">WMA 21</span>) con contexto de tendencia <span title="SMA 200: promedio simple de los últimos 200 días (casi un año de rueda). Si el precio está por encima, la tendencia larga es alcista; por debajo, bajista." style="border-bottom:1px dotted var(--muted2);cursor:help">SMA 200</span>, adaptado al perfil de inversor que declaraste. <strong>Toda decisión de compra o venta debe evaluarse con criterio individual y consultarse con el asesor antes de ejecutarse.</strong> EstrategiasLB no garantiza resultados. Asesor Idóneo CNV M.N. 2220.</div>
       </div>
     </div>
   </div>
@@ -703,7 +716,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <div class="avisos-sec-hd"><span class="avisos-sec-ic">🛡️</span><span class="avisos-sec-t">Alertas de riesgo</span><span class="avisos-sec-line"></span></div>
     <!-- ALERTAS DE CONCENTRACIÓN Y ANTI-PÁNICO -->
     <div id="conc-alerts" style="display:none"></div>
-    <div id="sec-riesgo-empty" class="avisos-empty">Tu cartera no tiene alertas de riesgo activas. Buena señal.</div>
+    <div id="sec-riesgo-empty" class="avisos-empty">Tu cartera no tiene alertas de riesgo activas — buena señal. <span style="color:var(--muted2)">Monitoreamos en cada actualización: concentración por papel, concentración por sector, y caídas fuertes de un papel respecto de tu precio de compra. Si algo se dispara, lo vas a ver acá.</span></div>
   </div>
 
   <!-- SECCIÓN: ANÁLISIS FINANCIERO -->
@@ -1061,7 +1074,13 @@ let S={portfolios:[],manual:[],px:{},dolar:{mep:null,ccl:null},ccy:"ars",view:"v
 function load(){try{const d=JSON.parse(localStorage.getItem(CFG.ST)||"{}");S.portfolios=d.portfolios||[];S.manual=d.manual||[];}catch{}try{S.px=JSON.parse(localStorage.getItem(CFG.PST))||{};}catch{}try{S.ppc=JSON.parse(localStorage.getItem(CFG.PPT))||{};}catch{}try{S.fund=JSON.parse(localStorage.getItem(CFG.FT))||{};}catch{}try{S.learned=JSON.parse(localStorage.getItem(CFG.LRN))||{};}catch{}try{S.profile=JSON.parse(localStorage.getItem(CFG.PROF))||null;}catch{}try{S.caucionDismissed=localStorage.getItem(CFG.CAUC)||null;}catch{}try{S.snapshots=JSON.parse(localStorage.getItem(CFG.SNP))||{};}catch{}try{S.bmkCache=JSON.parse(localStorage.getItem(CFG.BMK))||{};}catch{}try{S.onboarded=localStorage.getItem(CFG.ONB)==="1";}catch{}try{S.prefs=JSON.parse(localStorage.getItem(CFG.PREFS))||{};}catch{}try{S.notes=JSON.parse(localStorage.getItem(CFG.NOTES))||{};}catch{}try{S.sigHistory=JSON.parse(localStorage.getItem(CFG.SIGHIST))||[];}catch{}
 // aplicar prefs guardadas
 if(S.prefs.histPeriod)S.histPeriod=S.prefs.histPeriod;
-if(S.prefs.bTab)S.bTab=S.prefs.bTab;
+if(S.prefs.bTab){
+  // Validar que el broker guardado siga existiendo — si no, volver a "todos".
+  // (Evita que la app arranque en $0/Sin datos por una solapa de un broker borrado.)
+  const validos=["todos",...S.portfolios.map(p=>p.broker)];
+  if(S.manual.length)validos.push("manual");
+  S.bTab=validos.includes(S.prefs.bTab)?S.prefs.bTab:"todos";
+}
 if(S.prefs.ccy)S.ccy=S.prefs.ccy;}
 function saveProfile(){if(S.profile)localStorage.setItem(CFG.PROF,JSON.stringify(S.profile));else localStorage.removeItem(CFG.PROF);}
 function saveCaucion(){if(S.caucionDismissed)localStorage.setItem(CFG.CAUC,S.caucionDismissed);}
@@ -1328,7 +1347,7 @@ function renderD(){
   document.getElementById("t-mep-r").textContent=S.dolar.mep?"MEP $"+S.dolar.mep.toLocaleString("es-AR",{maximumFractionDigits:2}):"";
   document.getElementById("t-cnt").textContent=hs.length;
   document.getElementById("t-brk").textContent=bks.length?bks.join(", "):"Sin posiciones";
-  document.getElementById("t-sub").textContent=hs.length?hs.length+" posiciones · "+bks.length+" broker"+(bks.length!==1?"s":""):"Importá un PDF para empezar";
+  document.getElementById("t-sub").textContent=hs.length?hs.length+" posiciones · "+bks.length+" broker"+(bks.length!==1?"s":""):"Importá el Excel de tu broker";
   const ganEl=document.getElementById("t-gan"),ganPctEl=document.getElementById("t-gan-pct"),scGan=document.getElementById("sc-gan");
   if(conCh>0&&varPct!=null){
     const cls=varARS>=0?"up":"dn";
@@ -1346,7 +1365,8 @@ function renderD(){
 }
 function renderBrokerTabs(bks){
   const cont=document.getElementById("broker-tabs");
-  const tabs=[{id:"todos",lbl:"Todos",clr:"#e6edf5"},...bks.map(b=>({id:b,lbl:cap(b),clr:BC[b]||"#D4AF37"}))];
+  const BNOM={balanz:"Balanz",iol:"Invertir Online",cocos:"Cocos Capital",bull:"Bull Market",manual:"Carga manual"};
+  const tabs=[{id:"todos",lbl:"Todos",clr:"#e6edf5"},...bks.map(b=>({id:b,lbl:BNOM[b]||cap(b),clr:BC[b]||"#D4AF37"}))];
   cont.innerHTML=tabs.map(t=>`<button class="btab ${S.bTab===t.id?"on":""}" onclick="setBTab('${t.id}')"><span class="btab-dot" style="background:${t.clr}"></span>${t.lbl}</button>`).join("");
 }
 function setBTab(b){S.bTab=b;setPref("bTab",b);renderD();}
@@ -1416,10 +1436,11 @@ function renderTable(hs){
   const filtered=totalPre-hs.length;
   if(info){info.textContent=filtered>0?`Mostrando ${hs.length} de ${totalPre} · ${filtered} filtrados`:`${totalPre} ${totalPre===1?"posición":"posiciones"}`;}
   const bkColH=isTodos?'<th class="col-hide-md">Brokers</th>':"";
-  head.innerHTML=`<tr>${thSort("ticker","Ticker")}<th class="col-hide-md">Nombre</th>${thSort("tipo","Tipo","col-hide-sm")}${bkColH}${thSort("cant","Cantidad","nr col-hide-sm")}${thSort("peso","Peso","nr")}<th class="col-hide">PPC ✎</th>${thSort("precio","Precio actual","nr col-hide")}${thSort("valor","Valor","nr")}${thSort("resultado","Resultado","nr")}${thSort("pct","%","nr col-hide-sm")}<th class="col-hide">Recomendación</th><th style="width:32px"></th></tr>`;
+  head.innerHTML=`<tr>${thSort("ticker","Ticker")}<th class="col-hide-md">Nombre</th>${thSort("tipo","Tipo","col-hide-sm")}${bkColH}${thSort("cant","Cantidad","nr col-hide-sm")}${thSort("peso","Peso","nr")}<th class="col-hide" title="PPC: Precio Promedio de Compra. Es el precio al que compraste el papel (promediando si compraste varias veces). Sirve para calcular tu ganancia o pérdida real." style="cursor:help">PPC ✎</th>${thSort("precio","Precio actual","nr col-hide")}${thSort("valor","Valor","nr")}${thSort("resultado","Resultado","nr")}${thSort("pct","%","nr col-hide-sm")}<th class="col-hide">Recomendación</th><th style="width:32px"></th></tr>`;
   if(!hs.length){
     if(totalPre>0){body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">🔍</div><div class="be-txt">Sin resultados</div><div class="be-sub">Ningún ticker coincide con "${(document.getElementById("ttbl-search")?.value||"").trim()}"</div></td></tr>`;return;}
-    body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste tu cartera":"No hay posiciones de "+cap(S.bTab)}</div><div class="be-sub">Importá el Excel de tu broker</div><button class="bimp-lg" onclick="openImp()">📊 Importar Excel</button></td></tr>`;return;
+    const BNOM={balanz:"Balanz",iol:"Invertir Online",cocos:"Cocos Capital",bull:"Bull Market",manual:"carga manual"};
+    body.innerHTML=`<tr class="er"><td colspan="12"><div class="be-icon">📂</div><div class="be-txt">${S.bTab==="todos"?"Todavía no importaste tu cartera":"No hay posiciones de "+(BNOM[S.bTab]||cap(S.bTab))}</div><div class="be-sub">Podés importar el Excel de Balanz, Invertir Online, Cocos Capital o Bull Market</div><button class="bimp-lg" onclick="openImp()">📊 Importar Excel</button></td></tr>`;return;
   }
   body.innerHTML=hs.map((h,idx)=>{
     const tCls=TPC[h.tipo||"accion"]||"pa";
@@ -1960,7 +1981,7 @@ let snkT;function snk(msg){const el=document.getElementById("snk");el.textConten
 // ── ÍNDICES & MERCADOS GLOBALES ──
 const IDX_DEF=[
   {sym:"^MERV",name:"MERVAL",src:"yahoo"},
-  {sym:"SPY",name:"S&P 500",src:"yahoo"},
+  {sym:"^GSPC",name:"S&P 500",src:"yahoo"},
   {sym:"^DJI",name:"Dow Jones",src:"yahoo"},
   {sym:"GC=F",name:"Oro",src:"yahoo"},
   {sym:"CL=F",name:"Petróleo",src:"yahoo"},
@@ -2013,6 +2034,24 @@ async function renderIndices(){
 // EMA 11 × WMA 21 (cruce operativo) + SMA 200 (contexto de tendencia)
 // Recomendaciones adaptadas al perfil declarado por el usuario
 // ═══════════════════════════════════════════════════════════
+// Sanea una serie de cierres: los CEDEARs sufren ajustes de ratio que generan
+// saltos artificiales (>35% en un día). Detectamos el salto y reescalamos el tramo
+// anterior para que la serie quede continua (como un ajuste por split).
+function sanitizeCloses(closes){
+  if(!closes||closes.length<2)return closes;
+  const out=closes.slice();
+  for(let i=1;i<out.length;i++){
+    const prev=out[i-1],cur=out[i];
+    if(prev>0&&cur>0){
+      const ratio=cur/prev;
+      if(ratio<0.65||ratio>1.55){ // salto >35-55% en un día = ajuste de ratio, no mercado
+        // reescalar todo el tramo anterior para empalmar
+        for(let k=0;k<i;k++)out[k]*=ratio;
+      }
+    }
+  }
+  return out;
+}
 async function fetchHistory(ticker){
   // Histórico de CEDEARs/acciones desde data912
   const isCedear=DB[ticker]?.t==="cedear";
@@ -2024,7 +2063,7 @@ async function fetchHistory(ticker){
     if(!Array.isArray(j)||j.length<22)return null;
     // tomar cierres ordenados por fecha
     const closes=j.map(d=>d.close||d.c||d.adjclose||0).filter(x=>x>0);
-    return closes.length>=22?closes:null;
+    return closes.length>=22?sanitizeCloses(closes):null;
   }catch{return null;}
 }
 function sma(arr,n){if(arr.length<n)return null;const slice=arr.slice(-n);return slice.reduce((a,b)=>a+b,0)/n;}
@@ -2397,9 +2436,24 @@ function saveSnapshot(){
   }
 }
 
+// Variante de sanitizeCloses para series de objetos {fecha, close}
+function sanitizeSerie(serie,key){
+  if(!serie||serie.length<2)return serie;
+  const out=serie.map(p=>({...p}));
+  for(let i=1;i<out.length;i++){
+    const prev=out[i-1][key],cur=out[i][key];
+    if(prev>0&&cur>0){
+      const ratio=cur/prev;
+      if(ratio<0.65||ratio>1.55){
+        for(let k=0;k<i;k++)out[k][key]*=ratio;
+      }
+    }
+  }
+  return out;
+}
 // Traer histórico de SPY desde data912 (CEDEARs)
 async function getSPYHistory(){
-  const cacheKey="SPY_"+todayStr();
+  const cacheKey="SPYv2_"+todayStr(); // v2: serie saneada de ajustes de ratio
   if(S.bmkCache[cacheKey])return S.bmkCache[cacheKey];
   try{
     const r=await fetch("https://data912.com/historical/cedears/SPY",{signal:AbortSignal.timeout?AbortSignal.timeout(10000):undefined});
@@ -2407,7 +2461,8 @@ async function getSPYHistory(){
     const j=await r.json();
     if(!Array.isArray(j)||!j.length)return null;
     // Formato: array de {date, close, ...}. Ordenar por fecha, tomar cierres
-    const sorted=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    let sorted=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+    sorted=sanitizeSerie(sorted,"close"); // corregir saltos por ajuste de ratio del CEDEAR
     S.bmkCache={};S.bmkCache[cacheKey]=sorted; // Solo guardar el actual, no acumular
     saveBmkCache();
     return sorted;
@@ -2436,7 +2491,8 @@ async function reconstructPortfolioHistory(days){
       if(!r.ok)return {ticker:t.ticker,cant:t.cant,serie:null};
       const j=await r.json();
       if(!Array.isArray(j))return {ticker:t.ticker,cant:t.cant,serie:null};
-      const serie=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+      let serie=j.map(d=>({fecha:(d.date||d.datetime||"").slice(0,10),close:d.close||d.c||d.adjclose||0})).filter(d=>d.fecha&&d.close>0).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+      serie=sanitizeSerie(serie,"close"); // corregir saltos por ajuste de ratio
       return {ticker:t.ticker,cant:t.cant,serie};
     }catch{return {ticker:t.ticker,cant:t.cant,serie:null};}
   }));
@@ -2973,11 +3029,19 @@ function monthlyReturnFromSnapshots(month){
   // month: "YYYY-MM"
   const snaps=Object.values(S.snapshots).filter(s=>s.fecha&&s.fecha.startsWith(month)).sort((a,b)=>a.fecha.localeCompare(b.fecha));
   if(snaps.length<2)return null;
-  const start=snaps[0].valorARS,end=snaps[snaps.length-1].valorARS;
-  if(!start||!end||start<=0)return null;
-  // Si la fecha del primero y el último son la misma, no hay variación real
   if(snaps[0].fecha===snaps[snaps.length-1].fecha)return null;
-  return((end-start)/start)*100;
+  // Encadenar variaciones día a día, DESCARTANDO saltos por recomposición de cartera
+  // (importar otra cartera o borrarla genera saltos de ±30%+ que no son rendimiento).
+  let acc=1,validos=0;
+  for(let i=1;i<snaps.length;i++){
+    const a=snaps[i-1].valorARS,b=snaps[i].valorARS;
+    if(!a||!b||a<=0||b<=0)continue;
+    const r=b/a;
+    if(r<0.75||r>1.35)continue; // salto de ±25-35% en un día = cambio de cartera, no mercado
+    acc*=r;validos++;
+  }
+  if(!validos)return null;
+  return (acc-1)*100;
 }
 async function renderMonthlyComparison(){
   const slot=document.getElementById("month-comp-slot");
@@ -3064,26 +3128,19 @@ async function renderMonthlyComparison(){
 // ── RONDA 3.4: CONTEXTO DE MERCADO (VIX + Merval + interpretación) ──
 // ═══════════════════════════════════════════════════════════
 async function getVIX(){
-  // Yahoo Finance a través de una URL alternativa que funciona sin CORS
   const cacheKey="vix_"+todayStr();
   try{
     const cached=JSON.parse(localStorage.getItem(CFG.MCTX)||"{}");
     if(cached[cacheKey])return cached[cacheKey];
   }catch{}
   try{
-    // usamos data912 que tiene índice VIX si está disponible; caso contrario intento con yahoo query
-    const r=await fetchRobust("https://query1.finance.yahoo.com/v8/finance/chart/^VIX?interval=1d&range=5d",{timeout:8000,retries:1});
-    const j=await r.json();
-    const result=j?.chart?.result?.[0];
-    if(!result)return null;
-    const closes=result.indicators?.quote?.[0]?.close?.filter(x=>x!=null)||[];
-    if(!closes.length)return null;
-    const current=closes[closes.length-1];
-    const prev=closes.length>=2?closes[closes.length-2]:current;
-    const data={value:current,change:((current-prev)/prev)*100};
+    // Yahoo bloquea CORS directo: usamos fetchYahoo, que ya prueba 4 proxies CORS
+    const y=await fetchYahoo("^VIX");
+    if(!y||y.price==null)return null;
+    const data={value:y.price,change:y.ch||0};
     try{const c=JSON.parse(localStorage.getItem(CFG.MCTX)||"{}");c[cacheKey]=data;localStorage.setItem(CFG.MCTX,JSON.stringify(c));}catch{}
     return data;
-  }catch(e){console.warn("VIX",e);return null;}
+  }catch(e){console.warn("VIX no disponible",e);return null;}
 }
 async function renderMarketContext(){
   const slot=document.getElementById("mctx-slot");
@@ -3108,6 +3165,9 @@ async function renderMarketContext(){
   const items=[];
   if(vix){
     items.push(`<div class="mctx-i"><div class="mctx-il">VIX</div><div class="mctx-iv">${vix.value.toFixed(1)}</div><div class="mctx-is">${vix.change>=0?"+":""}${vix.change.toFixed(1)}% vs ayer</div></div>`);
+  }else{
+    // La fuente externa falló: informarlo en vez de omitir el dato en silencio
+    items.push(`<div class="mctx-i"><div class="mctx-il">VIX</div><div class="mctx-iv" style="color:var(--muted2);font-size:14px">no disponible</div><div class="mctx-is">reintentá con 🔄</div></div>`);
   }
   if(brecha!=null){
     items.push(`<div class="mctx-i"><div class="mctx-il">Brecha CCL/MEP</div><div class="mctx-iv">${brecha.toFixed(1)}%</div><div class="mctx-is">${brecha<3?"comprimida":brecha<8?"normal":"amplia"}</div></div>`);

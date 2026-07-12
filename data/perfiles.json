@@ -1,0 +1,45 @@
+{
+  "_nota": "Base del Clasificador de Perfiles de EstrategiasUNE. Reemplazá/ampliá estos activos con tu analisis exportado desde Google Sheets. Campos: ticker, nombre, tipo, perfil (conservador|moderado|agresivo), justificacion, ratios[{k,v}]. Los valores marcados con * son ilustrativos: cambialos por tus numeros reales.",
+  "actualizado": "2026-07",
+  "activos": [
+    {
+      "ticker": "YMCXO",
+      "nombre": "ON YPF 2029 (USD)",
+      "tipo": "Obligación Negociable · Hard dollar",
+      "perfil": "conservador",
+      "justificacion": "Deuda corporativa senior en dólares, de duración corta y emisor de gran porte. Al ser renta fija con vencimiento cercano, la sensibilidad del precio a la tasa es baja y el flujo de fondos es predecible. Ejemplo de activo pensado para preservar capital antes que para maximizar retorno.",
+      "ratios": [
+        { "k": "Duration", "v": "~2,5 años" },
+        { "k": "Moneda", "v": "USD" },
+        { "k": "Deuda/EBITDA", "v": "< 2x*" },
+        { "k": "Volatilidad", "v": "Baja" }
+      ]
+    },
+    {
+      "ticker": "GGAL",
+      "nombre": "Grupo Financiero Galicia",
+      "tipo": "Acción líder · Merval",
+      "perfil": "moderado",
+      "justificacion": "Acción de una compañía líder y de alta liquidez del panel Merval. Ofrece potencial de apreciación de capital, pero con la volatilidad propia de la renta variable argentina y su exposición al ciclo económico y regulatorio local. Equilibra crecimiento y riesgo.",
+      "ratios": [
+        { "k": "Clase", "v": "Renta variable" },
+        { "k": "Liquidez", "v": "Alta" },
+        { "k": "Beta (Merval)", "v": "~1,1*" },
+        { "k": "Volatilidad", "v": "Media-alta" }
+      ]
+    },
+    {
+      "ticker": "BTC",
+      "nombre": "Bitcoin",
+      "tipo": "Criptoactivo",
+      "perfil": "agresivo",
+      "justificacion": "Activo de altísima volatilidad, sin flujo de fondos ni respaldo de balance, cuyo precio responde a oferta/demanda y apetito de riesgo global. Puede tener movimientos de dos dígitos en pocos días, en ambas direcciones. Apto solo para una porción menor de la cartera y para perfiles que asumen pérdidas significativas.",
+      "ratios": [
+        { "k": "Clase", "v": "Cripto" },
+        { "k": "Volatilidad", "v": "Muy alta" },
+        { "k": "Drawdown hist.", "v": "> 60%*" },
+        { "k": "Flujo de fondos", "v": "No" }
+      ]
+    }
+  ]
+}

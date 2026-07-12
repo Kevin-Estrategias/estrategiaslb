@@ -6,5 +6,13 @@
   {
     "nombre": "KEVIN",
     "hash": "311bee20753a77282c43400cd2e7b3eaf1c14c769cb5c640c4fbb7d57ae081d0"
+  },
+  {
+    "nombre": "ADMIN",
+    "hash": "dcc1956115d875a2c33ecd70f920016ddcd207d1b0c7b58eba1c0c9e2d49feb6"
+  },
+  {
+    "nombre": "PILOTO",
+    "hash": "c96fbce13f9436f1ce7242f760c4696b331283a37504b1e1e0b69917d73a4793"
   }
 ]

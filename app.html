@@ -670,6 +670,49 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
   .sb-reopen svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
 }
 
+
+/* ═══ Clasificador de perfiles ═══ */
+.clf-search-wrap{position:relative;max-width:620px;margin-bottom:6px}
+.clf-search{width:100%;background:var(--bg2);border:1.5px solid var(--line2);border-radius:12px;padding:15px 18px 15px 46px;color:var(--txt);font-size:16px;font-family:"Montserrat",sans-serif}
+.clf-search:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(61,212,200,.12)}
+.clf-search-ic{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted2);pointer-events:none}
+.clf-search-ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.clf-drop{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;max-height:340px;overflow-y:auto;z-index:30;box-shadow:0 20px 50px rgba(0,0,0,.5);display:none}
+.clf-drop.show{display:block}
+.clf-opt{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--line);transition:.12s}
+.clf-opt:last-child{border-bottom:none}
+.clf-opt:hover{background:rgba(61,212,200,.08)}
+.clf-opt .tk{font-weight:800;font-size:14px;min-width:66px;font-family:"JetBrains Mono",monospace}
+.clf-opt .nm{font-size:13.5px;color:var(--muted);flex:1}
+.clf-opt .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.clf-opt .dot.conservador{background:#12b886}.clf-opt .dot.moderado{background:#D4AF37}.clf-opt .dot.agresivo{background:#f1665a}
+.clf-empty{padding:16px;color:var(--muted);font-size:13.5px;text-align:center}
+.clf-card{margin-top:22px;border-radius:18px;overflow:hidden;border:1px solid var(--line2);display:none;animation:clfIn .35s ease}
+.clf-card.show{display:block}
+@keyframes clfIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.clf-band{padding:26px 28px;position:relative}
+.clf-band.conservador{background:linear-gradient(135deg,rgba(18,184,134,.18),rgba(13,26,48,.4));border-bottom:3px solid #12b886}
+.clf-band.moderado{background:linear-gradient(135deg,rgba(212,175,55,.18),rgba(13,26,48,.4));border-bottom:3px solid #D4AF37}
+.clf-band.agresivo{background:linear-gradient(135deg,rgba(241,102,90,.2),rgba(13,26,48,.4));border-bottom:3px solid #f1665a}
+.clf-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 15px;border-radius:30px;margin-bottom:14px}
+.clf-badge.conservador{background:rgba(18,184,134,.16);color:#22d3a5;border:1.5px solid rgba(18,184,134,.45)}
+.clf-badge.moderado{background:rgba(212,175,55,.16);color:#e6c04a;border:1.5px solid rgba(212,175,55,.45)}
+.clf-badge.agresivo{background:rgba(241,102,90,.16);color:#ff8a7d;border:1.5px solid rgba(241,102,90,.45)}
+.clf-band .asset-nm{font-family:"Montserrat",sans-serif;font-size:26px;font-weight:800;line-height:1.15}
+.clf-band .asset-meta{font-size:13.5px;color:var(--muted);margin-top:4px}
+.clf-band .asset-meta b{color:var(--txt);font-family:"JetBrains Mono",monospace}
+.clf-body{padding:24px 28px;background:var(--panel)}
+.clf-body h4{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:10px}
+.clf-just{font-size:15px;line-height:1.6;color:var(--txt)}
+.clf-ratios{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.clf-ratio{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 13px;min-width:120px}
+.clf-ratio .k{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted2)}
+.clf-ratio .v{font-size:15px;font-weight:800;font-family:"JetBrains Mono",monospace;margin-top:2px}
+.clf-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--muted)}
+.clf-legend span{display:inline-flex;align-items:center;gap:6px}
+.clf-legend i{width:10px;height:10px;border-radius:50%}
+.clf-disc{font-size:11.5px;color:var(--muted2);margin-top:18px;line-height:1.5;border-top:1px solid var(--line);padding-top:14px}
+
 </style>
 </head>
 <body>
@@ -737,6 +780,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
       <div class="sb-gt">Herramientas</div>
       <button class="sb-it" data-v="v-tools" onclick="goV('v-tools')"><span class="sb-ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 12h.01M12 12h.01M15 12h.01M9 16h.01M12 16h.01M15 16h.01"/></svg></span>Calculadoras</button>
       <button class="sb-it" data-v="v-flujo" onclick="goV('v-flujo')"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M4 17c3 0 3-10 6-10s3 10 6 10 3-10 6-10" transform="scale(.8) translate(2 3)"/></svg></span>Simulador de flujo</button>
+      <button class="sb-it" data-v="v-clf" onclick="goV('v-clf')"><span class="sb-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>Clasificador de perfiles</button>
     </div>
   </nav>
   <div class="sb-foot">
@@ -923,6 +967,36 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 </div>
 
 <!-- ═══════════ SIMULADOR DE FLUJO ═══════════ -->
+
+<!-- ═══════════ CLASIFICADOR DE PERFILES ═══════════ -->
+<div class="cont view" id="v-clf">
+  <div class="pv-head"><h2>🛡️ Clasificador de perfiles de inversión</h2><p>Buscá una empresa o ticker (ON, bono, acción del Merval, ETF o cripto) y te decimos en qué perfil de riesgo encaja, con la justificación técnica del análisis de EstrategiasLB.</p></div>
+  <div class="clf-search-wrap">
+    <span class="clf-search-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+    <input class="clf-search" id="clf-q" placeholder="Buscá por nombre o ticker… (ej: Pampa, AL30, BTC)" autocomplete="off" oninput="clfFilter()" onfocus="clfFilter()">
+    <div class="clf-drop" id="clf-drop"></div>
+  </div>
+  <div class="clf-legend">
+    <span><i style="background:#12b886"></i>Conservador · Bajo riesgo</span>
+    <span><i style="background:#D4AF37"></i>Moderado</span>
+    <span><i style="background:#f1665a"></i>Perfil agresivo · Alto riesgo</span>
+  </div>
+
+  <div class="clf-card" id="clf-card">
+    <div class="clf-band" id="clf-band">
+      <span class="clf-badge" id="clf-badge"></span>
+      <div class="asset-nm" id="clf-nm"></div>
+      <div class="asset-meta" id="clf-meta"></div>
+    </div>
+    <div class="clf-body">
+      <h4>Justificación</h4>
+      <div class="clf-just" id="clf-just"></div>
+      <div class="clf-ratios" id="clf-ratios"></div>
+      <div class="clf-disc">La clasificación refleja el análisis fundamental de EstrategiasLB y es de carácter informativo. No constituye una recomendación de compra o venta. Toda inversión conlleva riesgos.</div>
+    </div>
+  </div>
+</div>
+
 <div class="cont view" id="v-flujo">
   <div class="pv-head"><h2>💰 Simulador de flujo de fondos</h2><p>Cargá tus instrumentos (capital + tasa anual + frecuencia de pago) y armamos el flujo estimado de los próximos 12 meses.</p></div>
   <div class="hcard">
@@ -1785,7 +1859,7 @@ function getBrokerH(broker){
   }).sort((a,b)=>(b.valorARS||0)-(a.valorARS||0));
 }
 function getActiveBrokers(){const bs=new Set(S.portfolios.map(p=>p.broker));if(S.manual.length)bs.add("manual");return Array.from(bs);}
-const VTITLES={"v-home":"Inicio","v-d":"Mi cartera","v-an":"Análisis","v-av":"Avisos","v-a":"Agregar / Importar","v-div":"Dividendos","v-c":"Calculadora CCL","v-rv":"Monitor de renta variable","v-rf":"Monitor de renta fija","v-macro":"Panorama macro","v-sug":"Carteras sugeridas","v-tools":"Calculadoras","v-flujo":"Simulador de flujo"};
+const VTITLES={"v-home":"Inicio","v-d":"Mi cartera","v-an":"Análisis","v-av":"Avisos","v-a":"Agregar / Importar","v-div":"Dividendos","v-c":"Calculadora CCL","v-rv":"Monitor de renta variable","v-rf":"Monitor de renta fija","v-macro":"Panorama macro","v-sug":"Carteras sugeridas","v-tools":"Calculadoras","v-flujo":"Simulador de flujo","v-clf":"Clasificador de perfiles"};
 function goV(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));document.getElementById(id)?.classList.add("on");
 document.querySelectorAll(".sb-it").forEach(t=>t.classList.toggle("on",t.getAttribute("data-v")===id));
 const pt=document.getElementById("pg-title");if(pt)pt.textContent=VTITLES[id]||"";
@@ -1802,6 +1876,7 @@ if(id==="v-rf")loadRF();
 if(id==="v-macro")loadMacro();
 if(id==="v-tools")initTools();
 if(id==="v-flujo")renderFlujo();
+if(id==="v-clf")loadPerfiles();
 window.scrollTo({top:0});}
 function sbToggle(){document.getElementById("sb").classList.toggle("open");document.getElementById("sb-ov").classList.toggle("on");}
 function sbClose(){document.getElementById("sb").classList.remove("open");document.getElementById("sb-ov").classList.remove("on");}
@@ -4546,6 +4621,68 @@ async function loadLiveLecapRate(){
   }catch(e){/* si falla, se queda el valor manual */}
 }
 function initTools(){calcCau();calcLec();calcIC();loadLiveLecapRate();}
+
+/* ═══════════ CLASIFICADOR DE PERFILES ═══════════ */
+const CLF={data:null,loaded:false};
+const CLF_SAMPLE={activos:[
+  {ticker:"YMCXO",nombre:"ON YPF 2029 (USD)",tipo:"Obligación Negociable · Hard dollar",perfil:"conservador",
+   justificacion:"Deuda corporativa senior en dólares, de duración corta y emisor de gran porte. Al ser un instrumento de renta fija con vencimiento cercano, la sensibilidad del precio a la tasa es baja y el flujo de fondos es predecible. Es un ejemplo de activo pensado para preservar capital antes que para maximizar retorno.",
+   ratios:[{k:"Duration",v:"~2,5 años"},{k:"Moneda",v:"USD"},{k:"Deuda/EBITDA",v:"< 2x*"},{k:"Volatilidad",v:"Baja"}]},
+  {ticker:"GGAL",nombre:"Grupo Financiero Galicia",tipo:"Acción líder · Merval",perfil:"moderado",
+   justificacion:"Acción de una compañía líder y de alta liquidez dentro del panel Merval. Ofrece potencial de apreciación de capital, pero con la volatilidad propia de la renta variable argentina y su exposición al ciclo económico y regulatorio local. Equilibra crecimiento y riesgo: apta para quien tolera oscilaciones a cambio de mayor retorno esperado.",
+   ratios:[{k:"Clase",v:"Renta variable"},{k:"Liquidez",v:"Alta"},{k:"Beta (Merval)",v:"~1,1*"},{k:"Volatilidad",v:"Media-alta"}]},
+  {ticker:"BTC",nombre:"Bitcoin",tipo:"Criptoactivo",perfil:"agresivo",
+   justificacion:"Activo de altísima volatilidad, sin flujo de fondos ni respaldo de balance, cuyo precio responde a oferta/demanda y apetito de riesgo global. Puede tener movimientos de dos dígitos en pocos días, en ambas direcciones. Solo apto para una porción menor de la cartera y para perfiles que asumen la posibilidad de pérdidas significativas.",
+   ratios:[{k:"Clase",v:"Cripto"},{k:"Volatilidad",v:"Muy alta"},{k:"Drawdown hist.",v:"> 60%*"},{k:"Flujo de fondos",v:"No"}]}
+]};
+const CLF_LABELS={conservador:"Conservador · Bajo riesgo",moderado:"Moderado",agresivo:"Perfil agresivo · Alto riesgo"};
+
+async function loadPerfiles(){
+  if(!CLF.loaded){
+    try{
+      const sig=AbortSignal.timeout?AbortSignal.timeout(9000):undefined;
+      const r=await fetch("./data/perfiles.json",{signal:sig,cache:"no-store"});
+      if(r.ok){const d=await r.json();if(d&&Array.isArray(d.activos)&&d.activos.length)CLF.data=d;}
+    }catch(e){}
+    if(!CLF.data)CLF.data=CLF_SAMPLE;
+    CLF.loaded=true;
+  }
+}
+function clfNorm(s){return (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function clfFilter(){
+  const q=clfNorm(document.getElementById("clf-q").value.trim());
+  const drop=document.getElementById("clf-drop");
+  const list=(CLF.data&&CLF.data.activos)||[];
+  if(!q){drop.classList.remove("show");drop.innerHTML="";return;}
+  const res=list.filter(a=>clfNorm(a.ticker).includes(q)||clfNorm(a.nombre).includes(q)||clfNorm(a.tipo).includes(q)).slice(0,12);
+  if(!res.length){drop.innerHTML='<div class="clf-empty">Sin resultados. Probá con otro nombre o ticker.</div>';drop.classList.add("show");return;}
+  drop.innerHTML=res.map(a=>{
+    const idx=list.indexOf(a);
+    return '<div class="clf-opt" onclick="clfSelect('+idx+')"><span class="dot '+a.perfil+'"></span><span class="tk">'+a.ticker+'</span><span class="nm">'+a.nombre+'</span></div>';
+  }).join("");
+  drop.classList.add("show");
+}
+function clfSelect(idx){
+  const a=(CLF.data&&CLF.data.activos)?CLF.data.activos[idx]:null;if(!a)return;
+  document.getElementById("clf-drop").classList.remove("show");
+  document.getElementById("clf-q").value=a.nombre;
+  const band=document.getElementById("clf-band"),badge=document.getElementById("clf-badge");
+  band.className="clf-band "+a.perfil;
+  badge.className="clf-badge "+a.perfil;
+  badge.textContent=CLF_LABELS[a.perfil]||a.perfil;
+  document.getElementById("clf-nm").textContent=a.nombre;
+  document.getElementById("clf-meta").innerHTML="<b>"+a.ticker+"</b> · "+(a.tipo||"");
+  document.getElementById("clf-just").textContent=a.justificacion||"";
+  const rt=document.getElementById("clf-ratios");
+  rt.innerHTML=(a.ratios||[]).map(r=>'<div class="clf-ratio"><div class="k">'+r.k+'</div><div class="v">'+r.v+'</div></div>').join("");
+  document.getElementById("clf-card").classList.add("show");
+}
+/* cerrar dropdown al clickear afuera */
+document.addEventListener("click",function(e){
+  const w=document.querySelector(".clf-search-wrap");
+  if(w&&!w.contains(e.target)){const d=document.getElementById("clf-drop");if(d)d.classList.remove("show");}
+});
+
 /* ---------- Simulador de flujo ---------- */
 function flAdd(){
   const n=(document.getElementById("fl-n").value||"").trim();

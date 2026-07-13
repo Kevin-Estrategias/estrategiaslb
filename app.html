@@ -970,7 +970,7 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
 
 <!-- ═══════════ CLASIFICADOR DE PERFILES ═══════════ -->
 <div class="cont view" id="v-clf">
-  <div class="pv-head"><h2>🛡️ Clasificador de perfiles de inversión</h2><p>Buscá una empresa o ticker (ON, bono, acción del Merval, ETF o cripto) y te decimos en qué perfil de riesgo encaja, con la justificación técnica del análisis de EstrategiasLB.</p></div>
+  <div class="pv-head"><h2>🛡️ Clasificador de perfiles de inversión</h2><p>Buscá cualquier ticker del mercado (acciones, CEDEARs, bonos, letras y ONs) y te decimos en qué perfil de riesgo encaja. El universo se arma en vivo con el feed de mercado; los activos marcados con <b style="color:var(--teal)">★ LB</b> llevan el análisis fundamental propio de EstrategiasLB.</p></div>
   <div class="clf-search-wrap">
     <span class="clf-search-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
     <input class="clf-search" id="clf-q" placeholder="Buscá por nombre o ticker… (ej: Pampa, AL30, BTC)" autocomplete="off" oninput="clfFilter()" onfocus="clfFilter()">
@@ -980,6 +980,8 @@ body.theme-light .div-b{background:linear-gradient(135deg,rgba(74,222,128,.09),r
     <span><i style="background:#12b886"></i>Conservador · Bajo riesgo</span>
     <span><i style="background:#D4AF37"></i>Moderado</span>
     <span><i style="background:#f1665a"></i>Perfil agresivo · Alto riesgo</span>
+    <span style="color:var(--teal);font-weight:700">★ LB = análisis EstrategiasLB</span>
+    <span class="clf-cnt" id="clf-count" style="margin-left:auto;color:var(--muted2);font-family:'JetBrains Mono',monospace"></span>
   </div>
 
   <div class="clf-card" id="clf-card">
@@ -4622,62 +4624,175 @@ async function loadLiveLecapRate(){
 }
 function initTools(){calcCau();calcLec();calcIC();loadLiveLecapRate();}
 
-/* ═══════════ CLASIFICADOR DE PERFILES ═══════════ */
-const CLF={data:null,loaded:false};
+/* ═══════════ CLASIFICADOR DE PERFILES (v2 definitivo) ═══════════ */
+const CLF={overrides:null,universe:[],built:false,loaded:false};
 const CLF_SAMPLE={activos:[
   {ticker:"YMCXO",nombre:"ON YPF 2029 (USD)",tipo:"Obligación Negociable · Hard dollar",perfil:"conservador",
-   justificacion:"Deuda corporativa senior en dólares, de duración corta y emisor de gran porte. Al ser un instrumento de renta fija con vencimiento cercano, la sensibilidad del precio a la tasa es baja y el flujo de fondos es predecible. Es un ejemplo de activo pensado para preservar capital antes que para maximizar retorno.",
+   justificacion:"Deuda corporativa senior en dólares, de duración corta y emisor de gran porte. Al ser renta fija con vencimiento cercano, la sensibilidad del precio a la tasa es baja y el flujo de fondos es predecible. Ejemplo de activo pensado para preservar capital.",
    ratios:[{k:"Duration",v:"~2,5 años"},{k:"Moneda",v:"USD"},{k:"Deuda/EBITDA",v:"< 2x*"},{k:"Volatilidad",v:"Baja"}]},
   {ticker:"GGAL",nombre:"Grupo Financiero Galicia",tipo:"Acción líder · Merval",perfil:"moderado",
-   justificacion:"Acción de una compañía líder y de alta liquidez dentro del panel Merval. Ofrece potencial de apreciación de capital, pero con la volatilidad propia de la renta variable argentina y su exposición al ciclo económico y regulatorio local. Equilibra crecimiento y riesgo: apta para quien tolera oscilaciones a cambio de mayor retorno esperado.",
+   justificacion:"Acción de una compañía líder y de alta liquidez del panel Merval. Ofrece potencial de apreciación de capital, con la volatilidad propia de la renta variable argentina y su exposición al ciclo económico y regulatorio local.",
    ratios:[{k:"Clase",v:"Renta variable"},{k:"Liquidez",v:"Alta"},{k:"Beta (Merval)",v:"~1,1*"},{k:"Volatilidad",v:"Media-alta"}]},
   {ticker:"BTC",nombre:"Bitcoin",tipo:"Criptoactivo",perfil:"agresivo",
-   justificacion:"Activo de altísima volatilidad, sin flujo de fondos ni respaldo de balance, cuyo precio responde a oferta/demanda y apetito de riesgo global. Puede tener movimientos de dos dígitos en pocos días, en ambas direcciones. Solo apto para una porción menor de la cartera y para perfiles que asumen la posibilidad de pérdidas significativas.",
+   justificacion:"Activo de altísima volatilidad, sin flujo de fondos ni respaldo de balance. Puede tener movimientos de dos dígitos en pocos días, en ambas direcciones. Apto solo para una porción menor de la cartera.",
    ratios:[{k:"Clase",v:"Cripto"},{k:"Volatilidad",v:"Muy alta"},{k:"Drawdown hist.",v:"> 60%*"},{k:"Flujo de fondos",v:"No"}]}
 ]};
 const CLF_LABELS={conservador:"Conservador · Bajo riesgo",moderado:"Moderado",agresivo:"Perfil agresivo · Alto riesgo"};
+const CLF_CLASS={
+  stocks:{tipo:"Acción · Merval",clase:"Renta variable",vol:"media a alta",base:60},
+  cedears:{tipo:"CEDEAR · Acción extranjera",clase:"Renta variable (CEDEAR)",vol:"media a alta",base:58},
+  bonds:{tipo:"Bono soberano",clase:"Renta fija soberana",vol:"alta",base:52},
+  notes:{tipo:"Letra / Lecap",clase:"Renta fija corta (tasa)",vol:"baja",base:16},
+  corp:{tipo:"Obligación Negociable",clase:"Renta fija corporativa",vol:"baja a media",base:30},
+  cripto:{tipo:"Criptoactivo",clase:"Cripto",vol:"muy alta",base:90}
+};
+/* nombres reales (dato público, mejora UX; no afecta la clasificación) */
+const CLF_NAMES={
+  GGAL:"Grupo Financiero Galicia",YPFD:"YPF",PAMP:"Pampa Energía",BMA:"Banco Macro",ALUA:"Aluar",
+  TXAR:"Ternium Argentina",TGSU2:"Transportadora Gas del Sur",CEPU:"Central Puerto",COME:"Soc. Comercial del Plata",
+  CRES:"Cresud",EDN:"Edenor",LOMA:"Loma Negra",MIRG:"Mirgor",SUPV:"Grupo Supervielle",TRAN:"Transener",
+  VALO:"Grupo Fin. Valores",BYMA:"BYMA",HARG:"Holcim Argentina",IRSA:"IRSA",TECO2:"Telecom Argentina",
+  CVH:"Cablevisión Holding",BBAR:"BBVA Argentina",TGNO4:"Transportadora Gas del Norte",METR:"Metrogas",
+  CADO:"Carlos Casado",AGRO:"Agrometal",SAMI:"San Miguel",LEDE:"Ledesma",MOLI:"Molinos Río de la Plata",
+  MOLA:"Molinos Agro",MORI:"Morixe",FERR:"Ferrum",DGCU2:"Distrib. Gas Cuyana",CGPA2:"Camuzzi Gas Pampeana",
+  INVJ:"Inversora Juramento",GBAN:"Gas Natural Ban",DYCA:"Dycasa",AUSO:"Autopistas del Sol",
+  AAPL:"Apple",MSFT:"Microsoft",AMZN:"Amazon",GOOGL:"Alphabet (Google)",META:"Meta Platforms",
+  NVDA:"Nvidia",TSLA:"Tesla",MELI:"Mercado Libre",KO:"Coca-Cola",DISN:"Disney",BABA:"Alibaba",
+  NFLX:"Netflix",AMD:"AMD",PYPL:"PayPal",WMT:"Walmart",JPM:"JP Morgan",BAC:"Bank of America",
+  XOM:"Exxon Mobil",PBR:"Petrobras",VALE:"Vale",VIST:"Vista Energy",GLOB:"Globant",DESP:"Despegar",
+  BIOX:"Bioceres",SPY:"ETF S&P 500",QQQ:"ETF Nasdaq 100",DIA:"ETF Dow Jones",EEM:"ETF Emergentes",
+  ARKK:"ETF ARK Innovation",GOLD:"Barrick Gold",C:"Citigroup",GE:"General Electric",INTC:"Intel",
+  MSTR:"MicroStrategy",COIN:"Coinbase",TSM:"TSMC",MU:"Micron",F:"Ford",GM:"General Motors",
+  AL30:"Bonar 2030 (USD)",GD30:"Global 2030 (USD)",AL35:"Bonar 2035",GD35:"Global 2035",
+  AE38:"Bonar 2038",GD38:"Global 2038",AL41:"Bonar 2041",GD41:"Global 2041",GD29:"Global 2029",AL29:"Bonar 2029"
+};
+const CLF_CRYPTO=[
+  {ticker:"BTC",nombre:"Bitcoin"},{ticker:"ETH",nombre:"Ethereum"},{ticker:"SOL",nombre:"Solana"},
+  {ticker:"BNB",nombre:"BNB"},{ticker:"XRP",nombre:"XRP"},{ticker:"ADA",nombre:"Cardano"},{ticker:"DOGE",nombre:"Dogecoin"}
+];
 
 async function loadPerfiles(){
+  const drop=document.getElementById("clf-drop");
   if(!CLF.loaded){
     try{
       const sig=AbortSignal.timeout?AbortSignal.timeout(9000):undefined;
       const r=await fetch("./data/perfiles.json",{signal:sig,cache:"no-store"});
-      if(r.ok){const d=await r.json();if(d&&Array.isArray(d.activos)&&d.activos.length)CLF.data=d;}
+      if(r.ok){const d=await r.json();if(d&&Array.isArray(d.activos)&&d.activos.length)CLF.overrides=d;}
     }catch(e){}
-    if(!CLF.data)CLF.data=CLF_SAMPLE;
+    if(!CLF.overrides)CLF.overrides=CLF_SAMPLE;
     CLF.loaded=true;
   }
+  await fetchMktRaw();
+  buildUniverse();
+  const c=document.getElementById("clf-count");
+  if(c)c.textContent=CLF.universe.length?(CLF.universe.length+" activos en la base"):"";
 }
+
+function clfPct(sortedDesc,v){ // percentil aprox (0=menor,1=mayor) sobre volúmenes desc
+  if(!sortedDesc.length||v==null)return 0.5;
+  let i=sortedDesc.findIndex(x=>v>=x); if(i<0)i=sortedDesc.length;
+  return 1-(i/sortedDesc.length);
+}
+function clfScore(cls,ch,liqPct){
+  let s=(CLF_CLASS[cls]?CLF_CLASS[cls].base:50);
+  const av=(ch!=null&&isFinite(ch))?Math.abs(ch):0;
+  s += Math.min(20, av*2.2);                 // volatilidad del día
+  if(cls==="stocks"||cls==="cedears"||cls==="bonds"){
+    s += (0.5-liqPct)*20;                     // más liquidez => menos riesgo (±10)
+  }
+  return Math.max(2,Math.min(100,Math.round(s)));
+}
+function clfProfileFromScore(s){ return s<35?"conservador":(s<=65?"moderado":"agresivo"); }
+function clfLiqLabel(v){ if(v==null)return"s/d"; if(v>=1e9)return"alta"; if(v>=1e8)return"media"; return"baja"; }
+
+function buildUniverse(){
+  const uni=[]; const seen={};
+  (CLF.overrides&&CLF.overrides.activos||[]).forEach(a=>{
+    const tk=(a.ticker||"").toUpperCase(); if(!tk)return; seen[tk]=true;
+    uni.push({ticker:tk,nombre:a.nombre||CLF_NAMES[tk]||tk,tipo:a.tipo||"",perfil:a.perfil||"moderado",justificacion:a.justificacion||"",ratios:a.ratios||[],expert:true,_v:1e12});
+  });
+  ["notes","corp","bonds","stocks","cedears"].forEach(cls=>{
+    const arr=(PJS.mkt[cls]||[]);
+    const volsDesc=arr.map(x=>x.v||0).filter(x=>x>0).sort((a,b)=>b-a);
+    arr.forEach(it=>{
+      const tk=(it.s||"").toUpperCase(); if(!tk||seen[tk])return; seen[tk]=true;
+      const meta=CLF_CLASS[cls]; const ch=it.ch,v=it.v;
+      const liqPct=clfPct(volsDesc,v||0);
+      const score=clfScore(cls,ch,liqPct);
+      const perfil=(cls==="notes")?"conservador":clfProfileFromScore(score);
+      const liq=clfLiqLabel(v);
+      const av=(ch!=null)?Math.abs(ch):0;
+      const volTxt = av>=6? (meta.vol+" (movimiento fuerte hoy)") : meta.vol;
+      let extra="";
+      if(cls==="stocks"||cls==="cedears")extra = liqPct>0.6? " Es un papel líder por volumen, lo que reduce el riesgo de liquidez." : (liqPct<0.3? " Su menor volumen operado agrega riesgo de liquidez." : "");
+      if(cls==="bonds")extra=" En bonos soberanos argentinos, el riesgo principal es de precio (volatilidad y contexto), no de un cupón.";
+      if(cls==="corp")extra=" Como deuda corporativa, su riesgo depende del crédito del emisor; conviene mirar el balance antes de invertir.";
+      if(cls==="notes")extra=" Instrumento de tasa a corto plazo: baja sensibilidad y flujo predecible.";
+      const just="Estimación automática por tipo de activo y comportamiento de mercado. "+meta.clase+", con volatilidad típica "+volTxt+" y liquidez "+liq+(v?(" (volumen ~"+pjVol(v)+")"):"")+"."+extra+" No reemplaza el análisis fundamental.";
+      const ratios=[
+        {k:"Índice de riesgo",v:score+" / 100"},
+        {k:"Clase",v:meta.clase},
+        {k:"Precio",v:(it.p!=null?("$"+pjFmt(it.p,2)):"s/d")},
+        {k:"Var. día",v:(ch!=null?((ch>0?"+":"")+pjFmt(ch,2)+"%"):"s/d")},
+        {k:"Volumen",v:pjVol(v)},
+        {k:"Volatilidad",v:meta.vol}
+      ];
+      uni.push({ticker:tk,nombre:CLF_NAMES[tk]||tk,tipo:meta.tipo,perfil,justificacion:just,ratios,expert:false,_v:v||0,_score:score});
+    });
+  });
+  // cripto majors (fuera de BYMA) si no están como override
+  CLF_CRYPTO.forEach(c=>{ if(seen[c.ticker])return; seen[c.ticker]=true;
+    uni.push({ticker:c.ticker,nombre:c.nombre,tipo:"Criptoactivo",perfil:"agresivo",
+      justificacion:"Estimación automática. Criptoactivo de muy alta volatilidad, sin flujo de fondos ni respaldo de balance; su precio depende de oferta/demanda y del apetito de riesgo global. Apto solo para una porción menor de la cartera y perfiles que asumen pérdidas significativas.",
+      ratios:[{k:"Índice de riesgo",v:"90 / 100"},{k:"Clase",v:"Cripto"},{k:"Volatilidad",v:"Muy alta"},{k:"Flujo de fondos",v:"No"}],
+      expert:false,_v:0,_score:90});
+  });
+  CLF.universe=uni; CLF.built=true;
+}
+
 function clfNorm(s){return (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function clfFilter(){
-  const q=clfNorm(document.getElementById("clf-q").value.trim());
+  const raw=document.getElementById("clf-q").value.trim();
+  const q=clfNorm(raw);
   const drop=document.getElementById("clf-drop");
-  const list=(CLF.data&&CLF.data.activos)||[];
+  const list=CLF.universe||[];
+  if(!list.length){drop.innerHTML='<div class="clf-empty">Cargando universo del mercado… reintentá en unos segundos.</div>';drop.classList.add("show");return;}
   if(!q){drop.classList.remove("show");drop.innerHTML="";return;}
-  const res=list.filter(a=>clfNorm(a.ticker).includes(q)||clfNorm(a.nombre).includes(q)||clfNorm(a.tipo).includes(q)).slice(0,12);
-  if(!res.length){drop.innerHTML='<div class="clf-empty">Sin resultados. Probá con otro nombre o ticker.</div>';drop.classList.add("show");return;}
+  const scored=[];
+  list.forEach(a=>{
+    const tk=clfNorm(a.ticker),nm=clfNorm(a.nombre);
+    let rank=-1;
+    if(tk===q)rank=0; else if(tk.startsWith(q))rank=1; else if(nm.startsWith(q))rank=2;
+    else if(tk.includes(q))rank=3; else if(nm.includes(q)||clfNorm(a.tipo).includes(q))rank=4;
+    if(rank>=0)scored.push({a,rank});
+  });
+  scored.sort((x,y)=> x.rank-y.rank || (y.a.expert-x.a.expert) || ((y.a._v||0)-(x.a._v||0)));
+  const res=scored.slice(0,16).map(s=>s.a);
+  if(!res.length){drop.innerHTML='<div class="clf-empty">Sin resultados. Puede que ese activo no esté en el feed del mercado en este momento.</div>';drop.classList.add("show");return;}
   drop.innerHTML=res.map(a=>{
     const idx=list.indexOf(a);
-    return '<div class="clf-opt" onclick="clfSelect('+idx+')"><span class="dot '+a.perfil+'"></span><span class="tk">'+a.ticker+'</span><span class="nm">'+a.nombre+'</span></div>';
+    const star=a.expert?' <span style="color:var(--teal);font-size:11px;font-weight:800">★ LB</span>':'';
+    const nm=(a.nombre&&a.nombre!==a.ticker)?('<span class="nm">'+a.nombre+star+'</span>'):('<span class="nm" style="opacity:.6">'+(a.tipo||'')+star+'</span>');
+    return '<div class="clf-opt" onclick="clfSelect('+idx+')"><span class="dot '+a.perfil+'"></span><span class="tk">'+a.ticker+'</span>'+nm+'</div>';
   }).join("");
   drop.classList.add("show");
 }
 function clfSelect(idx){
-  const a=(CLF.data&&CLF.data.activos)?CLF.data.activos[idx]:null;if(!a)return;
+  const a=(CLF.universe||[])[idx];if(!a)return;
   document.getElementById("clf-drop").classList.remove("show");
-  document.getElementById("clf-q").value=a.nombre;
+  document.getElementById("clf-q").value=(a.nombre&&a.nombre!==a.ticker)?a.nombre:a.ticker;
   const band=document.getElementById("clf-band"),badge=document.getElementById("clf-badge");
   band.className="clf-band "+a.perfil;
   badge.className="clf-badge "+a.perfil;
   badge.textContent=CLF_LABELS[a.perfil]||a.perfil;
-  document.getElementById("clf-nm").textContent=a.nombre;
-  document.getElementById("clf-meta").innerHTML="<b>"+a.ticker+"</b> · "+(a.tipo||"");
+  document.getElementById("clf-nm").textContent=(a.nombre&&a.nombre!==a.ticker)?a.nombre:a.ticker;
+  const mode=a.expert?'<span style="color:var(--teal);font-weight:800">★ Análisis EstrategiasLB</span>':'<span style="color:var(--muted2)">Estimación automática</span>';
+  document.getElementById("clf-meta").innerHTML="<b>"+a.ticker+"</b> · "+(a.tipo||"")+" · "+mode;
   document.getElementById("clf-just").textContent=a.justificacion||"";
   const rt=document.getElementById("clf-ratios");
   rt.innerHTML=(a.ratios||[]).map(r=>'<div class="clf-ratio"><div class="k">'+r.k+'</div><div class="v">'+r.v+'</div></div>').join("");
   document.getElementById("clf-card").classList.add("show");
 }
-/* cerrar dropdown al clickear afuera */
 document.addEventListener("click",function(e){
   const w=document.querySelector(".clf-search-wrap");
   if(w&&!w.contains(e.target)){const d=document.getElementById("clf-drop");if(d)d.classList.remove("show");}
@@ -4735,3 +4850,4 @@ function renderFlujo(){
 </div>
 </body>
 </html>
+                                                                                                                               
